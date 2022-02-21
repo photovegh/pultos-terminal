@@ -22,9 +22,9 @@ app.use(express.static("public/img"));
 
 /* INFO: MySQL connection */
 var con = mysql.createConnection({
-    host: "valami.online:57777",
+    host: "localhost",
     user: "root",
-    password: "susuSoft_0913x",
+    password: "",
 });
 
 con.connect(function (err) {
