@@ -1,0 +1,6 @@
+NOTE: megjegyzes
+INFO: FONTOS
+TODO:
+HACK:
+BUG:
+FIXME:

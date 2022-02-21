@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pult</title>
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container-fluid">
+
+        <!-- As a link -->
+        <!-- <nav class="navbar navbar-light bg-danger text-white"> -->
+        <nav class="fixed-top navbar navbar-expand-sm bg-danger navbar-dark d-flex justify-content-around">
+            <div>
+                <form action="/" method="get">
+                    <button type="submit">A nagy visszatérés! 😊 </button>
+                </form>
+            </div>
+            <div>
+                <form action="/" method="get">
+                    <button type="submit">LELTÁR 😊 </button>
+                </form>
+            </div>
+            <div>
+                <form action="/" method="get">
+                    <button type="submit">HITEL 😊 </button>
+                </form>
+            </div>
+        </nav>
+
+        <!-- <div class="fixed-top bg-danger text-white p-2">Felső sáv</div> -->
+        <div class="row mt-4 pt-3">
+            <div class="col-9 bg-info pt-1" id="termek">
+                <h3>hello bal felső sáv !!h3!!!</h3>
+                <h4>hello bal felső sáv !!h4!!!</h4>
+                <h5">hello bal felső sáv !!h5!!!</h3>
+
+
+                    <div class="row">
+                        <div class="col-9">
+                            <p>hello bal bal p</p>
+                        </div>
+                        <div class="col-3">
+                            <p>hello bal jobb</p>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary mt-3 " id="ezaz">Primary ezaz</button>
+                    <button type="button" class="btn btn-primary mt-3">Primary</button>
+                    <button type="button" class="btn btn-primary mt-3">Primary</button>
+                    <button type="button" class="btn btn-primary mt-3">Primary</button>
+                    <button type="button" class="btn btn-primary mt-3">Primary</button>
+                    <button type="button" class="btn btn-primary mt-3">Primary</button>
+                    <button type="button" class="btn btn-primary mt-3">Primary</button>
+                    <button type="button" class="btn btn-primary mt-3">Primary</button>
+                    <button type="button" class="btn btn-primary mt-3">Primary</button>
+                    <button type="button" class="btn btn-primary mt-3">Primary</button>
+                    <button type="button" class="btn btn-primary mt-3">Primary</button>
+                    <button type="button" class="btn btn-primary mt-3">Primary</button>
+                    <button type="button" class="btn btn-primary mt-3">Primary</button>
+                    <button type="button" class="btn btn-primary mt-3">Primary</button>
+                    <button type="button" class="btn btn-primary mt-3">Primary</button>
+                    <button type="button" class="btn btn-primary mt-3">Primary</button>
+                    <button type="button" class="btn btn-primary mt-3">Primary</button>
+                    <button type="button" class="btn btn-primary mt-3">Primary</button>
+            </div>
+
+            <div class="col-3 bg-warning">
+
+                <p>hello jobb 1111</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+                <p>hello jobb</p>
+            </div>
+
+        </div>
+        <p id="demo"></p>
+
+        <p>If you click on me, I will disappear.</p>
+        <p>Click me away!</p>
+        <p class="ucso">Click me too!</p>
+
+
+        <!--  <div class="row">
+            <div class=" bg-primary text-white col-9">
+                <p>topppppppp</p>
+            </div>
+            <div class="col-3">
+                <form action="/" method="get">
+                    <button type="submit">A nagy visszatérés! 😊 </button>
+                </form>
+            </div>
+        </div> -->
+        <!-- 
+            <div class="footer">
+                <p>Footer</p>
+            </div> -->
+    </div>
+
+    <!-- NOTE: also sav -->
+    <div class="fixed-bottom bg-danger text-white p-2">
+        <form action="/config" method="get">
+            <button type="submit">⚡ config ⚡ </button>
+        </form>
+    </div>
+
+
+    <script>
+        console.log("pult console is OK (from html script)");
+        console.log("localStroage data (from html script) : " + localStorage.getItem("password"));
+        //document.cookie
+    </script>
+    <script src="jquery.slim.min.js"></script>
+    <script src="popper.min.js"></script>
+    <script src="bootstrap.bundle.min.js"></script>
+    <script src="pult.js"></script>
+</body>
+
+</html>
