@@ -5,6 +5,8 @@ const conf = dotenv.config();
 const port = conf.parsed.PORT;
 
 var mysql = require("mysql");
+const app = express();
+
 //const user = ["Adminisztátor", "Pultos 1", "Pultos 2", "Pultos 3", "Pultos 4"];
 /* const password = [
     conf.parsed.ADMIN,
@@ -13,7 +15,6 @@ var mysql = require("mysql");
     conf.parsed.PULTOS3,
     conf.parsed.PULTOS4,
 ]; */
-const app = express();
 
 app.use(express.static("public"));
 app.use(express.static("public/js"));
@@ -25,18 +26,67 @@ var con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
+    database: "pultosterminal",
 });
 
 con.connect(function (err) {
     if (err) throw err;
-    console.log("Connected!");
+    console.log("Connected! 😎");
+    console.log();
 });
+
+/* INFO: termek nev lekeres */
+con.query("SELECT * FROM termekek", (err, data) => {
+    if (err) throw err;
+    console.log(data[0].id + " " + data[0].nev);
+    //console.log(data);
+    termekeks = data;
+});
+
+/* INFO: alter tabla lekeres */
+/* con.query("SELECT * FROM `kimert_termek`", (err, kimerve) => {
+    if (err) throw err;
+    console.log(kimerve);
+    console.log(kimerve[0].termekeksid);
+}); */
 
 /* INFO: induló képernyő */
 app.get("/", (req, res) => {
     console.log("PIN pad console OK");
     res.sendFile(__dirname + "/views/index.html");
 });
+
+/* INFO: /dataread 😋😋😋😋😋😋*/
+app.get("/dataread", (req, res) => {
+    con.query("SELECT * FROM termekek", (err, data) => {
+        if (err) throw err;
+        console.log(data[0].id + " " + data[0].nev);
+        res.send(data);
+    });
+});
+/* INFO: /dataread2 😋😋😋😋😋😋*/
+app.get("/dataread2", (req, res) => {
+    //const products = products.json;
+    /* res.send(
+        "Ez már komolyabb routing!!! 😉<br><h1>De ami a lényeg az, hogy SAJÁT! 😋😋😋"
+    ); */
+    con.query("SELECT * FROM termekek", (err, rows) => {
+        if (err) throw err;
+        console.log(rows[1].id + " " + rows[1].nev);
+        console.log(rows);
+        var xxx = [];
+        let i = 0;
+        rows.forEach((row) => {
+            console.log(`${row.nev} price ${row.beszar}`);
+            xxx[i] += row.nev;
+            i++;
+        });
+        //termekeks = rows;
+        //res.send(rows[1].nev);
+        res.send(JSON.stringify(xxx[2]));
+    });
+});
+
 /* INFO: config */
 app.get("/config", (req, res) => {
     console.log("PIN pad console OK");

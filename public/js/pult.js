@@ -20,16 +20,6 @@ $(document).ready(function () {
     });
 });
 
-console.log(
-    "localStroage data:::::::::::: " + localStorage.getItem("password")
-);
-console.log("localStroage USER:::::::::::: " + localStorage.getItem("user"));
-
-//
-//
-//
-//
-//
 $(document).ready(function () {
     $("p").click(function () {
         console.log(this.id);
@@ -38,18 +28,35 @@ $(document).ready(function () {
     });
 });
 
-/* console.log("pult console is OK !!!!!!!!!!!");
-console.log(
-    "localStroage data:::::::::::: " + localStorage.getItem("password")
-);
+/* ####### FRONTEND SEND get REQUEST INFO: START INFO:*/
+console.log("dataread is ok ............");
+const state = {
+    keszlet: [],
+};
+var personsHTML = "";
+/* ####### FRONTEND SEND get REQUEST  INFO: */
+async function getdata() {
+    const response = await fetch("/dataread");
+    document.getElementById("ucso").innerHTML = "";
+    let persons;
+    state.keszlet = await response.json();
+    console.log(state.keszlet[0].nev);
+    renderPersons();
+}
+function renderPersons() {
+    //let personsHTML = "";
+    for (const person of state.keszlet) {
+        personsHTML += `
+    <tr>
+    <td>${person.nev}</td>
+    <td>${person.beszar}</td>
+    
+    </tr>
+    `;
+    }
+    document.getElementById("ucso").innerHTML = personsHTML;
+    document.getElementById("ucso2").innerHTML = personsHTML;
+}
+getdata();
 
-console.log("***********😊******************");
-document.cookie = "name = sususoft; expires= Mon, 28 Feb 2022 12:00:00 UTC";
-document.cookie =
-    "name3 = developer PIN; expires= 22 02 2022 12:00:00 UTC; path=/";
-document.cookie =
-    "name2 = developer PIN; expires=" + new Date(9999, 02, 28).toUTCString;
-document.cookie = "rname=John Doe; expires=Thu, 18 Dec 2023 12:00:00 UTC";
-
-console.log(document.cookie);
- */
+/* ####### FRONTEND SEND get REQUEST INFO: END INFO:*/
