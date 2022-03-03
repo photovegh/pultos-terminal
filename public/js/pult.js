@@ -1,18 +1,27 @@
 // NOTE: Ez definiálja a bekért adatok ojektum tömbjét 😎
 const state = {
     keszlet: [],
+    csoportkategoria: [],
 };
 
-var personsHTML = "";
+var productsHTML = "";
 getdata();
 
 /* INFO: termék adatok bekérése START INFO: */
 async function getdata() {
-    const response = await fetch("/dataread");
-    let persons;
+    /* NOTE: get keszlet */
+    var response = await fetch("/dataread");
+    var products;
     state.keszlet = await response.json();
     console.log(state.keszlet[0].nev);
-    renderPersons();
+
+    /* NOTE: get csoport */
+    var response = await fetch("/datareadcsoport");
+    var products;
+    state.csoportkategoria = await response.json();
+    console.log(state.csoportkategoria[0].nev);
+
+    renderProducts();
     /* NOTE: A button click funkciójának figyelése */
     $(document).ready(function () {
         $("button").click(function () {
@@ -25,11 +34,24 @@ async function getdata() {
 /* INFO: termék adatok bekérése END INFO: */
 
 /* HACK: termék button-ok felrajzolása STAR HACK: */
-function renderPersons() {
-    for (const person of state.keszlet) {
-        personsHTML += `<button type='button' class='btn btn-danger btn-lg mt-3 m-1' id = ${person.id}>${person.nev} ${person.csoportok_id}</button>`;
+function renderProducts() {
+    for (const csoport of state.csoportkategoria) {
+        console.log(csoport.nev + "**********");
+
+        productsHTML += `<p class="bg-dark text-white mb-0">${csoport.nev}</p>`;
+
+        for (const product of state.keszlet) {
+            //console.log(product);
+            //productsHTML += `${product.csoport_nev} <br>`;
+            //console.log(csoport.nev + "*********" + product.csoport_nev);
+            if (csoport.nev == product.csoport_nev) {
+                productsHTML += `<button type='button' class='btn btn-danger  m-1' id = ${product.id}>${product.nev}</button>`;
+            }
+        }
+        productsHTML += `<br>`;
     }
-    document.getElementById("termek").innerHTML = personsHTML;
+
+    document.getElementById("termek").innerHTML = productsHTML;
 }
 /* HACK: termék button-ok felrajzolása END HACK: */
 

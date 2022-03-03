@@ -64,6 +64,15 @@ app.get("/dataread", (req, res) => {
         res.send(data);
     });
 });
+/* INFO: /datareadcsoport 😋😋😋😋😋😋*/
+app.get("/datareadcsoport", (req, res) => {
+    con.query("SELECT * FROM csoportok", (err, data) => {
+        if (err) throw err;
+        console.log(data[0].nev + " " + data[0].nev);
+        res.send(data);
+    });
+});
+
 /* INFO: /dataread2 😋😋😋😋😋😋*/
 app.get("/dataread2", (req, res) => {
     //const products = products.json;
