@@ -2,6 +2,7 @@
 const state = {
     keszlet: [],
     csoportkategoria: [],
+    xkimeres: [],
 };
 
 var productsHTML = "";
@@ -19,27 +20,47 @@ async function getdata() {
     state.csoportkategoria = await response.json();
     console.log(state.csoportkategoria[0].nev);
 
+    /* NOTE: get xkimeres */
+    var response = await fetch("/datareadxkimeres");
+    state.xkimeres = await response.json();
+    console.log(state.xkimeres[0].nev);
+
     renderProducts(); /* HACK: fv() hívás HACK: */
     /* NOTE: A button click funkciójának figyelése */
     $(document).ready(function () {
+        const arrayPultNev = [];
+        const arrayPultElar = [];
         let arrayIndex = -1;
         let vElar = -1;
-        let vKiszereles = -1;
         let summa = 0;
         $(".btnKeszlet").click(function () {
-            alert(this.id);
+            //alert(this.id);
             arrayIndex = this.id;
-            /* NOTE: */
+            /* NOTE: INFO: ?? */
             if (state.keszlet[arrayIndex].kiszereles_id == 2) {
-                alert(
-                    "ez maan a kiszereles 😎" + state.keszlet[arrayIndex].nev
-                );
+                /* NOTE: PULT nev */
+                arrayPultNev.push(state.keszlet[arrayIndex].nev);
+                console.log(arrayPultNev);
+                adat = state.xkimeres[arrayIndex].nev;
+                /* NOTE: PULT aladasi ar */
+                getModal(adat, arrayPultNev); /* BUG: MODAL hívása BUG: */
+                document.getElementById("pult").innerHTML +=
+                    state.keszlet[arrayIndex].nev + " Ea: " + +vElar + "<br>";
+            } else {
+                /* NOTE: INFO: ?? */
+                /* NOTE: PULT nev */
+                arrayPultNev.push(state.keszlet[arrayIndex].nev);
+                console.log(arrayPultNev);
+                /* NOTE: PULT aladasi ar */
+                arrayPultElar.push(state.keszlet[arrayIndex].elar);
+                console.log(arrayPultElar);
+
+                vElar = state.keszlet[arrayIndex].elar;
+                //vElar = state.keszlet[arrayIndex].elar;
+                summa += vElar;
+                document.getElementById("pult").innerHTML +=
+                    state.keszlet[arrayIndex].nev + " Ea: " + +vElar + "<br>";
             }
-            /* NOTE: */
-            vElar = state.keszlet[arrayIndex].elar;
-            document.getElementById("pult").innerHTML +=
-                state.keszlet[arrayIndex].nev + " Ea: " + +vElar + "<br>";
-            summa += vElar;
             document.getElementById("summa").innerHTML = summa;
         });
     });
@@ -64,6 +85,29 @@ function renderProducts() {
 
     document.getElementById("termek").innerHTML = productsHTML;
 }
+
+/* BUG: MODAL BUG: */
+function getModal(adat, arrayPultNev) {
+    $("#myModal").modal();
+    document.getElementById("modal-body").innerHTML = adat;
+
+    $("#btnModal").click(function () {
+        vElar = state.xkimeres[1].elar;
+        console.log("arrayPultNev modalban");
+        console.log(arrayPultNev);
+        //console.log(vElar);
+        //console.log(adat);
+
+        /* NOTE: PULT aladasi ar */
+        /* arrayPultElar.push(state.keszlet[arrayIndex].elar);
+        console.log(arrayPultElar); */
+
+        document.getElementById("summa").innerHTML = vElar;
+        //alert(adat);
+        //return summa;
+    });
+}
+
 /* HACK: termék button-ok felrajzolása END HACK: */
 
 /* ####### FRONTEND SEND get REQUEST INFO: START INFO:*/

@@ -80,6 +80,14 @@ app.get("/datareadkiszereles", (req, res) => {
         res.send(data);
     });
 });
+/* INFO: /datareadxkimeres 😋😋😋😋😋😋*/
+app.get("/datareadxkimeres", (req, res) => {
+    con.query("SELECT * FROM xkimeres", (err, data) => {
+        if (err) throw err;
+        console.log(data[0].nev + " " + data[0].nev);
+        res.send(data);
+    });
+});
 
 /* INFO: /dataread2 😋😋😋😋😋😋*/
 app.get("/dataread2", (req, res) => {
