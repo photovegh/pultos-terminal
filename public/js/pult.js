@@ -25,6 +25,7 @@ async function getdata() {
         let arrayIndex = -1;
         let vElar = -1;
         let vKiszereles = -1;
+        let summa = 0;
         $(".btnKeszlet").click(function () {
             alert(this.id);
             arrayIndex = this.id;
@@ -38,6 +39,8 @@ async function getdata() {
             vElar = state.keszlet[arrayIndex].elar;
             document.getElementById("pult").innerHTML +=
                 state.keszlet[arrayIndex].nev + " Ea: " + +vElar + "<br>";
+            summa += vElar;
+            document.getElementById("summa").innerHTML = summa;
         });
     });
 }
