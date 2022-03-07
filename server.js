@@ -72,6 +72,14 @@ app.get("/datareadcsoport", (req, res) => {
         res.send(data);
     });
 });
+/* INFO: /datareadkiszerelés 😋😋😋😋😋😋*/
+app.get("/datareadkiszereles", (req, res) => {
+    con.query("SELECT * FROM kiszereles", (err, data) => {
+        if (err) throw err;
+        console.log(data[0].nev + " " + data[0].nev);
+        res.send(data);
+    });
+});
 
 /* INFO: /dataread2 😋😋😋😋😋😋*/
 app.get("/dataread2", (req, res) => {
