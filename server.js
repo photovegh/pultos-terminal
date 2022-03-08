@@ -3,18 +3,8 @@ const dotenv = require("dotenv"); /* NOTE: környezeti változó */
 const fs = require("fs");
 const conf = dotenv.config();
 const port = conf.parsed.PORT;
-
 var mysql = require("mysql");
 const app = express();
-
-//const user = ["Adminisztátor", "Pultos 1", "Pultos 2", "Pultos 3", "Pultos 4"];
-/* const password = [
-    conf.parsed.ADMIN,
-    conf.parsed.PULTOS1,
-    conf.parsed.PULTOS2,
-    conf.parsed.PULTOS3,
-    conf.parsed.PULTOS4,
-]; */
 
 app.use(express.static("public"));
 app.use(express.static("public/js"));
@@ -45,16 +35,8 @@ con.connect(function (err) {
 con.query("SELECT * FROM termekek", (err, data) => {
     if (err) throw err;
     console.log(data[0].id + " " + data[0].nev);
-    //console.log(data);
     termekeks = data;
 });
-
-/* INFO: alter tabla lekeres */
-/* con.query("SELECT * FROM `kimert_termek`", (err, kimerve) => {
-    if (err) throw err;
-    console.log(kimerve);
-    console.log(kimerve[0].termekeksid);
-}); */
 
 /* INFO: induló képernyő */
 app.get("/", (req, res) => {
@@ -70,6 +52,7 @@ app.get("/dataread", (req, res) => {
         res.send(data);
     });
 });
+
 /* INFO: /datareadcsoport 😋😋😋😋😋😋*/
 app.get("/datareadcsoport", (req, res) => {
     con.query("SELECT * FROM csoportok", (err, data) => {
@@ -78,6 +61,7 @@ app.get("/datareadcsoport", (req, res) => {
         res.send(data);
     });
 });
+
 /* INFO: /datareadkiszerelés 😋😋😋😋😋😋*/
 app.get("/datareadkiszereles", (req, res) => {
     con.query("SELECT * FROM kiszereles", (err, data) => {
@@ -86,6 +70,7 @@ app.get("/datareadkiszereles", (req, res) => {
         res.send(data);
     });
 });
+
 /* INFO: /datareadxkimeres 😋😋😋😋😋😋*/
 app.get("/datareadxkimeres", (req, res) => {
     con.query("SELECT * FROM xkimeres", (err, data) => {
@@ -94,6 +79,7 @@ app.get("/datareadxkimeres", (req, res) => {
         res.send(data);
     });
 });
+
 /* INFO: /datareadxkimeresnev 😋😋😋😋😋😋*/
 app.get("/datareadxkimeresnev", (req, res) => {
     con.query("SELECT * FROM xkimeresnev", (err, data) => {
@@ -105,10 +91,6 @@ app.get("/datareadxkimeresnev", (req, res) => {
 
 /* INFO: /dataread2 😋😋😋😋😋😋*/
 app.get("/dataread2", (req, res) => {
-    //const products = products.json;
-    /* res.send(
-        "Ez már komolyabb routing!!! 😉<br><h1>De ami a lényeg az, hogy SAJÁT! 😋😋😋"
-    ); */
     con.query("SELECT * FROM termekek", (err, rows) => {
         if (err) throw err;
         console.log(rows[1].id + " " + rows[1].nev);
@@ -120,8 +102,6 @@ app.get("/dataread2", (req, res) => {
             xxx[i] += row.nev;
             i++;
         });
-        //termekeks = rows;
-        //res.send(rows[1].nev);
         res.send(JSON.stringify(xxx[2]));
     });
 });
@@ -145,9 +125,29 @@ function loggerMiddleWare(req, res, next) {
         return; */
     }
 }
+
 app.get("/pult", loggerMiddleWare, (req, res) => {
     console.log("Pult console OK");
     res.sendFile(__dirname + "/views/pult.html");
 });
 
 app.listen(port, () => console.log("server is OK 😋 PORT: " + port));
+
+//const user = ["Adminisztátor", "Pultos 1", "Pultos 2", "Pultos 3", "Pultos 4"];
+/* const password = [
+    conf.parsed.ADMIN,
+    conf.parsed.PULTOS1,
+    conf.parsed.PULTOS2,
+    conf.parsed.PULTOS3,
+    conf.parsed.PULTOS4,
+]; */
+/* INFO: alter tabla lekeres */
+/* con.query("SELECT * FROM `kimert_termek`", (err, kimerve) => {
+    if (err) throw err;
+    console.log(kimerve);
+    console.log(kimerve[0].termekeksid);
+}); */
+//const products = products.json;
+/* res.send(
+        "Ez már komolyabb routing!!! 😉<br><h1>De ami a lényeg az, hogy SAJÁT! 😋😋😋"
+    ); */
