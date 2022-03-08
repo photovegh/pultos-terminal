@@ -21,6 +21,12 @@ app.use(express.static("public/js"));
 app.use(express.static("public/css"));
 app.use(express.static("public/img"));
 
+/* INFO: lasttransaction */
+app.get("/lasttransaction", (req, res) => {
+    console.log("lasttransaction OK");
+    res.sendFile(__dirname + "/last-transaction.json");
+});
+
 /* INFO: MySQL connection */
 var con = mysql.createConnection({
     host: "localhost",
