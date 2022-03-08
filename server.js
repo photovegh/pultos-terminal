@@ -90,7 +90,15 @@ app.get("/datareadkiszereles", (req, res) => {
 app.get("/datareadxkimeres", (req, res) => {
     con.query("SELECT * FROM xkimeres", (err, data) => {
         if (err) throw err;
-        console.log(data[0].nev + " " + data[0].nev);
+        console.log(data[0].termek_nev + " " + data[0].termek_nev);
+        res.send(data);
+    });
+});
+/* INFO: /datareadxkimeresnev 😋😋😋😋😋😋*/
+app.get("/datareadxkimeresnev", (req, res) => {
+    con.query("SELECT * FROM xkimeresnev", (err, data) => {
+        if (err) throw err;
+        console.log(data[1].urtartalom + " " + data[1].nev);
         res.send(data);
     });
 });
