@@ -12,7 +12,7 @@ const arrayPultNev = [];
 const arrayPultElar = [];
 var productsHTML = "";
 var productsHTMLdrop = "";
-var productsHTMLtest = "";
+
 getdata();
 
 /* INFO: termék adatok bekérése START INFO: */
@@ -86,19 +86,23 @@ function renderProducts() {
         productsHTML += `<p class="bg-dark text-white mb-0">${csoport.nev}</p>`;
         let vIndex = 0;
         for (const product of state.keszlet) {
+            var i = 0;
             if (csoport.nev == product.csoport_nev) {
-                productsHTMLtest = `<p class="dropdown-item" >${state.xkimeresnev[1].nev}</p>`;
-                productsHTMLtest += `<p class="dropdown-item" >${state.xkimeresnev[0].nev}</p>`;
+                /* NOTE: ha kiért az italod, akkor rajzold fel, hogy milyen egységekben mérjem ki 😋 */
                 if (state.keszlet[vIndex].kiszereles_id == 2) {
-                    console.log(state.xkimeresnev[0].nev);
-                    console.log(state.xkimeresnev[1].nev);
-                    console.log("hurrrrrraaaaaa 😋😋😋😋");
+                    var productsHTMLxkimeresnev = "";
+                    for (let vKimeres of state.xkimeres) {
+                        if (vKimeres.termek_id == product.id) {
+                            productsHTMLxkimeresnev += `<p class="dropdown-item" >${vKimeres.xkimeresnev_nev}</p>`;
+                        }
+                    }
+                    i++;
                     productsHTML += `<div class="btn-group"> <div class="dropdown">
                     <button type="button" class="btn btn-primary dropdown-toggle m-1" data-toggle="dropdown">
                     ${product.nev}
                     </button>
                     <div class="dropdown-menu">
-                      <p class="dropdown-item" >${productsHTMLtest}</p>
+                      <p class="dropdown-item" >${productsHTMLxkimeresnev}</p>
                       
                     </div>
                   </div></div>`;
