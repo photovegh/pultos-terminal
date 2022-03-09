@@ -1,5 +1,5 @@
 var lastTransaction = -1;
-// NOTE: Ez definiálja a bekért adatok ojektum tömbjét 😎
+// NOTE: Ez definiálja a bekért //ok ojektum tömbjét 😎
 const state = {
     keszlet: [],
     csoportkategoria: [],
@@ -7,7 +7,7 @@ const state = {
     lastTransaction: [],
     xkimeresnev: [],
 };
-// NOTE: Ezek kellenek a forgalom adatokhoz
+// NOTE: Ezek kellenek a forgalom //okhoz
 const arrayPultNev = [];
 const arrayPultElar = [];
 var productsHTML = "";
@@ -15,7 +15,7 @@ var productsHTMLdrop = "";
 
 getdata();
 
-/* INFO: termék adatok bekérése START INFO: */
+/* INFO: termék //ok bekérése START INFO: */
 async function getdata() {
     /* NOTE: get last-transaction */
     var response = await fetch("/lasttransaction");
@@ -43,24 +43,64 @@ async function getdata() {
     /* NOTE: A button click funkciójának figyelése */
     $(document).ready(function () {
         let arrayIndex = -1;
+        let arrayIndextoggle = -1;
         let vElar = -1;
         let vNev;
         localStorage.setItem("vElar", vElar);
         let summa = 0;
         let xxx = "";
-        $(".btnKeszlet").click(function () {
+        /* BUG: dropdown-item figyelése BUG: */
+        /* $(".dropdown-item").click(function () {
             arrayIndex = this.id;
+            console.log("click 😊😊");
+            //console.log(state.xkimeres[arrayIndex].termek_nev);
+            console.log(arrayIndex);
+        }); */
+        /* $(".btnKeszlet, .dropdown-item, .dropdown-toggle").click(function () { */
+        $(".btnKeszlet, .dropdown-item, .dropdown-toggle").click(function (e) {
+            if (e.target.nodeName == "BUTTON") {
+                arrayIndex = this.id;
+            }
             /* NOTE: INFO: ?? */
+            let xButtonOrP = "";
+            console.log("click 😊");
+            console.log("arrayIndex");
+            console.log(arrayIndex);
+            console.log("arrayIndextoggle");
+            console.log(arrayIndextoggle);
+            xButtonOrP = e.target.nodeName;
+            console.log(xButtonOrP);
+
             if (state.keszlet[arrayIndex].kiszereles_id == 2) {
+                if (e.target.nodeName == "P") {
+                    arrayIndextoggle = this.id;
+
+                    vNev = state.keszlet[arrayIndex].nev;
+                    vElar =
+                        (state.keszlet[arrayIndex].elar /
+                            state.keszlet[arrayIndex].cl) *
+                        state.xkimeresnev[arrayIndextoggle].urtartalom;
+
+                    arrayPultNev.push(state.keszlet[arrayIndex].nev);
+                    arrayPultElar.push(vElar);
+                    //arrayPultElar.push(state.keszlet[arrayIndex].elar);
+                    pultRender(vNev, vElar);
+                }
+                /* console.log("click 😊 😊 😊");
+                console.log("arrayIndex");
+                console.log(arrayIndex);
+                console.log("arrayIndextoggle");
+                console.log(arrayIndextoggle); */
                 /* NOTE: PULT nev */
-                arrayPultNev.push(state.keszlet[arrayIndex].nev);
-                arrayPultElar.push(state.keszlet[arrayIndex].elar);
-                adat = state.xkimeres[arrayIndex].nev;
-                vNev = state.keszlet[arrayIndex].nev;
-                vElar = state.keszlet[arrayIndex].elar;
+
+                //adat = state.xkimeres[arrayIndex].nev;
+
+                console.log("vNev");
+                console.log(vNev);
+                console.log("vElar");
+                console.log(vElar);
                 /* NOTE: PULT aladasi ar */
                 /* BUG: PULT render BUG: */
-                pultRender(vNev, vElar);
             } else {
                 /* NOTE: INFO: OK */
                 /* NOTE: PULT nev */
@@ -74,16 +114,26 @@ async function getdata() {
                 vElar = state.keszlet[arrayIndex].elar;
                 pultRender(vNev, vElar);
             }
+            /*            if (
+                state.keszlet[arrayIndex].kiszereles_id == 1 ||
+                state.keszlet[arrayIndex].kiszereles_id == 3
+            ) {
+                arrayPultNev.push(state.keszlet[arrayIndex].nev);
+                arrayPultElar.push(state.keszlet[arrayIndex].elar);
+                vElar = state.keszlet[arrayIndex].elar;
+                vElar = state.keszlet[arrayIndex].elar;
+                pultRender(vNev, vElar);
+            } */
         });
     });
 }
+/* INFO: termék //ok bekérése END INFO: */
 
-/* INFO: termék adatok bekérése END INFO: */
 /* HACK: termék button-ok felrajzolása STAR HACK: */
 function renderProducts() {
     for (const csoport of state.csoportkategoria) {
         //console.log(csoport.nev + "**********");
-        productsHTML += `<p class="bg-dark text-white mb-0">${csoport.nev}</p>`;
+        productsHTML += `<p class="bg-dark text-white mb-0 ">${csoport.nev}</p>`;
         let vIndex = 0;
         for (const product of state.keszlet) {
             var i = 0;
@@ -93,12 +143,25 @@ function renderProducts() {
                     var productsHTMLxkimeresnev = "";
                     for (let vKimeres of state.xkimeres) {
                         if (vKimeres.termek_id == product.id) {
-                            productsHTMLxkimeresnev += `<p class="dropdown-item" >${vKimeres.xkimeresnev_nev}</p>`;
+                            /* BUG: */
+                            let xxx = parseInt(vKimeres.xkimeresnev_id - 1);
+                            productsHTMLxkimeresnev += `<p class="dropdown-item" id = ${xxx}>${state.xkimeresnev[xxx].nev}</p>`;
+                            //-console.log(vKimeres.termek_nev);
+                            //-console.log(vKimeres.termek_id);
+                            /* BUG: */
+                            //-console.log("elar");
+                            //-console.log(state.keszlet[vKimeres.termek_id].elar);
+                            //-console.log("urtartalom");
+                            //-console.log(state.xkimeresnev[xxx].urtartalom);
+                            //console.log(state.xkimeresnev[xxx].nev);
+                            /* console.log(vKimeres.xkimeresnev_id);
+                            console.log(xxx);
+                            console.log(state.xkimeresnev[xxx].nev); */
                         }
                     }
                     i++;
-                    productsHTML += `<div class="btn-group"> <div class="dropdown">
-                    <button type="button" class="btn btn-primary dropdown-toggle m-1" data-toggle="dropdown">
+                    productsHTML += `<div class="btn-group "> <div class="dropdown">
+                    <button type="button" class="btn btn-primary dropdown-toggle m-1" data-toggle="dropdown" id = ${vIndex}>
                     ${product.nev}
                     </button>
                     <div class="dropdown-menu">
