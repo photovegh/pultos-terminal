@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style-admin.css">
+</head>
+
+<body>
+
+    <div class="container-fluid">
+
+        <!-- NOTE: felső sav -->
+        <nav class="fixed-top navbar navbar-expand-sm bg-danger navbar-dark d-flex justify-content-around">
+            <div>
+                <form action="/" method="get">
+                    <button type="submit" style="background-color:deeppink ">Uj termék felvitele 🤔 </button>
+                </form>
+            </div>
+            <div>
+                <form action="/xkimeresnev" method="get">
+
+                    <button style="background-color:chartreuse" id="btnxkimeresnev">Kimérhető
+                        mennyiségek 😊</button>
+                </form>
+            </div>
+            <div>
+                <form action="/" method="get">
+                    <button type="submit" style="background-color:deeppink ">other
+                        🤔 </button>
+                </form>
+            </div>
+            <div>
+                <form action="/" method="get">
+                    <button type="submit" style="background-color:deeppink ">other
+                        🤔 </button>
+                </form>
+            </div>
+            <div>
+                <form action="/" method="get">
+                    <button type="submit" style="background-color:deeppink ">other
+                        🤔 </button>
+                </form>
+            </div>
+            <div>
+                <form action="/" method="get">
+                    <button type="submit" style="background-color:deeppink ">other
+                        🤔 </button>
+                </form>
+            </div>
+            <div>
+                <form action="/" method="get">
+                    <button type="submit" style="background-color:deeppink ">other
+                        🤔 </button>
+                </form>
+            </div>
+        </nav>
+        <br><br><br><br>
+        <div id="adatok"></div>
+
+        <!-- <div class="row mt-5 pt-3">
+            <div class="col-9 bg-info pt-1" id="termekdrop">
+            </div>
+            <div class="col-9 bg-info pt-1" id="termek">
+            </div>
+            <div class="col-3 bg-warning" id="pult">
+                <p>hello jobb 1111</p>
+            </div>
+        </div> -->
+
+    </div>
+
+    <!-- NOTE: also sav -->
+    <!-- <div class="fixed-bottom bg-danger text-white p-2">
+        <form action="/config" method="get">
+            <button type="submit">⚡ config ⚡ </button>
+            <span id="summa"></span>
+        </form>
+    </div> -->
+
+
+
+    <script src="jquery.slim.min.js"></script>
+    <script src="popper.min.js"></script>
+    <script src="bootstrap.bundle.min.js"></script>
+    <script src="admin.js"></script>
+</body>
+
+</html>
