@@ -90,6 +90,14 @@ app.get("/datareadxkimeresnev", (req, res) => {
         res.send(data);
     });
 });
+/* INFO: /datareadkiszereles 😋😋😋😋😋😋*/
+/* app.get("/datareadkiszereles", (req, res) => {
+        con.query("SELECT * FROM kiszereles", (err, data) => {
+            if (err) throw err;
+            console.log(data[1].urtartalom + " " + data[1].nev);
+            res.send(data);
+        });
+    }); */
 
 /* INFO: config */
 app.get("/config", (req, res) => {
@@ -97,10 +105,15 @@ app.get("/config", (req, res) => {
     res.sendFile(__dirname + "/views/config.html");
 });
 
-/* INFO: config */
+/* INFO: xkimeresnev */
 app.get("/xkimeresnev", (req, res) => {
     console.log("xkimeresnev console OK");
     res.sendFile(__dirname + "/views/xkimeresnev.html");
+});
+/* INFO: kiszereles */
+app.get("/kiszereles", (req, res) => {
+    console.log("kiszereles console OK");
+    res.sendFile(__dirname + "/views/kiszereles.html");
 });
 /* INFO: insert  INFO: START INFO: INFO: INFO: INFO: INFO: INFO:*/
 app.post("/insert", bodyParser.json(), (req, res) => {
@@ -124,6 +137,30 @@ app.post("/insert", bodyParser.json(), (req, res) => {
 
     console.log("xkimeresnev console OK");
     res.sendFile(__dirname + "/views/xkimeresnev.html");
+});
+/* INFO: insert  INFO: STOP INFO: INFO: INFO: INFO: INFO: INFO:*/
+/* INFO: insert  INFO: START INFO: INFO: INFO: INFO: INFO: INFO:*/
+app.post("/insertkiszereles", bodyParser.json(), (req, res) => {
+    const insertData = [req.body.nev, req.body.urtartalom];
+    const nev = req.body.nev;
+    const urtartalom = req.body.urtartalom;
+    console.log(nev);
+    console.log("urtartalom");
+    console.log(urtartalom);
+
+    /* INFO: INFO: INFO: */
+    con.query(
+        "INSERT INTO xkimeresnev (nev, urtartalom) VALUES (?)",
+        [insertData],
+        (err, data) => {
+            if (err) throw err;
+            res.send(data);
+        }
+    );
+    /* INFO: INFO: INFO: */
+
+    console.log("kiszereles console OK");
+    res.sendFile(__dirname + "/views/kiszereles.html");
 });
 /* INFO: insert  INFO: STOP INFO: INFO: INFO: INFO: INFO: INFO:*/
 
