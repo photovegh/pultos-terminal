@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kimérés név</title> <!-- NOTE: -->
+    <title>Admin</title>
     <link href="bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style-admin.css">
 </head>
@@ -22,9 +22,15 @@
             <input type="text" id="nev" name="nev"><br><br>
             <label for="urtartalom">Űrtartalom <kbd> centiliterben !!!</kbd>:</label><br>
             <input type="number" id="urtartalom" name="urtartalom"><br><br>
+            <!-- <input type="submit" value="Submit"> -->
         </form>
 
         <button id="newdata">Ujadat hozzáadása </button><br><br>
+
+
+
+
+
 
         <table class="table table-striped">
             <thead>
@@ -35,17 +41,26 @@
                 </tr>
             </thead>
             <tbody id="xkimeresdata">
+
+
+
             </tbody>
         </table>
 
-        <div id="adatok"></div> <!-- NOTE: -->
+        <div id="adatok"></div>
+
 
     </div>
+
+
     <script src="jquery.slim.min.js"></script>
     <script src="popper.min.js"></script>
     <script src="bootstrap.bundle.min.js"></script>
     <script src="admin.js"></script>
-    <script src="xkimeresnev.js"></script> <!-- NOTE: -->
+    <script src="xkimeresnev.js"></script>
+    <!--  <script>
+        renderXkimeresnev();
+    </script> -->
 </body>
 
 </html>
