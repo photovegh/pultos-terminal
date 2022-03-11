@@ -91,23 +91,6 @@ app.get("/datareadxkimeresnev", (req, res) => {
     });
 });
 
-/* INFO: /dataread2 😋😋😋😋😋😋*/
-app.get("/dataread2", (req, res) => {
-    con.query("SELECT * FROM termekek", (err, rows) => {
-        if (err) throw err;
-        console.log(rows[1].id + " " + rows[1].nev);
-        console.log(rows);
-        var xxx = [];
-        let i = 0;
-        rows.forEach((row) => {
-            console.log(`${row.nev} price ${row.beszar}`);
-            xxx[i] += row.nev;
-            i++;
-        });
-        res.send(JSON.stringify(xxx[2]));
-    });
-});
-
 /* INFO: config */
 app.get("/config", (req, res) => {
     console.log("PIN pad console OK");

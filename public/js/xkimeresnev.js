@@ -1,41 +1,15 @@
 var lastTransaction = -1;
 // NOTE: Ez definiálja a bekért //ok ojektum tömbjét 😎
 const state = {
-    keszlet: [],
-    csoportkategoria: [],
-    xkimeres: [],
-    lastTransaction: [],
     xkimeresnev: [],
 };
 // NOTE: Ezek kellenek a forgalom //okhoz
-const arrayPultNev = [];
-const arrayPultElar = [];
-var productsHTML = "";
-var productsHTMLdrop = "";
 var xid = 1;
 
 getdata();
 
 /* INFO: termék //ok bekérése START INFO: */
 async function getdata() {
-    /* NOTE: get last-transaction */
-    var response = await fetch("/lasttransaction");
-    state.lastTransaction = await response.json();
-    console.log("lastTransaction 😎");
-    console.log(state.lastTransaction[0].ltr);
-
-    /* NOTE: get keszlet */
-    var response = await fetch("/dataread");
-    state.keszlet = await response.json();
-
-    /* NOTE: get csoport */
-    var response = await fetch("/datareadcsoport");
-    state.csoportkategoria = await response.json();
-
-    /* NOTE: get xkimeres INFO: INFO: INFO:*/
-    var response = await fetch("/datareadxkimeres");
-    state.xkimeres = await response.json();
-
     /* NOTE: get xkimeresnev INFO: INFO: INFO:*/
     var response = await fetch("/datareadxkimeresnev");
     state.xkimeresnev = await response.json();
@@ -45,6 +19,20 @@ async function getdata() {
 
     $(document).ready(function () {
         $("#newdata").click(function () {
+            $("#nev").change(function () {
+                let nevInput = $("#nev");
+                let v = $(this).val();
+
+                let urtartalomInput = document.querySelector("#urtartalom");
+                console.log("nevInput.value");
+                console.log(v);
+                console.log("urtartalomInput.value");
+                console.log(urtartalomInput.value);
+
+                if (v !== null) {
+                    console.log("************************************");
+                }
+            });
             insertMySQL();
 
             async function insertMySQL() {
@@ -54,7 +42,7 @@ async function getdata() {
                 const urtartalomInput = document.querySelector("#urtartalom");
                 const urtartalom = urtartalomInput.value;
                 var id = xid + 1;
-                urtartalomInput.value = "";
+                urtartalomInput.value = 0;
                 /* INFO: insert  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
                 await fetch("/insert/", {
                     method: "POST",
@@ -74,9 +62,6 @@ async function getdata() {
                 xid++;
                 document.getElementById("xkimeresdata").innerHTML =
                     xkimeresnevHTML;
-                //.then((response) => response.json())
-                //.then((data) => console.log(data["data"]));
-                /* .then((data) => insertRowIntoTable(data["data"])); */
             }
         });
     });
@@ -99,20 +84,3 @@ function renderXkimeresnev() {
     }
     document.getElementById("xkimeresdata").innerHTML = xkimeresnevHTML;
 }
-
-/* addBtn.onclick = function () {
-    const nameInput = document.querySelector("#name-input");
-    const name = nameInput.value;
-    nameInput.value = ""; 
-    ====================================
-        fetch("/insert/", {
-        headers: {
-            "Content-type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify({ name: name }),
-    })
-    ================================
-        .then((response) => response.json())
-        .then((data) => insertRowIntoTable(data["data"]));
-    */
