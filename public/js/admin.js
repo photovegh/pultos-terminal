@@ -1,5 +1,9 @@
+/* NOTE: INPUT NotNull !!!! NOTE: */
+
 /* NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: */
 
+console.log("Ez az adminisztációs Js ami pl figyeli az input mezőket");
+console.log("🤔😋😋😋😋😋🤔😎😎😎");
 /* HACK: fv() hívás HACK: */
 //renderProducts();
 /* NOTE: A button click funkciójának figyelése */

@@ -57,7 +57,9 @@ app.get("/dataread", (req, res) => {
 app.get("/datareadcsoport", (req, res) => {
     con.query("SELECT * FROM csoportok", (err, data) => {
         if (err) throw err;
-        console.log(data[0].nev + " " + data[0].nev);
+
+        console.log("*******nev******* " + data[0].nev);
+        console.log("*******id******* " + data[0].id);
         res.send(data);
     });
 });

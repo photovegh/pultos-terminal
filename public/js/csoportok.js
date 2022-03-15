@@ -28,7 +28,7 @@ async function getdata() {
                     console.log("************************************");
                 }
             }); /* BUG: BUG: BUG: hibát dob rossz primary kulcs miatt BUG: BUG: BUG: */
-            //insertMySQL()
+            insertMySQL();
             alert("Rossz a primary kulcs javítás alatt");
             async function insertMySQL() {
                 const nevInput = document.querySelector("#nev");

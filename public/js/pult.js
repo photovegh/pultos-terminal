@@ -132,12 +132,13 @@ async function getdata() {
 /* HACK: termék button-ok felrajzolása STAR HACK: */
 function renderProducts() {
     for (const csoport of state.csoportkategoria) {
-        //console.log(csoport.nev + "**********");
+        console.log(csoport.id + "**********");
         productsHTML += `<p class="bg-dark text-white mb-0 ">${csoport.nev}</p>`;
         let vIndex = 0;
         for (const product of state.keszlet) {
             var i = 0;
-            if (csoport.nev == product.csoport_nev) {
+            /* if (csoport.nev == product.csoport_nev) { */
+            if (csoport.id == product.csoport_id) {
                 /* NOTE: ha kiért az italod, akkor rajzold fel, hogy milyen egységekben mérjem ki 😋 */
                 if (state.keszlet[vIndex].kiszereles_id == 2) {
                     var productsHTMLxkimeresnev = "";
