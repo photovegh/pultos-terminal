@@ -90,6 +90,16 @@ app.get("/datareadxkimeresnev", (req, res) => {
         res.send(data);
     });
 });
+
+/* INFO: /datareadtermekek 😋😋😋😋😋😋*/
+app.get("/datareadtermekek", (req, res) => {
+    con.query("SELECT * FROM termekek", (err, data) => {
+        if (err) throw err;
+        console.log(data[1].nev + " " + data[1].nev);
+        res.send(data);
+    });
+});
+
 /* INFO: /datareadkiszereles 😋😋😋😋😋😋*/
 /* app.get("/datareadkiszereles", (req, res) => {
         con.query("SELECT * FROM kiszereles", (err, data) => {
@@ -115,6 +125,17 @@ app.get("/kiszereles", (req, res) => {
     console.log("kiszereles console OK");
     res.sendFile(__dirname + "/views/kiszereles.html");
 });
+/* INFO: csoportok */
+app.get("/csoportok", (req, res) => {
+    console.log("csoportok console OK");
+    res.sendFile(__dirname + "/views/csoportok.html");
+});
+/* INFO: termekek */
+app.get("/termekek", (req, res) => {
+    console.log("termekek console OK");
+    res.sendFile(__dirname + "/views/termekek.html");
+});
+
 /* INFO: insert  INFO: START INFO: INFO: INFO: INFO: INFO: INFO:*/
 app.post("/insert", bodyParser.json(), (req, res) => {
     const insertData = [req.body.nev, req.body.urtartalom];
@@ -139,7 +160,7 @@ app.post("/insert", bodyParser.json(), (req, res) => {
     res.sendFile(__dirname + "/views/xkimeresnev.html");
 });
 /* INFO: insert  INFO: STOP INFO: INFO: INFO: INFO: INFO: INFO:*/
-/* INFO: insert  INFO: START INFO: INFO: INFO: INFO: INFO: INFO:*/
+/* INFO: insertkiszereles  INFO: START INFO: INFO: INFO: INFO: INFO: INFO:*/
 app.post("/insertkiszereles", bodyParser.json(), (req, res) => {
     const insertData = [req.body.nev, req.body.urtartalom];
     const nev = req.body.nev;
@@ -150,7 +171,7 @@ app.post("/insertkiszereles", bodyParser.json(), (req, res) => {
 
     /* INFO: INFO: INFO: */
     con.query(
-        "INSERT INTO xkimeresnev (nev, urtartalom) VALUES (?)",
+        "INSERT INTO kiszereles (nev, urtartalom) VALUES (?)",
         [insertData],
         (err, data) => {
             if (err) throw err;
@@ -162,7 +183,64 @@ app.post("/insertkiszereles", bodyParser.json(), (req, res) => {
     console.log("kiszereles console OK");
     res.sendFile(__dirname + "/views/kiszereles.html");
 });
-/* INFO: insert  INFO: STOP INFO: INFO: INFO: INFO: INFO: INFO:*/
+/* INFO: insertkiszereles  INFO: STOP INFO: INFO: INFO: INFO: INFO: INFO:*/
+/* INFO: insertcsoportok  INFO: START INFO: INFO: INFO: INFO: INFO: INFO:*/
+app.post("/insertcsoportok", bodyParser.json(), (req, res) => {
+    const insertData = [req.body.nev];
+    const nev = req.body.nev;
+
+    console.log(nev);
+
+    /* INFO: INFO: INFO: */
+    con.query(
+        "INSERT INTO csoportok (nev) VALUES (?)",
+        [insertData],
+        (err, data) => {
+            if (err) throw err;
+            res.send(data);
+        }
+    );
+    /* INFO: INFO: INFO: */
+
+    console.log("csoportok console OK");
+    res.sendFile(__dirname + "/views/csoportok.html");
+});
+/* INFO: insertcsoportok  INFO: STOP INFO: INFO: INFO: INFO: INFO: INFO:*/
+
+/* BUG: inserttermekek  BUG: START BUG: BUG: BUG: BUG: BUG: BUG:*/
+app.post("/inserttermekek", bodyParser.json(), (req, res) => {
+    const nev = req.body.nev;
+    const beszar = req.body.beszar;
+    /* TODO: NOTE: INFO: NOTE: TODO: */
+    const kiszerelesId = req.body.kiszerelesId;
+    /* TODO: NOTE: INFO: NOTE: TODO: */
+    console.log(nev);
+    console.log("beszar");
+    console.log(beszar);
+    console.log("kiszerelesId");
+    console.log(kiszerelesId);
+    /* TODO: NOTE: INFO: NOTE: TODO: */
+    var insertData = [req.body.kiszerelesId, req.body.nev, req.body.beszar];
+    /* TODO: NOTE: INFO: NOTE: TODO: */
+    /* INFO: INFO: INFO: */
+    con.query(
+        /* TODO: NOTE: INFO: NOTE: TODO: */
+        "INSERT INTO termekek (kiszereles_id, nev, beszar) VALUES (?)",
+        /* TODO: NOTE: INFO: NOTE: TODO: */
+        [insertData],
+        (err, data) => {
+            if (err) throw err;
+            varBUG: insertData = [""];
+            /* BUG:constBUG: insertData = [""]; */
+            res.send(data);
+        }
+    );
+    /* INFO: INFO: INFO: */
+
+    console.log("termekek console OK");
+    res.sendFile(__dirname + "/views/termekek.html");
+});
+/* BUG: inserttermekek  BUG: STOP BUG: BUG: BUG: BUG: BUG: BUG:*/
 
 /* INFO: password authentication */
 function loggerMiddleWare(req, res, next) {

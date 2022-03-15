@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kiszereles</title>
+    <title>Csoport kategóriák</title> <!-- BUG: -->
     <link href="bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style-admin.css">
 </head>
@@ -17,50 +17,31 @@
             <button type="submit">⚡ Vissza a menühöz ⚡ </button>
         </form>
 
-        <form action="/action_page.php">
-            <label for="nev">Neve:</label><br>
-            <input type="text" id="nev" name="nev"><br><br>
-            <label for="urtartalom">Űrtartalom <kbd> deciliterben !!!</kbd>:</label><br>
-            <input type="number" id="urtartalom" name="urtartalom"><br><br>
-            <!-- <input type="submit" value="Submit"> -->
+        <form>
+            <label for="nev">Termékek csoportosítása :</label><br>
+            <input type="text" id="nev" name="nev" value="*" required><br><br>
+            <button id="newdata">Ujadat hozzáadása </button><br><br>
         </form>
-
-        <button id="newdata">Ujadat hozzáadása </button><br><br>
-
-
-
-
 
 
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Neve</th>
-                    <th>Ürtartalom (dl)</th>
                 </tr>
             </thead>
-            <tbody id="kiszereles">
-
-
-
+            <tbody id="xkimeresdata">
             </tbody>
         </table>
 
-        <div id="adatok"></div>
-
+        <div id="adatok"></div> <!-- BUG: -->
 
     </div>
-
-
     <script src="jquery.slim.min.js"></script>
     <script src="popper.min.js"></script>
     <script src="bootstrap.bundle.min.js"></script>
     <script src="admin.js"></script>
-    <script src="kiszereles.js"></script>
-    <!--  <script>
-        renderXkimeresnev();
-    </script> -->
+    <script src="csoportok.js"></script> <!-- BUG: -->
 </body>
 
 </html>

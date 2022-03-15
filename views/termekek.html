@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kiszereles</title>
+    <title>Termekek</title>
     <link href="bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style-admin.css">
 </head>
@@ -18,10 +18,14 @@
         </form>
 
         <form action="/action_page.php">
+            <!-- TODO: NOTE: INFO: NOTE: TODO: -->
+            <label for="kiszereles_id">Kiszerelés neve:</label><br>
+            <input type="text" id="kiszereles_id" name="kiszereles_id"><br><br>
+            <!-- TODO: NOTE: INFO: NOTE: TODO: -->
             <label for="nev">Neve:</label><br>
             <input type="text" id="nev" name="nev"><br><br>
-            <label for="urtartalom">Űrtartalom <kbd> deciliterben !!!</kbd>:</label><br>
-            <input type="number" id="urtartalom" name="urtartalom"><br><br>
+            <label for="beszar">Beszerzési ár <kbd> deciliterben !!!</kbd>:</label><br>
+            <input type="number" id="beszar" name="beszar"><br><br>
             <!-- <input type="submit" value="Submit"> -->
         </form>
 
@@ -37,10 +41,10 @@
                 <tr>
                     <th>Id</th>
                     <th>Neve</th>
-                    <th>Ürtartalom (dl)</th>
+                    <th>Beszerzési ár</th>
                 </tr>
             </thead>
-            <tbody id="kiszereles">
+            <tbody id="termekek">
 
 
 
@@ -57,7 +61,7 @@
     <script src="popper.min.js"></script>
     <script src="bootstrap.bundle.min.js"></script>
     <script src="admin.js"></script>
-    <script src="kiszereles.js"></script>
+    <script src="termekek.js"></script>
     <!--  <script>
         renderXkimeresnev();
     </script> -->

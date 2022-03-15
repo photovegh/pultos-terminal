@@ -7,6 +7,7 @@ const state = {
     lastTransaction: [],
     xkimeresnev: [],
     kiszereles: [],
+    termekek: [],
 };
 // NOTE: Ezek kellenek a forgalom //okhoz
 const arrayPultNev = [];
@@ -45,7 +46,11 @@ async function getdata() {
     var response = await fetch("/datareadxkimeresnev");
     state.xkimeresnev = await response.json();
 
-    renderkiszereles();
+    /* NOTE: get datareadtermekek INFO: INFO: INFO:*/
+    var response = await fetch("/datareadtermekek");
+    state.termekek = await response.json();
+
+    rendertermekek();
     /* NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: */
 
     $(document).ready(function () {
@@ -53,32 +58,45 @@ async function getdata() {
             insertMySQL();
 
             async function insertMySQL() {
+                /* TODO: NOTE: INFO: NOTE: TODO: */
+                const kiszerelesInput =
+                    document.querySelector("#kiszereles_id");
+                const kiszerelesId = kiszerelesInput.value;
+                kiszerelesInput.value = "";
+                /* TODO: NOTE: INFO: NOTE: TODO: */
+
                 const nevInput = document.querySelector("#nev");
                 const nev = nevInput.value;
                 nevInput.value = "";
-                const urtartalomInput = document.querySelector("#urtartalom");
-                const urtartalom = urtartalomInput.value;
+
+                const beszarInput = document.querySelector("#beszar");
+                const beszar = beszarInput.value;
                 var id = xid + 1;
-                urtartalomInput.value = "";
+                beszarInput.value = "";
                 /* INFO: insert  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
-                await fetch("/insertkiszereles/", {
+                await fetch("/inserttermekek/", {
                     method: "POST",
                     headers: {
                         "Content-type": "application/json",
                     },
-                    body: JSON.stringify({ nev: nev, urtartalom: urtartalom }),
+                    body: JSON.stringify({
+                        /* TODO: NOTE: INFO: NOTE: TODO: */
+                        kiszerelesId: kiszerelesId,
+                        /* TODO: NOTE: INFO: NOTE: TODO: */
+                        nev: nev,
+                        beszar: beszar,
+                    }),
                 });
                 /* INFO: insert  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
-                kiszerelesHTML += `<tr >
+                termekekHTML += `<tr >
                 <td>${id}</td>
                 <td>${nev}</td>
-                <td>${urtartalom}</td>
+                <td>${beszar}</td>
                 </tr>
                 `;
                 id++;
                 xid++;
-                document.getElementById("kiszereles").innerHTML =
-                    kiszerelesHTML;
+                document.getElementById("termekek").innerHTML = termekekHTML;
                 //.then((response) => response.json())
                 //.then((data) => console.log(data["data"]));
                 /* .then((data) => insertRowIntoTable(data["data"])); */
@@ -87,22 +105,22 @@ async function getdata() {
     });
 }
 
-function renderkiszereles() {
+function rendertermekek() {
     let index = 0;
-    kiszerelesHTML = "";
-    console.log(state.kiszereles[0].nev);
-    for (let vkiszereles of state.kiszereles) {
-        kiszerelesHTML += `<tr >
-                <td>${vkiszereles.id}</td>
-                <td>${vkiszereles.nev}</td>
-                <td>${vkiszereles.urtartalom}</td>
+    termekekHTML = "";
+    console.log(state.termekek[0].nev);
+    for (let vTermekek of state.termekek) {
+        termekekHTML += `<tr >
+                <td>${vTermekek.id}</td>
+                <td>${vTermekek.nev}</td>
+                <td>${vTermekek.beszar}</td>
                 </tr>
 
      `;
         index++;
-        xid = vkiszereles.id; /* BUG: */
+        xid = vTermekek.id; /* BUG: */
     }
-    document.getElementById("kiszereles").innerHTML = kiszerelesHTML;
+    document.getElementById("termekek").innerHTML = termekekHTML;
 }
 
 /* addBtn.onclick = function () {
