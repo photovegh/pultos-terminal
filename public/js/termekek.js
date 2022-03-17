@@ -1,6 +1,6 @@
 var lastTransaction = -1;
-var termekKiszereles = 0;
-var csoportKiszereles = 0;
+var termekKiszereles = 9;
+var csoportKiszereles = 5;
 // NOTE: Ez definiálja a bekért //ok ojektum tömbjét 😎
 const state = {
     keszlet: [],
