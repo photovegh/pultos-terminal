@@ -60,8 +60,9 @@ async function getdata() {
 
     $(document).ready(function () {
         $("#newdata").click(function () {
-            insertMySQL();
+            /* TODO: NOTE: INFO: insertMySQL(); TODO: NOTE: INFO:*/
 
+            figyel();
             async function insertMySQL() {
                 /* TODO: NOTE: INFO: NOTE: TODO: */
                 /* const kiszerelesInput =
@@ -212,6 +213,15 @@ function rendercsoport() {
     });
     /* BUG: */
 }
+/* HACK: */
+
+function figyel() {
+    if (document.getElementById("nev").value == "") {
+        console.log("******* mezo UUURRREEESSS *******");
+    }
+    console.log("******* Ok *******");
+}
+
 /* HACK: */
 
 /* addBtn.onclick = function () {

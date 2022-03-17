@@ -224,15 +224,15 @@ app.post("/inserttermekek", bodyParser.json(), (req, res) => {
     const beszar = req.body.beszar;
     /* TODO: NOTE: INFO: NOTE: TODO: */
     /* const kiszerelesId = req.body.kiszerelesId; */
-    const kiszerelesId = req.body.termekKiszereles;
-    const csoportId = req.body.csoportKiszereles;
+    const kiszerelesId = req.body.kiszerelesId;
+    const csoportId = req.body.csoportId;
     /* TODO: NOTE: INFO: NOTE: TODO: */
     console.log(nev);
     console.log("beszar");
     console.log(beszar);
-    console.log("kiszerelesId");
+    console.log("kiszerelesId***");
     console.log(kiszerelesId);
-    console.log("csoportId");
+    console.log("csoportId***");
     console.log(csoportId);
     /* TODO: NOTE: INFO: NOTE: TODO: */
     var insertData = [

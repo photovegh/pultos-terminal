@@ -4,6 +4,13 @@
 
 console.log("Ez az adminisztációs Js ami pl figyeli az input mezőket");
 console.log("🤔😋😋😋😋😋🤔😎😎😎");
+
+/* function figyel() {
+    if (document.getElementById("nev") == "*") {
+        console.log("******* mezo URES *******");
+    }
+} */
+
 /* HACK: fv() hívás HACK: */
 //renderProducts();
 /* NOTE: A button click funkciójának figyelése */
