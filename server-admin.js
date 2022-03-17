@@ -191,16 +191,27 @@ app.post("/insertcsoportok", bodyParser.json(), (req, res) => {
 
     console.log(nev);
 
-    /* INFO: INFO: INFO: */
+    /* INFO: TODO: INFO: TODO: INFO: */
     con.query(
+        "INSERT INTO csoportok (nev) VALUES (?)",
+        [insertData],
+        (err, data) => {
+            try {
+                res.send(data);
+            } catch {
+                if (err) throw err;
+            }
+        }
+    );
+    /* con.query(
         "INSERT INTO csoportok (nev) VALUES (?)",
         [insertData],
         (err, data) => {
             if (err) throw err;
             res.send(data);
         }
-    );
-    /* INFO: INFO: INFO: */
+    ); */
+    /* INFO: TODO: INFO: TODO: INFO: */
 
     console.log("csoportok console OK");
     res.sendFile(__dirname + "/views/csoportok.html");
@@ -212,27 +223,48 @@ app.post("/inserttermekek", bodyParser.json(), (req, res) => {
     const nev = req.body.nev;
     const beszar = req.body.beszar;
     /* TODO: NOTE: INFO: NOTE: TODO: */
-    const kiszerelesId = req.body.kiszerelesId;
+    /* const kiszerelesId = req.body.kiszerelesId; */
+    const kiszerelesId = req.body.termekKiszereles;
+    const csoportId = req.body.csoportKiszereles;
     /* TODO: NOTE: INFO: NOTE: TODO: */
     console.log(nev);
     console.log("beszar");
     console.log(beszar);
     console.log("kiszerelesId");
     console.log(kiszerelesId);
+    console.log("csoportId");
+    console.log(csoportId);
     /* TODO: NOTE: INFO: NOTE: TODO: */
-    var insertData = [req.body.kiszerelesId, req.body.nev, req.body.beszar];
+    var insertData = [
+        req.body.nev,
+        req.body.beszar,
+        req.body.elar,
+        req.body.leltarozando,
+        req.body.kritikus,
+        req.body.gyujto,
+        req.body.jelenlegiKeszlet,
+        req.body.urtartalom,
+        req.body.kiszerelesId,
+        req.body.csoportId,
+    ];
     /* TODO: NOTE: INFO: NOTE: TODO: */
     /* INFO: INFO: INFO: */
     con.query(
         /* TODO: NOTE: INFO: NOTE: TODO: */
-        "INSERT INTO termekek (kiszereles_id, nev, beszar) VALUES (?)",
+        "INSERT INTO termekek (nev, beszar, elar, leltarozando, kritikus, gyujto, keszlet, urtartalom, kiszereles_id, csoport_id) VALUES (?)",
         /* TODO: NOTE: INFO: NOTE: TODO: */
         [insertData],
         (err, data) => {
             if (err) throw err;
             varBUG: insertData = [""];
             /* BUG:constBUG: insertData = [""]; */
-            res.send(data);
+
+            try {
+                res.send(data);
+            } catch {
+                if (err) throw err;
+            }
+            /* res.send(data); */
         }
     );
     /* INFO: INFO: INFO: */

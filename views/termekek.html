@@ -18,14 +18,41 @@
         </form>
 
         <form action="/action_page.php">
+            <label for="nev">Termék neve:</label><br>
+            <input type="text" id="nev" name="nev"><br><!-- NOTE: -->
+            <label for="beszar">Beszerzési ár :</label><br>
+            <input type="number" value=0 id="beszar" name="beszar"><br><!-- NOTE: -->
+            <label for="elar">Eladási ár :</label><br>
+            <input type="number" value=0 id="elar" name="elar"><br><!-- NOTE: -->
+            <label for="leltarozando">Leltározando (i/n):</label><br>
+            <input type="text" id="leltarozando" name="leltarozando" size="1" value="i"><br> <!-- NOTE: -->
+            <label for="kritikus">Kritikus mennyiség :</label><br>
+            <input type="number" value=0 id="kritikus" name="kritikus"><br> <!-- NOTE: -->
+            <label for="gyujto">Gyüjtő mennyiség :</label><br>
+            <input type="number" value=0 id="gyujto" name="gyujto"><br> <!-- NOTE: -->
+            <label for="jelenlegiKeszlet">Az új termék induló készlete :</label><br>
+            <input type="number" value=0 id="jelenlegiKeszlet" name="jelenlegiKeszlet"><br><!-- NOTE: -->
+            <label for="urtartalom">Ha a termék kimérhető akkor az űrtartalma :</label><br>
+            <input type="number" value=0 id="urtartalom" name="urtartalom"><br><!-- NOTE: -->
+
+            <div>
+                <fieldset>
+                    <legend>A termék milyen kiszerelésű?</legend><!-- NOTE: -->
+                    <div id="kiszerelesSelect"></div>
+                    <!-- <div id="xkimeresnevSelect"></div> -->
+                </fieldset>
+            </div>
+
+            <fieldset>
+                <legend>A termék melyik csoportba tartozik?</legend><!-- NOTE: -->
+                <div id="csoportSelect"></div>
+            </fieldset>
+            <!-- HACK: https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_form_horizontal&stacked=h HACK: -->
+            <!-- HACK: -->
             <!-- TODO: NOTE: INFO: NOTE: TODO: -->
-            <label for="kiszereles_id">Kiszerelés neve:</label><br>
-            <input type="text" id="kiszereles_id" name="kiszereles_id"><br><br>
+            <!-- <label for="kiszereles_id">Kiszerelés *****:</label><br>
+            <input type="text" id="kiszereles_id" name="kiszereles_id"><br><br> -->
             <!-- TODO: NOTE: INFO: NOTE: TODO: -->
-            <label for="nev">Neve:</label><br>
-            <input type="text" id="nev" name="nev"><br><br>
-            <label for="beszar">Beszerzési ár <kbd> deciliterben !!!</kbd>:</label><br>
-            <input type="number" id="beszar" name="beszar"><br><br>
             <!-- <input type="submit" value="Submit"> -->
         </form>
 
