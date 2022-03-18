@@ -18,45 +18,51 @@
         </form>
 
         <form>
-            <label for="nev">Termék neve:</label><br>
-            <input type="text" id="nev" name="nev" required><br><!-- NOTE: -->
-            <label for="beszar">Beszerzési ár :</label><br>
-            <input type="number" id="beszar" name="beszar"><br><!-- NOTE: -->
-            <label for="elar">Eladási ár :</label><br>
-            <input type="number" id="elar" name="elar"><br><!-- NOTE: -->
-            <label for="leltarozando">Leltározando (i/n):</label><br>
-            <input type="text" id="leltarozando" name="leltarozando" size="1" value="i"><br> <!-- NOTE: -->
-            <label for="kritikus">Kritikus mennyiség :</label><br>
-            <input type="number" id="kritikus" name="kritikus"><br> <!-- NOTE: -->
-            <label for="gyujto">Gyüjtő mennyiség :</label><br>
-            <input type="number" id="gyujto" name="gyujto"><br> <!-- NOTE: -->
-            <label for="jelenlegiKeszlet">Az új termék induló készlete :</label><br>
-            <input type="number" id="jelenlegiKeszlet" name="jelenlegiKeszlet"><br><!-- NOTE: -->
-            <label for="urtartalom">A termék Beszerzési űrtartalma <span style="background-color:chartreuse ;">
-                    ! deciliterben ! </span> :</label><br>
-            <input type="number" id="urtartalom" name="urtartalom"><br><!-- NOTE: -->
-
-            <div class="shadow p-3 mb-5 bg-white rounded ">
+            <div class="shadow p-2 mb-1 bg-white rounded">
+                <label for="nev">Termék neve:</label><br>
+                <input type="text" id="nev" name="nev" required><br>
+            </div>
+            <div class="shadow p-2 mb-1 bg-white rounded">
+                <label for="beszar">Beszerzési ár :</label><br>
+                <input type="number" id="beszar" name="beszar"><br>
+            </div>
+            <div class="shadow p-2 mb-1 bg-white rounded">
+                <label for="elar">Eladási ár :</label><br>
+                <input type="number" id="elar" name="elar"><br>
+            </div>
+            <div class="shadow p-2 mb-1 bg-white rounded">
+                <label for="leltarozando">Leltározando (i/n):</label><br>
+                <input type="text" id="leltarozando" name="leltarozando" size="1" value="i"><br>
+            </div>
+            <div class="shadow p-2 mb-1 bg-white rounded">
+                <label for="kritikus">Kritikus mennyiség :</label><br>
+                <input type="number" id="kritikus" name="kritikus"><br>
+            </div>
+            <div class="shadow p-2 mb-1 bg-white rounded">
+                <label for="gyujto">Gyüjtő mennyiség :</label><br>
+                <input type="number" id="gyujto" name="gyujto"><br>
+            </div>
+            <div class="shadow p-2 mb-1 bg-white rounded">
+                <label for="jelenlegiKeszlet">Az új termék induló készlete :</label><br>
+                <input type="number" id="jelenlegiKeszlet" name="jelenlegiKeszlet"><br>
+            </div>
+            <div class="shadow p-2 mb-1 bg-white rounded">
+                <label for="urtartalom">A termék Beszerzési űrtartalma <span style="background-color:chartreuse ;">
+                        ! deciliterben ! </span> :</label><br>
+                <input type="number" id="urtartalom" name="urtartalom"><br>
+            </div>
+            <div class="shadow p-3 mb-5 bg-white rounded">
                 <fieldset>
-                    <legend>A termék milyen kiszerelésű?</legend><!-- NOTE: -->
+                    <legend>A termék milyen kiszerelésű?</legend>
                     <div id="kiszerelesSelect"></div>
-                    <!-- <div id="xkimeresnevSelect"></div> -->
                 </fieldset>
             </div>
             <div class="shadow p-3 mb-5 bg-white rounded">
                 <fieldset>
-                    <legend>A termék melyik csoportba tartozik?</legend><!-- NOTE: -->
+                    <legend>A termék melyik csoportba tartozik?</legend>
                     <div id="csoportSelect"></div>
                 </fieldset>
             </div>
-            <!-- HACK: https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_form_horizontal&stacked=h HACK: -->
-            <!-- HACK: -->
-            <!-- TODO: NOTE: INFO: NOTE: TODO: -->
-            <!-- <label for="kiszereles_id">Kiszerelés *****:</label><br>
-            <input type="text" id="kiszereles_id" name="kiszereles_id"><br><br> -->
-            <!-- TODO: NOTE: INFO: NOTE: TODO: -->
-
-            <!-- <input type="submit" value="Ujadat hozzáadása" id="newdata"> -->
         </form>
 
         <button id="newdata">Ujadat hozzáadása </button><br><br>
@@ -74,14 +80,12 @@
         </table>
         <div id="adatok"></div>
     </div>
+    </div>
     <script src="jquery.slim.min.js"></script>
     <script src="popper.min.js"></script>
     <script src="bootstrap.bundle.min.js"></script>
     <script src="admin.js"></script>
     <script src="termekek.js"></script>
-    <!--  <script>
-        renderXkimeresnev();
-    </script> -->
 </body>
 
 </html>
