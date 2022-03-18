@@ -139,7 +139,7 @@ function renderProducts() {
             var i = 0;
             /* if (csoport.nev == product.csoport_nev) { */
             if (csoport.id == product.csoport_id) {
-                /* NOTE: ha kiért az italod, akkor rajzold fel, hogy milyen egységekben mérjem ki 😋 */
+                /* NOTE: ha kimért az italod, akkor rajzold fel, hogy milyen egységekben mérjem ki 😋 */
                 if (state.keszlet[vIndex].kiszereles_id == 2) {
                     var productsHTMLxkimeresnev = "";
                     for (let vKimeres of state.xkimeres) {

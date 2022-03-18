@@ -63,48 +63,65 @@ async function getdata() {
             /* TODO: NOTE: INFO: insertMySQL(); TODO: NOTE: INFO:*/
 
             figyel();
+            insertMySQL();
             async function insertMySQL() {
                 /* TODO: NOTE: INFO: NOTE: TODO: */
-                /* const kiszerelesInput =
-                    document.querySelector("#kiszereles_id");
-                const kiszerelesId = kiszerelesInput.value;
-                const kiszerelesId = kiszerelesInput.value;
-                kiszerelesInput.value = ""; */
-                /* TODO: NOTE: INFO: NOTE: TODO: */
-
                 const nevInput = document.querySelector("#nev");
-                const nev = nevInput.value;
+                /* HACK: const nev = nevInput.value; HACK: */
+                const nev = nevInput.value == "" ? "noname" : nevInput.value;
                 nevInput.value = "";
 
                 const beszarInput = document.querySelector("#beszar");
-                const beszar = beszarInput.value;
+                /* const beszar = beszarInput.value; */
+                const beszar =
+                    beszarInput.value == "" ? "0" : beszarInput.value;
                 beszarInput.value = "";
 
                 const elarInput = document.querySelector("#elar");
-                const elar = elarInput.value;
+                /* const elar = elarInput.value; */
+                const elar = elarInput.value == "" ? "0" : elarInput.value;
                 elarInput.value = "";
 
                 const leltarozandoInput =
                     document.querySelector("#leltarozando");
-                const leltarozando = leltarozandoInput.value;
+                /* const leltarozando = leltarozandoInput.value; */
+                const leltarozando =
+                    leltarozandoInput.value == ""
+                        ? "i"
+                        : leltarozandoInput.value;
                 leltarozandoInput.value = "";
 
                 const kritikusInput = document.querySelector("#kritikus");
-                const kritikus = kritikusInput.value;
+                /* const kritikus = kritikusInput.value; */
+                const kritikus =
+                    kritikusInput.value == ""
+                        ? "0"
+                        : kritikusInput.value; /* BUG: */
                 kritikusInput.value = "";
 
                 const gyujtoInput = document.querySelector("#gyujto");
-                const gyujto = gyujtoInput.value;
+                /* const gyujto = gyujtoInput.value; */
+                const gyujto =
+                    gyujtoInput.value == "" ? "0" : gyujtoInput.value;
                 gyujtoInput.value = "";
 
                 const jelenlegiKeszletInput =
                     document.querySelector("#jelenlegiKeszlet");
-                const jelenlegiKeszlet = jelenlegiKeszletInput.value;
+                /* const jelenlegiKeszlet = jelenlegiKeszletInput.value; */
+                const jelenlegiKeszlet =
+                    jelenlegiKeszletInput.value == ""
+                        ? "0"
+                        : jelenlegiKeszletInput.value;
                 jelenlegiKeszletInput.value = "";
 
                 const urtartalomInput = document.querySelector("#urtartalom");
-                const urtartalom = urtartalomInput.value;
+                /* const urtartalom = urtartalomInput.value; */
+                const urtartalom =
+                    urtartalomInput.value == "" ? "0" : urtartalomInput.value;
                 urtartalomInput.value = "";
+                /* TODO: NOTE: INFO: NOTE: TODO: */
+                const cl = urtartalom * 10;
+                /* TODO: NOTE: INFO: NOTE: TODO: */
 
                 var id = xid + 1;
                 /* INFO: insert  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
@@ -115,18 +132,19 @@ async function getdata() {
                     },
                     body: JSON.stringify({
                         /* TODO: NOTE: INFO: NOTE: TODO: */
+                        nev: nev,
+                        beszar: beszar,
                         elar: elar,
                         leltarozando: leltarozando,
                         kritikus: kritikus,
                         gyujto: gyujto,
                         jelenlegiKeszlet: jelenlegiKeszlet,
                         urtartalom: urtartalom,
+                        cl: cl,
                         kiszerelesId: termekKiszereles,
                         csoportId: csoportKiszereles,
 
                         /* TODO: NOTE: INFO: NOTE: TODO: */
-                        nev: nev,
-                        beszar: beszar,
                     }),
                 });
                 /* INFO: insert  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
@@ -263,3 +281,11 @@ function figyel() {
             console.log("checked??? : " + this.checked);
         });
     }); */
+
+/* TODO: NOTE: INFO: NOTE: TODO: */
+/* const kiszerelesInput =
+                    document.querySelector("#kiszereles_id");
+                const kiszerelesId = kiszerelesInput.value;
+                const kiszerelesId = kiszerelesInput.value;
+                kiszerelesInput.value = ""; */
+/* TODO: NOTE: INFO: NOTE: TODO: */

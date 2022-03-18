@@ -244,6 +244,7 @@ app.post("/inserttermekek", bodyParser.json(), (req, res) => {
         req.body.gyujto,
         req.body.jelenlegiKeszlet,
         req.body.urtartalom,
+        req.body.cl,
         req.body.kiszerelesId,
         req.body.csoportId,
     ];
@@ -251,7 +252,7 @@ app.post("/inserttermekek", bodyParser.json(), (req, res) => {
     /* INFO: INFO: INFO: */
     con.query(
         /* TODO: NOTE: INFO: NOTE: TODO: */
-        "INSERT INTO termekek (nev, beszar, elar, leltarozando, kritikus, gyujto, keszlet, urtartalom, kiszereles_id, csoport_id) VALUES (?)",
+        "INSERT INTO termekek (nev, beszar, elar, leltarozando, kritikus, gyujto, keszlet, urtartalom, cl, kiszereles_id, csoport_id) VALUES (?)",
         /* TODO: NOTE: INFO: NOTE: TODO: */
         [insertData],
         (err, data) => {
