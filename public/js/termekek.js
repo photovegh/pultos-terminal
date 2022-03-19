@@ -49,6 +49,14 @@ async function getdata() {
     /* NOTE: get datareadtermekek INFO: INFO: INFO:*/
     var response = await fetch("/datareadtermekek");
     state.termekek = await response.json();
+
+    async function getdataonlytermekek() {
+        /* NOTE: get datareadtermekek INFO:*/
+        var response = await fetch("/datareadtermekek");
+        state.termekek = await response.json();
+        // BUG: esetleg rendertermekek() BUG:
+    }
+
     rendertermekek();
     /* HACK: */
     renderkiszereles();
@@ -135,10 +143,12 @@ async function getdata() {
                         /* TODO: NOTE: INFO: NOTE: TODO: */
                     }),
                 });
+
+                var myArray = [];
                 //INFO:INFO:INFO:INFO:INFO:INFO:INFO:INFO:INFO:
                 if (termekKiszereles == 2) {
                     $("#createXkimeres").modal();
-                    var myArray = [];
+                    //var myArray = [];
                     var indexArray = [];
                     var myObject = {};
                     createXkimeresHTML = "";
@@ -178,11 +188,73 @@ async function getdata() {
                         this.title == 1
                             ? (myArray[index].xKim.tarolhato = 1)
                             : (myArray[index].xKim.tarolhato = 0);
-                        console.log(myArray);
+                        //console.log(myArray);
                         //BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:
                         //ide kell a fetch !!!!!!!!!!!!!!!!!!!!!!!!!!!
+
                         //BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:
                     });
+
+                    //BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:
+                    $("#mDataSend").click(function () {
+                        var termek_id = "";
+                        var termek_nev = "";
+                        var kmimerenev_id = "";
+                        var insertIndex = 0;
+                        var newTomb = [];
+                        let index = 1;
+
+                        for (i = 0; i < myArray.length; i++) {
+                            if (myArray[i].xKim.tarolhato == 1) {
+                                newTomb.push(myArray[i].xKim.elemID);
+                            }
+
+                            /* if (myArray[i].xKim.tarolhato == 1
+                                ) */
+                        }
+                        console.log("newTomb.length ++++++++++++++");
+                        console.log(newTomb.length);
+                        console.log(newTomb);
+                        console.log("newTomb.length +++++ ciklus +++++++++");
+                        for (i of newTomb) {
+                            console.log("elem " + i);
+                        }
+                        console.log("myArray");
+                        console.log(myArray);
+                        console.log("nev");
+                        console.log(nev);
+                        console.log("id-1");
+                        console.log(id - 1);
+
+                        /* for (insertId of myArray) {
+                            if (
+                                insertId.xKim.elemID == index &&
+                                insertId.xKim.tarolhato == 1
+                            ) {
+                               
+                                insertIndex = insertId.xKim.elemID;
+                                console.log("insertId.xKim.elemID");
+                                console.log(insertId.xKim.elemID);
+                                console.log("insertId.xKim.tarolhato");
+                                console.log(insertId.xKim.tarolhato);
+                                console.log("elemID **");
+                                console.log(insertIndex);
+                            }
+                            index++;
+                        } */
+
+                        //insertXkimereMySQL();
+                        async function insertXkimereMySQL() {
+                            termek_id = id;
+                            termek_nev = nev;
+                            kmimerenev_id = insertIndex;
+                            console.log("hmmmmmmmmmm");
+                            console.log(id);
+                            console.log(nev);
+                            console.log(insertIndex);
+                        }
+                    });
+                    //BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:
                 }
                 //INFO:INFO:INFO:INFO:INFO:INFO:INFO:INFO:INFO:
 
@@ -201,6 +273,12 @@ async function getdata() {
         });
     });
 }
+
+/* function modalDataSedn() {
+    console.log("modalDataSedn()******************");
+    console.log("nev:");
+    console.log(nev);
+} */
 
 function rendertermekek() {
     let index = 0;

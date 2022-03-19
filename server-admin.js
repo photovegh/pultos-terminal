@@ -137,14 +137,10 @@ app.get("/termekek", (req, res) => {
 });
 
 /* INFO: insert  INFO: START INFO: INFO: INFO: INFO: INFO: INFO:*/
-app.post("/insert", bodyParser.json(), (req, res) => {
+app.post("/insertxkimeresnev", bodyParser.json(), (req, res) => {
     const insertData = [req.body.nev, req.body.urtartalom];
     const nev = req.body.nev;
     const urtartalom = req.body.urtartalom;
-    //console.log(nev);
-    //console.log("urtartalom");
-    //console.log(urtartalom);
-
     /* INFO: INFO: INFO: */
     con.query(
         "INSERT INTO xkimeresnev (nev, urtartalom) VALUES (?)",
@@ -155,11 +151,10 @@ app.post("/insert", bodyParser.json(), (req, res) => {
         }
     );
     /* INFO: INFO: INFO: */
-
-    //console.log("xkimeresnev console OK");
     res.sendFile(__dirname + "/views/xkimeresnev.html");
 });
 /* INFO: insert  INFO: STOP INFO: INFO: INFO: INFO: INFO: INFO:*/
+
 /* INFO: insertkiszereles  INFO: START INFO: INFO: INFO: INFO: INFO: INFO:*/
 app.post("/insertkiszereles", bodyParser.json(), (req, res) => {
     const insertData = [req.body.nev, req.body.urtartalom];

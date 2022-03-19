@@ -43,15 +43,15 @@ async function getdata() {
                 const urtartalom = urtartalomInput.value;
                 var id = xid + 1;
                 urtartalomInput.value = 0;
-                /* INFO: insert  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
-                await fetch("/insert/", {
+                /* INFO: insertxkimeresnev  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
+                await fetch("/insertxkimeresnev/", {
                     method: "POST",
                     headers: {
                         "Content-type": "application/json",
                     },
                     body: JSON.stringify({ nev: nev, urtartalom: urtartalom }),
                 });
-                /* INFO: insert  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
+                /* INFO: insertxkimeresnev  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
                 xkimeresnevHTML += `<tr >
                 <td>${id}</td>
                 <td>${nev}</td>
