@@ -15,7 +15,7 @@ app.use(express.static("public/img"));
 
 /* INFO: lasttransaction */
 app.get("/lasttransaction", (req, res) => {
-    console.log("lasttransaction OK");
+    //console.log("lasttransaction OK");
     res.sendFile(__dirname + "/last-transaction.json");
 });
 
@@ -29,14 +29,14 @@ var con = mysql.createConnection({
 
 con.connect(function (err) {
     if (err) throw err;
-    console.log("Connected! 😎");
-    console.log();
+    //console.log("Connected! 😎");
+    //console.log();
 });
 
 /* INFO: termek nev lekeres */
 con.query("SELECT * FROM termekek", (err, data) => {
     if (err) throw err;
-    console.log(data[1].id + " " + data[1].nev);
+    //console.log(data[1].id + " " + data[1].nev);
     termekeks = data;
 });
 
@@ -46,14 +46,14 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/views/admin.html");
 });
 
-/* INFO: /dataread 😋😋😋😋😋😋*/
+/* INFO: /dataread 😋HACK:HACK:😋*/
 app.get("/dataread", (req, res) => {
     con.query("SELECT * FROM termekek", (err, data) => {
         if (err) throw err;
-        console.log(data[1].id + " " + data[1].nev);
+        //console.log(data[1].id + " " + data[1].nev);
         res.send(data);
     });
-});
+}); /*   HACK:HACK:      HACK:HACK: */
 
 /* INFO: /datareadcsoport 😋😋😋😋😋😋*/
 app.get("/datareadcsoport", (req, res) => {
@@ -68,7 +68,7 @@ app.get("/datareadcsoport", (req, res) => {
 app.get("/datareadkiszereles", (req, res) => {
     con.query("SELECT * FROM kiszereles", (err, data) => {
         if (err) throw err;
-        console.log(data[0].nev + " " + data[0].nev);
+        //console.log(data[0].nev + " " + data[0].nev);
         res.send(data);
     });
 });
@@ -86,7 +86,7 @@ app.get("/datareadxkimeres", (req, res) => {
 app.get("/datareadxkimeresnev", (req, res) => {
     con.query("SELECT * FROM xkimeresnev", (err, data) => {
         if (err) throw err;
-        console.log(data[1].urtartalom + " " + data[1].nev);
+        //console.log(data[1].urtartalom + " " + data[1].nev);
         res.send(data);
     });
 });
@@ -95,7 +95,7 @@ app.get("/datareadxkimeresnev", (req, res) => {
 app.get("/datareadtermekek", (req, res) => {
     con.query("SELECT * FROM termekek", (err, data) => {
         if (err) throw err;
-        console.log(data[1].nev + " " + data[1].nev);
+        //console.log(data[1].nev + " " + data[1].nev);
         res.send(data);
     });
 });
@@ -111,18 +111,18 @@ app.get("/datareadtermekek", (req, res) => {
 
 /* INFO: config */
 app.get("/config", (req, res) => {
-    console.log("PIN pad console OK");
+    //console.log("PIN pad console OK");
     res.sendFile(__dirname + "/views/config.html");
 });
 
 /* INFO: xkimeresnev */
 app.get("/xkimeresnev", (req, res) => {
-    console.log("xkimeresnev console OK");
+    //console.log("xkimeresnev console OK");
     res.sendFile(__dirname + "/views/xkimeresnev.html");
 });
 /* INFO: kiszereles */
 app.get("/kiszereles", (req, res) => {
-    console.log("kiszereles console OK");
+    //console.log("kiszereles console OK");
     res.sendFile(__dirname + "/views/kiszereles.html");
 });
 /* INFO: csoportok */
@@ -132,7 +132,7 @@ app.get("/csoportok", (req, res) => {
 });
 /* INFO: termekek */
 app.get("/termekek", (req, res) => {
-    console.log("termekek console OK");
+    //console.log("termekek console OK");
     res.sendFile(__dirname + "/views/termekek.html");
 });
 
@@ -141,9 +141,9 @@ app.post("/insert", bodyParser.json(), (req, res) => {
     const insertData = [req.body.nev, req.body.urtartalom];
     const nev = req.body.nev;
     const urtartalom = req.body.urtartalom;
-    console.log(nev);
-    console.log("urtartalom");
-    console.log(urtartalom);
+    //console.log(nev);
+    //console.log("urtartalom");
+    //console.log(urtartalom);
 
     /* INFO: INFO: INFO: */
     con.query(
@@ -156,7 +156,7 @@ app.post("/insert", bodyParser.json(), (req, res) => {
     );
     /* INFO: INFO: INFO: */
 
-    console.log("xkimeresnev console OK");
+    //console.log("xkimeresnev console OK");
     res.sendFile(__dirname + "/views/xkimeresnev.html");
 });
 /* INFO: insert  INFO: STOP INFO: INFO: INFO: INFO: INFO: INFO:*/
@@ -165,9 +165,9 @@ app.post("/insertkiszereles", bodyParser.json(), (req, res) => {
     const insertData = [req.body.nev, req.body.urtartalom];
     const nev = req.body.nev;
     const urtartalom = req.body.urtartalom;
-    console.log(nev);
-    console.log("urtartalom");
-    console.log(urtartalom);
+    //console.log(nev);
+    //console.log("urtartalom");
+    //console.log(urtartalom);
 
     /* INFO: INFO: INFO: */
     con.query(
@@ -189,7 +189,7 @@ app.post("/insertcsoportok", bodyParser.json(), (req, res) => {
     const insertData = [req.body.nev];
     const nev = req.body.nev;
 
-    console.log(nev);
+    //console.log(nev);
 
     /* INFO: TODO: INFO: TODO: INFO: */
     con.query(
@@ -213,7 +213,7 @@ app.post("/insertcsoportok", bodyParser.json(), (req, res) => {
     ); */
     /* INFO: TODO: INFO: TODO: INFO: */
 
-    console.log("csoportok console OK");
+    //console.log("csoportok console OK");
     res.sendFile(__dirname + "/views/csoportok.html");
 });
 /* INFO: insertcsoportok  INFO: STOP INFO: INFO: INFO: INFO: INFO: INFO:*/
@@ -227,13 +227,13 @@ app.post("/inserttermekek", bodyParser.json(), (req, res) => {
     const kiszerelesId = req.body.kiszerelesId;
     const csoportId = req.body.csoportId;
     /* TODO: NOTE: INFO: NOTE: TODO: */
-    console.log(nev);
-    console.log("beszar");
-    console.log(beszar);
-    console.log("kiszerelesId***");
-    console.log(kiszerelesId);
-    console.log("csoportId***");
-    console.log(csoportId);
+    //console.log(nev);
+    //console.log("beszar");
+    //console.log(beszar);
+    //console.log("kiszerelesId***");
+    //console.log(kiszerelesId);
+    //console.log("csoportId***");
+    //console.log(csoportId);
     /* TODO: NOTE: INFO: NOTE: TODO: */
     var insertData = [
         req.body.nev,
@@ -261,6 +261,8 @@ app.post("/inserttermekek", bodyParser.json(), (req, res) => {
             /* BUG:constBUG: insertData = [""]; */
 
             try {
+                //console.log("data");
+                //console.log(data);
                 res.send(data);
             } catch {
                 if (err) throw err;
@@ -270,7 +272,7 @@ app.post("/inserttermekek", bodyParser.json(), (req, res) => {
     );
     /* INFO: INFO: INFO: */
 
-    console.log("termekek console OK");
+    //console.log("termekek console OK");
     res.sendFile(__dirname + "/views/termekek.html");
 });
 /* BUG: inserttermekek  BUG: STOP BUG: BUG: BUG: BUG: BUG: BUG:*/
@@ -279,10 +281,10 @@ app.post("/inserttermekek", bodyParser.json(), (req, res) => {
 function loggerMiddleWare(req, res, next) {
     const pin = true;
     if (pin) {
-        console.log("loggerMiddleWare is OK 😋 ");
+        //console.log("loggerMiddleWare is OK 😋 ");
         next();
     } else {
-        console.log(body);
+        //console.log(body);
         /* res.status(401).send("Authentical error is NEMOK 🤔 "); */
         res.status(200).sendFile(__dirname + "/views/index.html");
         /* console.log("loggerMiddleWare is NEMOK 🤔 ");
@@ -291,7 +293,7 @@ function loggerMiddleWare(req, res, next) {
 }
 
 app.get("/pult", loggerMiddleWare, (req, res) => {
-    console.log("Pult console OK");
+    //console.log("Pult console OK");
     res.sendFile(__dirname + "/views/pult.html");
 });
 

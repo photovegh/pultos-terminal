@@ -1,9 +1,9 @@
 var lastTransaction = -1;
 var termekKiszereles = 9;
 var csoportKiszereles = 5;
-// NOTE: Ez definiálja a bekért //ok ojektum tömbjét 😎
+// NOTE: Ez definiálja a bekért adatbázis ojektum tömbjét 😎
 const state = {
-    keszlet: [],
+    /* keszlet: [], HACK:HACK:*/
     csoportkategoria: [],
     xkimeres: [],
     lastTransaction: [],
@@ -25,13 +25,11 @@ async function getdata() {
     /* NOTE: get last-transaction */
     var response = await fetch("/lasttransaction");
     state.lastTransaction = await response.json();
-    //console.log("lastTransaction 😎");
-    //console.log(state.lastTransaction[0].ltr);
 
-    /* NOTE: get keszlet */
-    var response = await fetch("/dataread");
+    /* NOTE: get keszlet HACK:HACK: */
+    /* var response = await fetch("/dataread");
     state.keszlet = await response.json();
-
+ */
     /* NOTE: get kiszereles */
     var response = await fetch("/datareadkiszereles");
     state.kiszereles = await response.json();
@@ -61,8 +59,6 @@ async function getdata() {
     $(document).ready(function () {
         $("#newdata").click(function () {
             /* TODO: NOTE: INFO: insertMySQL(); TODO: NOTE: INFO:*/
-
-            figyel();
             insertMySQL();
             async function insertMySQL() {
                 /* TODO: NOTE: INFO: NOTE: TODO: */
@@ -78,13 +74,11 @@ async function getdata() {
                 beszarInput.value = "";
 
                 const elarInput = document.querySelector("#elar");
-                /* const elar = elarInput.value; */
                 const elar = elarInput.value == "" ? "0" : elarInput.value;
                 elarInput.value = "";
 
                 const leltarozandoInput =
                     document.querySelector("#leltarozando");
-                /* const leltarozando = leltarozandoInput.value; */
                 const leltarozando =
                     leltarozandoInput.value == ""
                         ? "i"
@@ -92,22 +86,17 @@ async function getdata() {
                 leltarozandoInput.value = "";
 
                 const kritikusInput = document.querySelector("#kritikus");
-                /* const kritikus = kritikusInput.value; */
                 const kritikus =
-                    kritikusInput.value == ""
-                        ? "0"
-                        : kritikusInput.value; /* BUG: */
+                    kritikusInput.value == "" ? "0" : kritikusInput.value;
                 kritikusInput.value = "";
 
                 const gyujtoInput = document.querySelector("#gyujto");
-                /* const gyujto = gyujtoInput.value; */
                 const gyujto =
                     gyujtoInput.value == "" ? "0" : gyujtoInput.value;
                 gyujtoInput.value = "";
 
                 const jelenlegiKeszletInput =
                     document.querySelector("#jelenlegiKeszlet");
-                /* const jelenlegiKeszlet = jelenlegiKeszletInput.value; */
                 const jelenlegiKeszlet =
                     jelenlegiKeszletInput.value == ""
                         ? "0"
@@ -115,7 +104,6 @@ async function getdata() {
                 jelenlegiKeszletInput.value = "";
 
                 const urtartalomInput = document.querySelector("#urtartalom");
-                /* const urtartalom = urtartalomInput.value; */
                 const urtartalom =
                     urtartalomInput.value == "" ? "0" : urtartalomInput.value;
                 urtartalomInput.value = "";
@@ -147,6 +135,57 @@ async function getdata() {
                         /* TODO: NOTE: INFO: NOTE: TODO: */
                     }),
                 });
+                //INFO:INFO:INFO:INFO:INFO:INFO:INFO:INFO:INFO:
+                if (termekKiszereles == 2) {
+                    $("#createXkimeres").modal();
+                    var myArray = [];
+                    var indexArray = [];
+                    var myObject = {};
+                    createXkimeresHTML = "";
+                    let str = `<h3 style = "color: blue">${nev}</h3>`;
+                    document.getElementById("azonosito").innerHTML = str;
+
+                    for (vKimeresNev of state.xkimeresnev) {
+                        createXkimeresHTML += `<h4 class = "xKimeresSelect" title=0 id = ${vKimeresNev.id} 
+                        style = "color: red" >${vKimeresNev.nev}</h4>`;
+                        myObject = {
+                            xKim: {
+                                elemID: vKimeresNev.id,
+                                tarolhato: 0,
+                            },
+                        };
+                        myArray.push(myObject);
+                        indexArray.push(vKimeresNev.id);
+                    }
+                    document.getElementById("modalKineresNev").innerHTML =
+                        createXkimeresHTML;
+                    $(".xKimeresSelect").click(function () {
+                        let index = 0;
+                        let arrayIndex = 0;
+                        for (let i of indexArray) {
+                            if (i == this.id) {
+                                index = arrayIndex;
+                            }
+                            arrayIndex++;
+                        }
+                        this.title == 0
+                            ? this.setAttribute("title", 1)
+                            : this.setAttribute("title", 0);
+                        this.title == 1
+                            ? (this.style.color = "green")
+                            : (this.style.color = "red");
+
+                        this.title == 1
+                            ? (myArray[index].xKim.tarolhato = 1)
+                            : (myArray[index].xKim.tarolhato = 0);
+                        console.log(myArray);
+                        //BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:
+                        //ide kell a fetch !!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        //BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:
+                    });
+                }
+                //INFO:INFO:INFO:INFO:INFO:INFO:INFO:INFO:INFO:
+
                 /* INFO: insert  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
                 termekekHTML += `<tr >
                 <td>${id}</td>
@@ -154,6 +193,7 @@ async function getdata() {
                 <td>${beszar}</td>
                 </tr>
                 `;
+
                 id++;
                 xid++;
                 document.getElementById("termekek").innerHTML = termekekHTML;
@@ -289,3 +329,12 @@ function figyel() {
                 const kiszerelesId = kiszerelesInput.value;
                 kiszerelesInput.value = ""; */
 /* TODO: NOTE: INFO: NOTE: TODO: */
+//const valid = [];
+//let i = 0;
+//    valid.push(0);
+
+/*     console.log(`*********valid[${i}]*********`);
+                        console.log(valid[i]);
+                        console.log(valid.length); */
+//    i++;
+//    localStorage.setItem(vKimeresNev.id, "kuka" + i);
