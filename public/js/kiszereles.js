@@ -1,11 +1,6 @@
 var lastTransaction = -1;
 // NOTE: Ez definiálja a bekért //ok ojektum tömbjét 😎
 const state = {
-    keszlet: [],
-    csoportkategoria: [],
-    xkimeres: [],
-    lastTransaction: [],
-    xkimeresnev: [],
     kiszereles: [],
 };
 // NOTE: Ezek kellenek a forgalom //okhoz
@@ -53,13 +48,17 @@ async function getdata() {
             insertMySQL();
 
             async function insertMySQL() {
+                /* HACK:HACK:HACK: */
                 const nevInput = document.querySelector("#nev");
-                const nev = nevInput.value;
+                const nev = nevInput.value == "" ? "noname" : nevInput.value;
                 nevInput.value = "";
+                /* HACK:HACK:HACK: */
                 const urtartalomInput = document.querySelector("#urtartalom");
-                const urtartalom = urtartalomInput.value;
-                var id = xid + 1;
+                const urtartalom =
+                    urtartalomInput.value == "" ? "0" : urtartalomInput.value;
                 urtartalomInput.value = "";
+                /* HACK:HACK:HACK: */
+                var id = xid + 1;
                 /* INFO: insert  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
                 await fetch("/insertkiszereles/", {
                     method: "POST",
@@ -104,20 +103,8 @@ function renderkiszereles() {
     }
     document.getElementById("kiszereles").innerHTML = kiszerelesHTML;
 }
-
-/* addBtn.onclick = function () {
-    const nameInput = document.querySelector("#name-input");
-    const name = nameInput.value;
-    nameInput.value = ""; 
-    ====================================
-        fetch("/insert/", {
-        headers: {
-            "Content-type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify({ name: name }),
-    })
-    ================================
-        .then((response) => response.json())
-        .then((data) => insertRowIntoTable(data["data"]));
-    */
+/* keszlet: [],
+    csoportkategoria: [],
+    xkimeres: [],
+    lastTransaction: [],
+    xkimeresnev: [], */

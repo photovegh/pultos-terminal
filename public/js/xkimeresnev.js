@@ -36,13 +36,17 @@ async function getdata() {
             insertMySQL();
 
             async function insertMySQL() {
+                /* HACK:HACK:HACK: */
                 const nevInput = document.querySelector("#nev");
-                const nev = nevInput.value;
+                const nev = nevInput.value == "" ? "noname" : nevInput.value;
                 nevInput.value = "";
+                /* HACK:HACK:HACK: */
                 const urtartalomInput = document.querySelector("#urtartalom");
-                const urtartalom = urtartalomInput.value;
+                const urtartalom =
+                    urtartalomInput.value == "" ? "0" : urtartalomInput.value;
+                urtartalomInput.value = "";
+                /* HACK:HACK:HACK: */
                 var id = xid + 1;
-                urtartalomInput.value = 0;
                 /* INFO: insertxkimeresnev  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
                 await fetch("/insertxkimeresnev/", {
                     method: "POST",

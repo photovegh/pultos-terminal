@@ -246,6 +246,7 @@ async function getdata() {
                 id++;
                 xid++;
                 document.getElementById("termekek").innerHTML = termekekHTML;
+                document.getElementById("totalForm").reset();
             }
         });
     });
