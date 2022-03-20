@@ -120,7 +120,7 @@ async function getdata() {
                 /* TODO: NOTE: INFO: NOTE: TODO: */
 
                 var id = xid + 1;
-                /* INFO: insert  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
+                /* INFO: inserttermekek  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
                 await fetch("/inserttermekek/", {
                     method: "POST",
                     headers: {
@@ -189,76 +189,53 @@ async function getdata() {
                             ? (myArray[index].xKim.tarolhato = 1)
                             : (myArray[index].xKim.tarolhato = 0);
                         //console.log(myArray);
-                        //BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:
-                        //ide kell a fetch !!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-                        //BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:
                     });
 
                     //BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:
                     $("#mDataSend").click(function () {
                         var termek_id = "";
                         var termek_nev = "";
-                        var kmimerenev_id = "";
+                        var xkimeresnev_id = "";
                         var insertIndex = 0;
-                        var newTomb = [];
                         let index = 1;
+                        id = id - 1; //NOTE: a tárolando termek_id
 
-                        for (i = 0; i < myArray.length; i++) {
-                            if (myArray[i].xKim.tarolhato == 1) {
-                                newTomb.push(myArray[i].xKim.elemID);
-                            }
-
-                            /* if (myArray[i].xKim.tarolhato == 1
-                                ) */
-                        }
-                        console.log("newTomb.length ++++++++++++++");
-                        console.log(newTomb.length);
-                        console.log(newTomb);
-                        console.log("newTomb.length +++++ ciklus +++++++++");
-                        for (i of newTomb) {
-                            console.log("elem " + i);
-                        }
-                        console.log("myArray");
-                        console.log(myArray);
-                        console.log("nev");
-                        console.log(nev);
-                        console.log("id-1");
-                        console.log(id - 1);
-
-                        /* for (insertId of myArray) {
-                            if (
-                                insertId.xKim.elemID == index &&
-                                insertId.xKim.tarolhato == 1
-                            ) {
-                               
+                        for (insertId of myArray) {
+                            if (insertId.xKim.tarolhato == 1) {
+                                //BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:
+                                //ide kell a fetch !!!!!!!!!!!!!!!!!!!!!!!!!!!
                                 insertIndex = insertId.xKim.elemID;
-                                console.log("insertId.xKim.elemID");
-                                console.log(insertId.xKim.elemID);
-                                console.log("insertId.xKim.tarolhato");
-                                console.log(insertId.xKim.tarolhato);
-                                console.log("elemID **");
-                                console.log(insertIndex);
-                            }
-                            index++;
-                        } */
 
-                        //insertXkimereMySQL();
+                                insertXkimereMySQL();
+                                //BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:
+                            }
+                        }
+
                         async function insertXkimereMySQL() {
                             termek_id = id;
                             termek_nev = nev;
-                            kmimerenev_id = insertIndex;
-                            console.log("hmmmmmmmmmm");
-                            console.log(id);
-                            console.log(nev);
-                            console.log(insertIndex);
+                            xkimeresnev_id = insertIndex;
+
+                            /* INFO: inserxkimeres  INFO: INFO: INFO: INFO:*/
+                            await fetch("/inserxkimeres/", {
+                                method: "POST",
+                                headers: {
+                                    "Content-type": "application/json",
+                                },
+                                body: JSON.stringify({
+                                    termek_id: termek_id,
+                                    termek_nev: termek_nev,
+                                    xkimeresnev_id: xkimeresnev_id,
+                                }),
+                            });
+                            /* INFO: inserxkimeres  INFO: INFO: INFO: INFO: */
                         }
                     });
                     //BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:
                 }
                 //INFO:INFO:INFO:INFO:INFO:INFO:INFO:INFO:INFO:
 
-                /* INFO: insert  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
+                /* INFO: inserttermekek  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
                 termekekHTML += `<tr >
                 <td>${id}</td>
                 <td>${nev}</td>

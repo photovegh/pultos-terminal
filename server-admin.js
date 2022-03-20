@@ -155,6 +155,29 @@ app.post("/insertxkimeresnev", bodyParser.json(), (req, res) => {
 });
 /* INFO: insert  INFO: STOP INFO: INFO: INFO: INFO: INFO: INFO:*/
 
+/* NOTE: insert  NOTE: START NOTE: NOTE: NOTE: NOTE: NOTE: NOTE:*/
+app.post("/inserxkimeres", bodyParser.json(), (req, res) => {
+    const insertData = [
+        req.body.termek_id,
+        req.body.termek_nev,
+        req.body.xkimeresnev_id,
+    ];
+    //const nev = req.body.nev;
+    //const urtartalom = req.body.urtartalom;
+    /* INFO: INFO: INFO: */
+    con.query(
+        "INSERT INTO xkimeres (termek_id, termek_nev, xkimeresnev_id) VALUES (?)",
+        [insertData],
+        (err, data) => {
+            if (err) throw err;
+            res.send(data);
+        }
+    );
+    /* INFO: INFO: INFO: */
+    res.sendFile(__dirname + "/views/xkimeresnev.html");
+});
+/* NOTE: insert  NOTE: STOP NOTE: NOTE: NOTE: NOTE: NOTE: NOTE:*/
+
 /* INFO: insertkiszereles  INFO: START INFO: INFO: INFO: INFO: INFO: INFO:*/
 app.post("/insertkiszereles", bodyParser.json(), (req, res) => {
     const insertData = [req.body.nev, req.body.urtartalom];
