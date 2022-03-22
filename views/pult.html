@@ -18,17 +18,17 @@
         <nav class="fixed-top navbar navbar-expand-sm bg-danger navbar-dark d-flex justify-content-around">
             <div>
                 <form action="/" method="get">
-                    <button type="submit">A nagy visszatérés! 😊 </button>
+                    <button type="submit" style="background-color:greenyellow;">Kilépés! 😊 </button>
                 </form>
             </div>
             <div>
                 <form action="/" method="get">
-                    <button type="submit">LELTÁR 😊 1366 pixel</button>
+                    <button type="submit" style="background-color: red;">LELTÁR 🤔 1366 pixel</button>
                 </form>
             </div>
             <div>
                 <form action="/" method="get">
-                    <button type="submit">KOSARAK 😊 </button>
+                    <button type="submit" style="background-color:red;">KOSARAK 🤔 </button>
                 </form>
             </div>
         </nav>
@@ -46,11 +46,15 @@
     </div>
 
     <!-- NOTE: also sav -->
-    <div class="fixed-bottom bg-danger text-white p-2">
+    <div class="fixed-bottom bg-danger text-white p-2 ">
         <form action="/config" method="get">
-            <button type="submit">⚡ config ⚡ </button>
-            <span id="summa"></span>
+            <div class="d-flex justify-content-between">
+
+                <button type="submit">⚡ config ⚡ </button>
+                <span id="summa">Mindösszesen</span>
+            </div>
         </form>
+
     </div>
 
 
