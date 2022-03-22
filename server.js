@@ -18,23 +18,28 @@ app.get("/lasttransaction", (req, res) => {
 });
 
 /* INFO: MySQL connection */
-var con = mysql.createConnection({
+/* var con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
     database: "pultosterminal",
+}); */
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "pultos",
+    password: "Terminal-2022",
+    database: "pultosterminal",
 });
+/* INFO: MySQL connection */
 
 con.connect(function (err) {
     if (err) throw err;
     console.log("Connected! 😎");
-    console.log();
 });
 
 /* INFO: termek nev lekeres */
 con.query("SELECT * FROM termekek", (err, data) => {
     if (err) throw err;
-    console.log(data[0].id + " " + data[0].nev);
     termekeks = data;
 });
 
@@ -48,7 +53,6 @@ app.get("/", (req, res) => {
 app.get("/dataread", (req, res) => {
     con.query("SELECT * FROM termekek", (err, data) => {
         if (err) throw err;
-        console.log(data[0].id + " " + data[0].nev);
         res.send(data);
     });
 });
@@ -57,9 +61,6 @@ app.get("/dataread", (req, res) => {
 app.get("/datareadcsoport", (req, res) => {
     con.query("SELECT * FROM csoportok", (err, data) => {
         if (err) throw err;
-
-        console.log("*******nev******* " + data[0].nev);
-        console.log("*******id******* " + data[0].id);
         res.send(data);
     });
 });
@@ -68,7 +69,6 @@ app.get("/datareadcsoport", (req, res) => {
 app.get("/datareadkiszereles", (req, res) => {
     con.query("SELECT * FROM kiszereles", (err, data) => {
         if (err) throw err;
-        console.log(data[0].nev + " " + data[0].nev);
         res.send(data);
     });
 });
@@ -77,7 +77,6 @@ app.get("/datareadkiszereles", (req, res) => {
 app.get("/datareadxkimeres", (req, res) => {
     con.query("SELECT * FROM xkimeres", (err, data) => {
         if (err) throw err;
-        console.log(data[0].termek_nev + " " + data[0].termek_nev);
         res.send(data);
     });
 });
@@ -86,7 +85,6 @@ app.get("/datareadxkimeres", (req, res) => {
 app.get("/datareadxkimeresnev", (req, res) => {
     con.query("SELECT * FROM xkimeresnev", (err, data) => {
         if (err) throw err;
-        console.log(data[1].urtartalom + " " + data[1].nev);
         res.send(data);
     });
 });
@@ -95,12 +93,10 @@ app.get("/datareadxkimeresnev", (req, res) => {
 app.get("/dataread2", (req, res) => {
     con.query("SELECT * FROM termekek", (err, rows) => {
         if (err) throw err;
-        console.log(rows[1].id + " " + rows[1].nev);
         console.log(rows);
         var xxx = [];
         let i = 0;
         rows.forEach((row) => {
-            console.log(`${row.nev} price ${row.beszar}`);
             xxx[i] += row.nev;
             i++;
         });
@@ -120,7 +116,6 @@ function loggerMiddleWare(req, res, next) {
         console.log("loggerMiddleWare is OK 😋 ");
         next();
     } else {
-        console.log(body);
         /* res.status(401).send("Authentical error is NEMOK 🤔 "); */
         res.status(200).sendFile(__dirname + "/views/index.html");
         /* console.log("loggerMiddleWare is NEMOK 🤔 ");

@@ -19,12 +19,19 @@ app.get("/lasttransaction", (req, res) => {
 });
 
 /* INFO: MySQL connection */
-var con = mysql.createConnection({
+/* var con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
     database: "pultosterminal",
+}); */
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "pultos",
+    password: "Terminal-2022",
+    database: "pultosterminal",
 });
+/* INFO: MySQL connection */
 
 con.connect(function (err) {
     if (err) throw err;
