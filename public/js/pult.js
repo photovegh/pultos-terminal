@@ -1,17 +1,49 @@
 var lastTransaction = -1;
-// NOTE: Ez definiálja a bekért //ok ojektum tömbjét 😎
+// NOTE: Ez definiálja a bekért adat ojektum tömbjét 😎
 const state = {
     keszlet: [],
     csoportkategoria: [],
     xkimeres: [],
     lastTransaction: [],
     xkimeresnev: [],
+    pult: [],
 };
-// NOTE: Ezek kellenek a forgalom //okhoz
+
+// NOTE: Ezek kellenek a forgalom adatokhoz
+/*
+ termék (lastTransaction) :HACK
+ - id
+ - név
+ - kevert ital osszetevo
+ - xkimeresnevnev
+ - xkimeresnevid
+ -  xkimeresnev urtartalom || 0 HACK: keszlet * cl-ból vonódik ez a mennyiség
+ -  termek              cl || 0 HACK: keszlet * cl-ból vonódik ez a mennyiség
+ - db
+ - adott eladási kiszereles beszar
+ - adott eladási kiszereles elar
+ - INFO: fizetés kp, kártya, hitel, leltár, beszállító kifizetés ?????
+
+ ...NOTE: átgondolni még, hogy mi kell
+ ...NOTE: cl vagy darab készletcsökkentése !!! ha 2 vagy 1 vonja a cl-t
+        2-nél nagyobb csökkentse a db
+        NEM és NEM ha 2-nél nagyobb a urtartalom = urtartalom * 1
+        INFO: a keszlet az összkészlet legyen INFO:
+        INFO: az urtartalom  => db vagy urtartalom INFO:
+        INFO: cl  => ha 2 urtartalom / 10;;; 3-tól urtartalom * 1 INFO:
+        INFO: cl  => ha 1 ott 0, ugyanis az összetevők űrtartalma INFO:
+        INFO: cl  => ha 1 vonódik le összetevőnként küln-külön 😋 INFO:
+        INFO: A termékekhez kell egy jelenlegi készlet mező 😎🦉😎 INFO:
+ ...NOTE: osszesen elar * db => mindösszesen sor
+
+ */
 const arrayPultNev = [];
 const arrayPultElar = [];
+//const arrayPultEdb = [];
+var pultIndex = 0;
 var productsHTML = "";
 var productsHTMLdrop = "";
+var brbr = "<br><br><br><br><br><br><br><br>"; //INFO:
 
 getdata();
 
@@ -20,8 +52,6 @@ async function getdata() {
     /* NOTE: get last-transaction */
     var response = await fetch("/lasttransaction");
     state.lastTransaction = await response.json();
-    console.log("lastTransaction 😎");
-    console.log(state.lastTransaction[0].ltr);
 
     /* NOTE: get keszlet */
     var response = await fetch("/dataread");
@@ -44,120 +74,149 @@ async function getdata() {
     $(document).ready(function () {
         let arrayIndex = -1;
         let arrayIndextoggle = -1;
-        let vElar = -1;
-        let vNev;
-        localStorage.setItem("vElar", vElar);
+        let eladottElar = -1;
+        let sorokNev;
+        localStorage.setItem("eladottElar", eladottElar);
         let summa = 0;
         let xxx = "";
         /* BUG: dropdown-item figyelése BUG: */
-        /* $(".dropdown-item").click(function () {
-            arrayIndex = this.id;
-            console.log("click 😊😊");
-            //console.log(state.xkimeres[arrayIndex].termek_nev);
-            console.log(arrayIndex);
-        }); */
-        /* $(".btnKeszlet, .dropdown-item, .dropdown-toggle").click(function () { */
         $(".btnKeszlet, .dropdown-item, .dropdown-toggle").click(function (e) {
             if (e.target.nodeName == "BUTTON") {
                 arrayIndex = this.id;
+                localStorage.setItem("arrayIndex", arrayIndex);
             }
             /* NOTE: INFO: ?? */
             let xButtonOrP = "";
-            console.log("click 😊");
-            console.log("arrayIndex");
-            console.log(arrayIndex);
-            console.log("arrayIndextoggle");
-            console.log(arrayIndextoggle);
-            xButtonOrP = e.target.nodeName;
-            console.log(xButtonOrP);
+            var edb = 1;
 
+            xButtonOrP = e.target.nodeName;
             if (state.keszlet[arrayIndex].kiszereles_id == 2) {
                 if (e.target.nodeName == "P") {
-                    arrayIndextoggle = this.id;
+                    arrayIndextoggle = this.id; //HACK:
 
-                    vNev = state.keszlet[arrayIndex].nev;
-                    vElar =
+                    //sorokNev = state.keszlet[arrayIndex].nev;
+                    sorokNev = state.keszlet[arrayIndex].nev; //HACK:
+                    sorokId = state.keszlet[arrayIndex].id; //HACK:
+
+                    eladottElar =
+                        (state.keszlet[arrayIndex].elar /
+                            state.keszlet[arrayIndex].cl) *
+                        state.xkimeresnev[arrayIndextoggle].urtartalom;
+                    sorokXkimeresNevNev =
+                        state.xkimeresnev[arrayIndextoggle].nev; //HACK:
+                    sorokXkimeresNevId = state.xkimeresnev[arrayIndextoggle].id;
+                    sorokXkimeresNevUrtartalom =
+                        state.xkimeresnev[arrayIndextoggle].urtartalom;
+
+                    sorokEladottBeszar =
+                        (state.keszlet[arrayIndex].beszar /
+                            state.keszlet[arrayIndex].cl) *
+                        state.xkimeresnev[arrayIndextoggle].urtartalom;
+
+                    sorokEladottElar =
                         (state.keszlet[arrayIndex].elar /
                             state.keszlet[arrayIndex].cl) *
                         state.xkimeresnev[arrayIndextoggle].urtartalom;
 
-                    arrayPultNev.push(state.keszlet[arrayIndex].nev);
-                    arrayPultElar.push(vElar);
-                    //arrayPultElar.push(state.keszlet[arrayIndex].elar);
-                    pultRender(vNev, vElar);
+                    //arrayPultNev.push(state.keszlet[arrayIndex].nev);
+                    //arrayPultElar.push(eladottElar);
+
+                    state.pult.push({
+                        id: sorokId, //NOTE:
+                        nev: sorokNev, //NOTE:
+                        xkimeresnevnev: sorokXkimeresNevNev, //NOTE:
+                        xkimeresnevid: sorokXkimeresNevId,
+                        xkimeresnevurtartalom: sorokXkimeresNevUrtartalom,
+                        db: edb, //NOTE:
+                        //cl: edb * sorokXkimeresNevUrtartalom,
+                        cl: sorokXkimeresNevUrtartalom,
+                        eladottbeszar: sorokEladottBeszar, //NOTE:
+                        eladottelar: sorokEladottElar, //NOTE:
+                        fizetesmod: "k", //NOTE:
+                        transactionnumber: 7, //NOTE:
+                        megjegyzes: "megjegyzes", //NOTE:
+                    });
+                    //pultRender(arrayIndex); //BUG:BUG:BUG:BUG:BUG:BUG:BUG: state !!!
+                    console.log(state.pult[2]);
+                    renderPult();
                 }
-                /* console.log("click 😊 😊 😊");
-                console.log("arrayIndex");
-                console.log(arrayIndex);
-                console.log("arrayIndextoggle");
-                console.log(arrayIndextoggle); */
-                /* NOTE: PULT nev */
-
-                //adat = state.xkimeres[arrayIndex].nev;
-
-                console.log("vNev");
-                console.log(vNev);
-                console.log("vElar");
-                console.log(vElar);
-                /* NOTE: PULT aladasi ar */
-                /* BUG: PULT render BUG: */
             } else {
-                /* NOTE: INFO: OK */
-                /* NOTE: PULT nev */
-                /* NOTE: PULT aladasi ar */
-                arrayPultNev.push(state.keszlet[arrayIndex].nev);
-                arrayPultElar.push(state.keszlet[arrayIndex].elar);
-                vElar = state.keszlet[arrayIndex].elar;
-                //vElar = state.keszlet[arrayIndex].elar;
-                //summa += vElar;
-                vNev = state.keszlet[arrayIndex].nev;
-                vElar = state.keszlet[arrayIndex].elar;
-                pultRender(vNev, vElar);
+                //arrayPultNev.push(state.keszlet[arrayIndex].nev); //NOTE:
+                //arrayPultElar.push(state.keszlet[arrayIndex].elar);
+                /* HACK: cl????????  HACK: */
+                //arrayIndextoggle = this.id; //HACK:
+
+                eladottElar = state.keszlet[arrayIndex].elar;
+                //sorokNev = state.keszlet[arrayIndex].nev;
+                sorokNev = state.keszlet[arrayIndex].nev; //HACK:
+                sorokId = state.keszlet[arrayIndex].id; //HACK:
+
+                /* eladottElar =
+                        (state.keszlet[arrayIndex].elar /
+                            state.keszlet[arrayIndex].cl) *
+                        state.xkimeresnev[arrayIndextoggle].urtartalom; */
+                /* sorokXkimeresNevNev =
+                        state.xkimeresnev[arrayIndextoggle].nev; */
+                /* sorokXkimeresNevId = state.xkimeresnev[arrayIndextoggle].id; */
+                /* sorokXkimeresNevUrtartalom =
+                        state.xkimeresnev[arrayIndextoggle].urtartalom; */
+
+                sorokEladottBeszar = state.keszlet[arrayIndex].beszar;
+                /* (state.keszlet[arrayIndex].beszar /
+                            state.keszlet[arrayIndex].cl) *
+                        state.xkimeresnev[arrayIndextoggle].urtartalom; */
+
+                sorokEladottElar = state.keszlet[arrayIndex].elar;
+                /* (state.keszlet[arrayIndex].elar /
+                            state.keszlet[arrayIndex].cl) *
+                        state.xkimeresnev[arrayIndextoggle].urtartalom; */
+                /* sorokCl =
+                    (edb * state.keszlet[arrayIndex].cl) /
+                    state.keszlet[arrayIndex].urtartalom; */
+                /* HACK: cl????????  HACK: */
+                state.pult.push({
+                    id: sorokId, //NOTE:
+                    nev: sorokNev, //NOTE:
+                    xkimeresnevnev: " ", //NOTE:
+                    xkimeresnevid: " ",
+                    xkimeresnevurtartalom: " ",
+                    db: edb, //NOTE:
+                    cl: state.keszlet[arrayIndex].cl,
+                    //cl: sorokCl,
+                    eladottbeszar: sorokEladottBeszar, //NOTE:
+                    eladottelar: sorokEladottElar, //NOTE:
+                    fizetesmod: "c", //NOTE:
+                    transactionnumber: 21, //NOTE:
+                    megjegyzes: "info", //NOTE:
+                });
+                //pultRender(arrayIndex); //BUG:BUG:BUG:BUG:BUG:BUG:BUG: state
+                console.log(state.pult[2]);
+                renderPult();
             }
-            /*            if (
-                state.keszlet[arrayIndex].kiszereles_id == 1 ||
-                state.keszlet[arrayIndex].kiszereles_id == 3
-            ) {
-                arrayPultNev.push(state.keszlet[arrayIndex].nev);
-                arrayPultElar.push(state.keszlet[arrayIndex].elar);
-                vElar = state.keszlet[arrayIndex].elar;
-                vElar = state.keszlet[arrayIndex].elar;
-                pultRender(vNev, vElar);
-            } */
         });
     });
 }
-/* INFO: termék //ok bekérése END INFO: */
+
+function myFunction() {
+    arrayPultNev.pop();
+    arrayPultElar.pop();
+}
 
 /* HACK: termék button-ok felrajzolása STAR HACK: */
 function renderProducts() {
     for (const csoport of state.csoportkategoria) {
-        console.log(csoport.id + "**********");
         productsHTML += `<p class="bg-dark text-white mb-0 ">${csoport.nev}</p>`;
         let vIndex = 0;
         for (const product of state.keszlet) {
             var i = 0;
-            /* if (csoport.nev == product.csoport_nev) { */
             if (csoport.id == product.csoport_id) {
                 /* NOTE: ha kimért az italod, akkor rajzold fel, hogy milyen egységekben mérjem ki 😋 */
                 if (state.keszlet[vIndex].kiszereles_id == 2) {
                     var productsHTMLxkimeresnev = "";
                     for (let vKimeres of state.xkimeres) {
                         if (vKimeres.termek_id == product.id) {
-                            /* BUG: */
                             let xxx = parseInt(vKimeres.xkimeresnev_id - 1);
                             productsHTMLxkimeresnev += `<p class="dropdown-item" id = ${xxx}>${state.xkimeresnev[xxx].nev}</p>`;
-                            //-console.log(vKimeres.termek_nev);
-                            //-console.log(vKimeres.termek_id);
-                            /* BUG: */
-                            //-console.log("elar");
-                            //-console.log(state.keszlet[vKimeres.termek_id].elar);
-                            //-console.log("urtartalom");
-                            //-console.log(state.xkimeresnev[xxx].urtartalom);
-                            //console.log(state.xkimeresnev[xxx].nev);
-                            /* console.log(vKimeres.xkimeresnev_id);
-                            console.log(xxx);
-                            console.log(state.xkimeresnev[xxx].nev); */
                         }
                     }
                     i++;
@@ -181,51 +240,110 @@ function renderProducts() {
     document.getElementById("termek").innerHTML = productsHTML;
 }
 
-/* BUG: PULT render BUG: */
-function pultRender(vNev, vElar) {
-    document.getElementById("pult").innerHTML +=
-        vNev + " Ea: " + vElar + "<br>";
-    /* TODO: summa */
-    let selement = 0;
-    arrayPultElar.forEach((element) => {
-        //console.log(element);
-        selement = selement + element;
+function renderPult() {
+    //FIXME: FIXME: FIXME:
+    var tetelSorokHTML = "";
+    var mindosszesen = 0;
+    var tombIndex = 0;
+    for (var sorok of state.pult) {
+        tetelSorokHTML += `
+        <div class="card">
+        <div class="font-weight-bold">
+            ${sorok.nev} ${sorok.xkimeresnevnev} : <span>${
+            sorok.eladottelar
+        }</span>
+        </div>
+        <div>
+            <button class="btn mr-5 btn-danger delete-db" id = ${tombIndex}>del</button>   <button class="btn mr-3 btn-warning remove-db" id = ${tombIndex}>-</button>   ${
+            sorok.db
+        }    <button class="btn ml-3 btn-success insert-db" id = ${tombIndex}>+</button>   <span class="font-weight-bold">${
+            sorok.eladottelar * sorok.db
+        }</span>
+        </div>
+    </div>
+        `;
+        tombIndex++;
+        mindosszesen += sorok.eladottelar * sorok.db;
+        console.log(tombIndex);
+    }
+    document.getElementById("pult").innerHTML = tetelSorokHTML;
+    document.getElementById("summa").innerHTML = mindosszesen;
+    $(".insert-db").click(function (event) {
+        let pultTombIndex = this.id;
+        console.log("insert-db tombIndex");
+        console.log(pultTombIndex);
+        state.pult[pultTombIndex].db++;
+        renderPult();
     });
-    //console.log(selement);
-    document.getElementById("summa").innerHTML = selement;
+    $(".remove-db").click(function (event) {
+        let pultTombIndex = this.id;
+        console.log("remove-db tombIndex");
+        console.log(pultTombIndex);
+        state.pult[pultTombIndex].db--;
+        renderPult();
+    });
+    $(".delete-db").click(function (event) {
+        let pultTombIndex = this.id;
+        console.log("delete-db tombIndex");
+        console.log(pultTombIndex);
+        alert("Hamarosan bekötve"); //FIXME: FIXME: FIXME:
+        renderPult();
+    });
 }
+//FIXME: FIXME: FIXME:
+window.onload = renderPult();
 
-/* HACK: termék button-ok felrajzolása END HACK: */
-/* ####### FRONTEND SEND get REQUEST INFO: START INFO:*/
-/* ####### FRONTEND SEND get REQUEST  INFO: */
-/* ####### BUTTON EVENT INFO: variable INFO:*/
-/* NOTE: A button click funkciójának figyelése */
-/* console.log("state.xkimeres[x].termek_id");
-                console.log(state.xkimeres[2].termek_id);
-                console.log("state.xkimeres[x].termek_nev");
-                console.log(state.xkimeres[2].termek_nev); */
-//console.log(state.xkimeres.length);
-//console.log("vIndex : " + vIndex);
-//let xIndex = 0;
-//for (xkimeres of state.xkimeres) {
-//console.log("xkimeres.termek_id😋");
-//console.log(xkimeres.termek_id);
-/* console.log(
-                        "state.keszlet[xkimeres.termek_id].kiszereles_id😎😎"
-                    ); */
-//console.log(state.keszlet[vIndex].kiszereles_id);
-//document.getElementById("p").innerHTML = "hmmmmm";
-//document.getElementById("termekdrop").innerHTML = productsHTMLdrop;
-/* console.log(arrayPultNev);
-                console.log("arrayPultElar");
-                console.log(arrayPultElar); */
-/* console.log("arrayPultElar");
-                console.log(arrayPultElar);
-                console.log(arrayPultNev); */
-//console.log("state.xkimeres[0].termek_nev");
-//console.log(state.xkimeres[0].termek_nev);
-//console.log(state.keszlet[0].nev);
-//console.log(state.csoportkategoria[0].nev);
-//console.log("state.xkimeres[0].termek_nev");
-//console.log(state.xkimeres[0].termek_nev);
-//console.log(state.keszlet[vIndex].nev);
+/* BUG: PULT render BUG: */
+/* function pultRender(arrayIndex) {
+    pultIndex++;
+    let selement = 0;
+    let kiir = "";
+    for (i = 0; i < arrayPultNev.length; i++) {
+        kiir += arrayPultNev[i] + arrayPultElar[i] + "<br>";
+        selement += arrayPultElar[i];
+    }
+
+    document.getElementById("pult").innerHTML = kiir;
+    kiir = "";
+    pultIndex = 0;
+
+    document.getElementById("summa").innerHTML = selement;
+} */
+
+/* //FIXME: 
+    pult: [
+        {
+            id: 'id',//NOTE:
+            nev: 'nev',//NOTE:
+            //FIXME: kevertitalosszetevonev:  'nev *ezt nem iratom ki*, a tarolashoz kell',
+            **xkimeresnevnev: '**xkimeresnevnev',//NOTE:
+            **xkimeresnevid: '**xkimeresnevid',//NOTE:
+            **xkimeresnevurtartalom: '**xkimeresnevurtartalom',///NOTE:
+            db: 'db',//NOTE:
+            cl: 'cl *ezt nem iratom ki* maradek keszlet eloallitasahoz kell',//NOTE: ha nem 2 a cl ugy lesz db, hogy cl / urtartalom NOTE:
+            eladottbeszar: 'eladottbeszar *ezt nem iratom ki*',//NOTE:
+            eladottelar: 'eladottelar',//NOTE:
+            fizetesmod: 'kp, hitel, letar ...',//NOTE:
+            transactionnumber: 'transactionnumber'//NOTE:
+            megjegyzes: 'megjegyzes'//NOTE:
+        }
+    ]
+ FIXME: */
+/* //FIXME: 
+    pult: [
+        {
+            id: 5,
+            nev: 'kalinka',
+            xkimeresnevnev: '3 centes',
+            db: 1,
+            eladottelar: 321,
+        },
+        {
+            id: '12',
+            nev: 'cola',
+            xkimeresnevnev: ' ',
+            db: 2,
+            eladottelar: 77,
+        }
+    ]
+ FIXME: */

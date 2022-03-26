@@ -116,7 +116,8 @@ async function getdata() {
                     urtartalomInput.value == "" ? "0" : urtartalomInput.value;
                 urtartalomInput.value = "";
                 /* TODO: NOTE: INFO: NOTE: TODO: */
-                const cl = urtartalom * 10;
+                //const cl = urtartalom * 10;
+                const cl = termekKiszereles == 2 ? urtartalom * 10 : 1;
                 /* TODO: NOTE: INFO: NOTE: TODO: */
 
                 var id = xid + 1;
