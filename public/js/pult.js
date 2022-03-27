@@ -7,6 +7,7 @@ const state = {
     lastTransaction: [],
     xkimeresnev: [],
     pult: [],
+    kosarak: [],
 };
 
 // NOTE: Ezek kellenek a forgalom adatokhoz
@@ -37,13 +38,11 @@ const state = {
  ...NOTE: osszesen elar * db => mindösszesen sor
 
  */
-const arrayPultNev = [];
-const arrayPultElar = [];
-//const arrayPultEdb = [];
 var pultIndex = 0;
 var productsHTML = "";
 var productsHTMLdrop = "";
-var brbr = "<br><br><br><br><br><br><br><br>"; //INFO:
+var foundPult = false;
+var foundKosar = false;
 
 getdata();
 
@@ -118,36 +117,27 @@ async function getdata() {
                             state.keszlet[arrayIndex].cl) *
                         state.xkimeresnev[arrayIndextoggle].urtartalom;
 
-                    //arrayPultNev.push(state.keszlet[arrayIndex].nev);
-                    //arrayPultElar.push(eladottElar);
-
                     state.pult.push({
-                        id: sorokId, //NOTE:
-                        nev: sorokNev, //NOTE:
-                        xkimeresnevnev: sorokXkimeresNevNev, //NOTE:
+                        id: sorokId,
+                        nev: sorokNev,
+                        xkimeresnevnev: sorokXkimeresNevNev,
                         xkimeresnevid: sorokXkimeresNevId,
                         xkimeresnevurtartalom: sorokXkimeresNevUrtartalom,
-                        db: edb, //NOTE:
-                        //cl: edb * sorokXkimeresNevUrtartalom,
+                        db: edb,
                         cl: sorokXkimeresNevUrtartalom,
-                        eladottbeszar: sorokEladottBeszar, //NOTE:
-                        eladottelar: sorokEladottElar, //NOTE:
-                        fizetesmod: "k", //NOTE:
-                        transactionnumber: 7, //NOTE:
-                        megjegyzes: "megjegyzes", //NOTE:
+                        eladottbeszar: sorokEladottBeszar,
+                        eladottelar: sorokEladottElar,
+                        fizetesmod: "k",
+                        transactionnumber: 7,
+                        megjegyzes: "megjegyzes",
                     });
-                    //pultRender(arrayIndex); //BUG:BUG:BUG:BUG:BUG:BUG:BUG: state !!!
-                    console.log(state.pult[2]);
                     renderPult();
                 }
             } else {
-                //arrayPultNev.push(state.keszlet[arrayIndex].nev); //NOTE:
-                //arrayPultElar.push(state.keszlet[arrayIndex].elar);
                 /* HACK: cl????????  HACK: */
                 //arrayIndextoggle = this.id; //HACK:
 
                 eladottElar = state.keszlet[arrayIndex].elar;
-                //sorokNev = state.keszlet[arrayIndex].nev;
                 sorokNev = state.keszlet[arrayIndex].nev; //HACK:
                 sorokId = state.keszlet[arrayIndex].id; //HACK:
 
@@ -175,31 +165,24 @@ async function getdata() {
                     state.keszlet[arrayIndex].urtartalom; */
                 /* HACK: cl????????  HACK: */
                 state.pult.push({
-                    id: sorokId, //NOTE:
-                    nev: sorokNev, //NOTE:
-                    xkimeresnevnev: " ", //NOTE:
+                    id: sorokId,
+                    nev: sorokNev,
+                    xkimeresnevnev: " ",
                     xkimeresnevid: " ",
                     xkimeresnevurtartalom: " ",
-                    db: edb, //NOTE:
+                    db: edb,
                     cl: state.keszlet[arrayIndex].cl,
-                    //cl: sorokCl,
-                    eladottbeszar: sorokEladottBeszar, //NOTE:
-                    eladottelar: sorokEladottElar, //NOTE:
-                    fizetesmod: "c", //NOTE:
-                    transactionnumber: 21, //NOTE:
-                    megjegyzes: "info", //NOTE:
+                    eladottbeszar: sorokEladottBeszar,
+                    eladottelar: sorokEladottElar,
+                    fizetesmod: "c",
+                    transactionnumber: 21,
+                    megjegyzes: "info",
                 });
                 //pultRender(arrayIndex); //BUG:BUG:BUG:BUG:BUG:BUG:BUG: state
-                console.log(state.pult[2]);
                 renderPult();
             }
         });
     });
-}
-
-function myFunction() {
-    arrayPultNev.pop();
-    arrayPultElar.pop();
 }
 
 /* HACK: termék button-ok felrajzolása STAR HACK: */
@@ -254,7 +237,7 @@ function renderPult() {
         }</span>
         </div>
         <div>
-            <button class="btn mr-5 btn-danger delete-db" id = ${tombIndex}>del</button>   <button class="btn mr-3 btn-warning remove-db" id = ${tombIndex}>-</button>   ${
+            <button class="btn mr-4 btn-danger delete-db" id = ${tombIndex}>del</button>   <button class="btn mr-3 btn-warning remove-db" id = ${tombIndex}>-</button>   ${
             sorok.db
         }    <button class="btn ml-3 btn-success insert-db" id = ${tombIndex}>+</button>   <span class="font-weight-bold">${
             sorok.eladottelar * sorok.db
@@ -264,86 +247,103 @@ function renderPult() {
         `;
         tombIndex++;
         mindosszesen += sorok.eladottelar * sorok.db;
-        console.log(tombIndex);
     }
     document.getElementById("pult").innerHTML = tetelSorokHTML;
     document.getElementById("summa").innerHTML = mindosszesen;
     $(".insert-db").click(function (event) {
         let pultTombIndex = this.id;
-        console.log("insert-db tombIndex");
-        console.log(pultTombIndex);
         state.pult[pultTombIndex].db++;
         renderPult();
     });
     $(".remove-db").click(function (event) {
         let pultTombIndex = this.id;
-        console.log("remove-db tombIndex");
-        console.log(pultTombIndex);
         state.pult[pultTombIndex].db--;
         renderPult();
     });
     $(".delete-db").click(function (event) {
         let pultTombIndex = this.id;
-        console.log("delete-db tombIndex");
-        console.log(pultTombIndex);
-        alert("Hamarosan bekötve"); //FIXME: FIXME: FIXME:
+        state.pult.splice(pultTombIndex, 1);
         renderPult();
     });
+    //foundKosar = tetelSorokHTML == "" ? false : true;
+    foundPult = tetelSorokHTML == "" ? false : true;
 }
 //FIXME: FIXME: FIXME:
-window.onload = renderPult();
-
-/* BUG: PULT render BUG: */
-/* function pultRender(arrayIndex) {
-    pultIndex++;
-    let selement = 0;
-    let kiir = "";
-    for (i = 0; i < arrayPultNev.length; i++) {
-        kiir += arrayPultNev[i] + arrayPultElar[i] + "<br>";
-        selement += arrayPultElar[i];
+function naTegyukEgyUjKosarba() {
+    console.log("kapdBe");
+    if (foundPult) {
+        $("#kosarMegnevezesModal").modal();
     }
+    foundKosar = state.kosarak.length > 0 ? true : false;
+    console.log(state.kosarak.length);
+}
+function kosarNevSzerintiTarolas() {
+    let kosarMegnevezes = "jani";
+    console.log("document.querySelector(#kosarMegnevezes");
+    console.log(document.querySelector("#kosarMegnevezes").value);
+    kosarMegnevezes = document.querySelector("#kosarMegnevezes").value;
+    state.pult.push({
+        kosarMegnevezes: kosarMegnevezes,
+    });
+    state.kosarak.push(state.pult);
+    state.pult = [];
+    renderPult();
+    console.log("state.kosarak-------------------------------------");
+    console.log(state.kosarak);
+}
 
-    document.getElementById("pult").innerHTML = kiir;
-    kiir = "";
-    pultIndex = 0;
+$(".kosarBtn").click(function () {
+    if (foundPult) {
+        let kosarMegnevezes = "jani";
+        state.pult.push({
+            kosarMegnevezes: kosarMegnevezes,
+        });
+        state.kosarak.push(state.pult);
+        state.pult = [];
+        renderPult();
+        console.log("state.kosarak-------------------------------------");
+        console.log(state.kosarak);
+    }
+    foundKosar = state.kosarak.length > 0 ? true : false;
+    console.log(state.kosarak.length);
+});
 
-    document.getElementById("summa").innerHTML = selement;
-} */
+$(".kosarak").click(function () {
+    //var vizsgal = foundKosar == false ? "üres" : "teli mint a deli busz";
+    //console.log(vizsgal);
 
-/* //FIXME: 
-    pult: [
-        {
-            id: 'id',//NOTE:
-            nev: 'nev',//NOTE:
-            //FIXME: kevertitalosszetevonev:  'nev *ezt nem iratom ki*, a tarolashoz kell',
-            **xkimeresnevnev: '**xkimeresnevnev',//NOTE:
-            **xkimeresnevid: '**xkimeresnevid',//NOTE:
-            **xkimeresnevurtartalom: '**xkimeresnevurtartalom',///NOTE:
-            db: 'db',//NOTE:
-            cl: 'cl *ezt nem iratom ki* maradek keszlet eloallitasahoz kell',//NOTE: ha nem 2 a cl ugy lesz db, hogy cl / urtartalom NOTE:
-            eladottbeszar: 'eladottbeszar *ezt nem iratom ki*',//NOTE:
-            eladottelar: 'eladottelar',//NOTE:
-            fizetesmod: 'kp, hitel, letar ...',//NOTE:
-            transactionnumber: 'transactionnumber'//NOTE:
-            megjegyzes: 'megjegyzes'//NOTE:
+    if (foundPult) {
+        alert(
+            "Előbb a pulton lévő termékeket vagy fizettesd ki, vagy tedd a kosárba, de a pultnak üresnek kell lenni, hogy visszatölts egy kosarat!"
+        );
+    } else {
+        if (foundKosar) {
+            $("#kosarakModal").modal();
+            var kosarSorokHTML = "";
+
+            for (let index = 0; index < state.kosarak.length; index++) {
+                kosarSorokHTML += `<div class="card m-3"><h3>${state.kosarak[index][1].kosarMegnevezes}</h3></div>`;
+                //console.log("kosarSor 🤔");
+                //console.log(state.kosarak.nev);
+                /* console.log("state.kosarak.lenght");
+                console.log(state.kosarak.length);
+                console.log("state.kosarak[index][0].nev");
+                console.log(state.kosarak[index][0].nev); */
+            }
+            /* 
+            for (var kosarSor of state.kosarak[0]) {
+                kosarSorokHTML += `<div class="card m-3"><h3>${kosarSor.nev}</h3></div>`;
+                console.log("kosarSor 🤔");
+                console.log(kosarSor.nev);
+                console.log("state.kosarak.lenght");
+                console.log(state.kosarak.length);
+                console.log("state.kosarak");
+                console.log(state.kosarak);
+            } */
+            document.getElementById("kosarakFelsorolasa").innerHTML =
+                kosarSorokHTML;
         }
-    ]
- FIXME: */
-/* //FIXME: 
-    pult: [
-        {
-            id: 5,
-            nev: 'kalinka',
-            xkimeresnevnev: '3 centes',
-            db: 1,
-            eladottelar: 321,
-        },
-        {
-            id: '12',
-            nev: 'cola',
-            xkimeresnevnev: ' ',
-            db: 2,
-            eladottelar: 77,
-        }
-    ]
- FIXME: */
+    }
+});
+
+window.onload = renderPult();

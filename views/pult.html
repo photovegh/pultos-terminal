@@ -16,7 +16,7 @@
     <nav class="fixed-top navbar navbar-expand-sm bg-danger navbar-dark d-flex justify-content-around">
         <div>
             <form action="/" method="get">
-                <button type="submit" style="background-color:greenyellow;">Kilépés! 😊 </button>
+                <button type="submit" class="btn btn-success btn-lg">Kilépés!</button>
             </form>
         </div>
         <div>
@@ -26,7 +26,7 @@
         </div>
         <div>
             <form action="/" method="get">
-                <button type="submit" style="background-color:red;">KOSARAK 🤔 </button>
+                <button type="button" class="btn btn-warning btn-lg kosarak">KOSARAK</button>
             </form>
         </div>
     </nav>
@@ -83,8 +83,6 @@
             <!-- BUG: jobb-->
             <div id="pultos">
                 <div id="pult"></div>
-                <!-- <div id="torol"></div> -->
-                <!-- <p>hello jobb 1111</p> -->
             </div>
             <br>
             <br>
@@ -148,13 +146,12 @@
     </div>
     <!-- @media NOTE: -->
 
-
     <div class="absolute">
-        <button style="background-color:bisque ">Bevitel</button>
-        <button style="background-color:yellow ">Hitel</button>
-        <button style="background-color:cornflowerblue ">Kosárba</button>
+        <button type="button" class="btn btn-primary mr-4 btn-lg">Bevitel</button>
+        <button type="button" class="btn btn-secondary mr-4 btn-lg">Hitel</button>
+        <button type="button" class="btn btn-warning mr-4 btn-lg kosarBt"
+            onclick="naTegyukEgyUjKosarba()">Kosárba</button>
     </div>
-
 
     <!-- NOTE: also sav START -->
     <div class="fixed-bottom bg-danger text-white p-2 ">
@@ -169,22 +166,71 @@
     <!-- NOTE: also sav END -->
 
 
+
+    <!-- The HACK: kosarakModal -->
+    <div class="modal" id="kosarakModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Melyik kosár tartalmát töltsem vissza a pultra?</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div id="kosarakFelsorolasa"></div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- The HACK: kosarakModal -->
+    <!-- The HACK: kosarMegnevezes -->
+    <div class="modal" id="kosarMegnevezesModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Mi legyen a neve a kosárnak_</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <label for="kosarMegnevezes">Beszerzési ár :</label><br>
+                    <input type="text" id="kosarMegnevezes" name="kosarMegnevezes">
+                    <!-- <input type="text" id="kosarMegnevezes"> -->
+
+                    <!-- <div id="kosarMegnevezes"></div> -->
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger" data-dismiss="modal" id="zzz"
+                        onclick="kosarNevSzerintiTarolas()">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- The HACK: kosarMegnevezes -->
+
+    </div>
+
+
+
     <script src="jquery.slim.min.js"></script>
     <script src="popper.min.js"></script>
     <script src="bootstrap.bundle.min.js"></script>
     <script src="pult.js"></script>
-    <!-- NOTE: template render -->
-    <!-- 
-    <div class="card">
-        <div>
-            ${sorok.nev} <span>${sorok.ar}</span>
-        </div>
-        <div>
-            <button>del</button><button>-</button>${sorok.db}<button>+</button> <span>osszesen</span>
-        </div>
-    </div>
-     -->
-    <!-- NOTE: template render -->
 
 </body>
 
