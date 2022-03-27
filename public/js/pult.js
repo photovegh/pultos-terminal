@@ -43,6 +43,7 @@ var productsHTML = "";
 var productsHTMLdrop = "";
 var foundPult = false;
 var foundKosar = false;
+var kosarMegnevezes = "*";
 
 getdata();
 
@@ -228,6 +229,7 @@ function renderPult() {
     var tetelSorokHTML = "";
     var mindosszesen = 0;
     var tombIndex = 0;
+    //var kosarMegnevezes = "*";
     for (var sorok of state.pult) {
         tetelSorokHTML += `
         <div class="card">
@@ -272,16 +274,38 @@ function renderPult() {
 function naTegyukEgyUjKosarba() {
     console.log("kapdBe");
     if (foundPult) {
+        document.querySelector("#kosarMegnevezesId").value = "";
+        kosarMegnevezes = "";
         $("#kosarMegnevezesModal").modal();
+        $(".keyboard").on("click", function () {
+            inputKey = "";
+            console.log("keyboard************this.id*******************");
+            console.log(this.id);
+            inputKey = this.id;
+            console.log("this.value");
+            inputKey = this.value;
+            console.log("*******************************");
+            console.log("inputKey");
+            console.log(inputKey);
+            kosarMegnevezes += inputKey;
+            console.log("***************kosarMegnevezes****************");
+            console.log("document.querySelector(#inputKey)");
+            console.log(kosarMegnevezes);
+            document.querySelector("#kosarMegnevezesId").value =
+                kosarMegnevezes;
+
+            //$(".keyboard").off("click");
+        });
     }
-    foundKosar = state.kosarak.length > 0 ? true : false;
+    foundKosar = state.kosarak.length >= 0 ? true : false;
     console.log(state.kosarak.length);
 }
+
 function kosarNevSzerintiTarolas() {
-    let kosarMegnevezes = "jani";
-    console.log("document.querySelector(#kosarMegnevezes");
-    console.log(document.querySelector("#kosarMegnevezes").value);
-    kosarMegnevezes = document.querySelector("#kosarMegnevezes").value;
+    // kosarMegnevezes = "jani";
+    console.log("document.querySelector(#kosarMegnevezesId");
+    console.log(document.querySelector("#kosarMegnevezesId").value);
+    kosarMegnevezes = document.querySelector("#kosarMegnevezesId").value;
     state.pult.push({
         kosarMegnevezes: kosarMegnevezes,
     });
@@ -290,6 +314,8 @@ function kosarNevSzerintiTarolas() {
     renderPult();
     console.log("state.kosarak-------------------------------------");
     console.log(state.kosarak);
+
+    $(".keyboard").off("click");
 }
 
 $(".kosarBtn").click(function () {
