@@ -8,6 +8,7 @@ const state = {
     xkimeresnev: [],
     pult: [],
     kosarak: [],
+    kosarNevek: [],
 };
 
 // NOTE: Ezek kellenek a forgalom adatokhoz
@@ -302,23 +303,47 @@ function naTegyukEgyUjKosarba() {
 }
 
 function kosarNevSzerintiTarolas() {
-    // kosarMegnevezes = "jani";
-    console.log("document.querySelector(#kosarMegnevezesId");
-    console.log(document.querySelector("#kosarMegnevezesId").value);
-    kosarMegnevezes = document.querySelector("#kosarMegnevezesId").value;
-    state.pult.push({
-        kosarMegnevezes: kosarMegnevezes,
-    });
     state.kosarak.push(state.pult);
+    state.kosarNevek.push({
+        kosarMegnevezes: kosarMegnevezes,
+        kosarMegnevezesIndex: state.kosarak.length,
+    });
+
     state.pult = [];
     renderPult();
-    console.log("state.kosarak-------------------------------------");
+    console.log("state.kosarak--------😎😎😎😎😎😎😋------------------");
+
+    for (let i = 0; i < state.kosarak.length; i++) {
+        for (let sorok of state.kosarak[i]) {
+            console.log(sorok.nev);
+        }
+    }
+
     console.log(state.kosarak);
+    console.log(state.kosarNevek);
+
+    console.log("state.kosarak.length");
+    console.log(state.kosarak.length);
 
     $(".keyboard").off("click");
+
+    // kosarMegnevezes = "jani";
+    /* console.log("document.querySelector(#kosarMegnevezesId");
+    console.log(document.querySelector("#kosarMegnevezesId").value);
+    kosarMegnevezes = document.querySelector("#kosarMegnevezesId").value; */
+    /* state.pult.push({
+        kosarMegnevezes: kosarMegnevezes,
+        kosarMegnevezesIndex: state.kosarak.length,
+    }); */
+
+    /* state.kosarak.push(
+        "state.kosarak.length",
+        state.kosarak.length,
+        state.pult
+    ); */
 }
 
-$(".kosarBtn").click(function () {
+/* $(".kosarBtn").click(function () {BUG: megszunt
     if (foundPult) {
         let kosarMegnevezes = "jani";
         state.pult.push({
@@ -332,7 +357,7 @@ $(".kosarBtn").click(function () {
     }
     foundKosar = state.kosarak.length > 0 ? true : false;
     console.log(state.kosarak.length);
-});
+}); */
 
 $(".kosarak").click(function () {
     //var vizsgal = foundKosar == false ? "üres" : "teli mint a deli busz";
@@ -348,12 +373,19 @@ $(".kosarak").click(function () {
             var kosarSorokHTML = "";
 
             for (let index = 0; index < state.kosarak.length; index++) {
-                kosarSorokHTML += `<div class="card m-3"><h3>${state.kosarak[index][1].kosarMegnevezes}</h3></div>`;
-                //console.log("kosarSor 🤔");
-                //console.log(state.kosarak.nev);
-                /* console.log("state.kosarak.lenght");
-                console.log(state.kosarak.length);
-                console.log("state.kosarak[index][0].nev");
+                /* kosarSorokHTML += `<div class="card m-3" id=${index} ><h3>${state.kosarak[index][1].kosarMegnevezes} - ${state.kosarak[index][1].kosarMegnevezesIndex}</h3></div>`; */
+
+                kosarSorokHTML += `<button type="button" class="btn btn-info m-2 zzzzz" id=${index}> ${state.kosarNevek[index].kosarMegnevezes} - ${state.kosarNevek[index].kosarMegnevezesIndex}</button><br>`;
+
+                /* INFO:INFO:INFO:INFO: itt van a kosarnev INFO:INFO:INFO:INFO: */
+                /* INFO:INFO:INFO:INFO: meg a kosarindex   INFO:INFO:INFO:INFO: */
+                console.log("kosarSor 🤔");
+                console.log(state.kosarNevek[index].kosarMegnevezes);
+                console.log("state.kosarNevek.lenght");
+                console.log(state.kosarNevek.length);
+                console.log("state.kosarak");
+                console.log(state.kosarak);
+                /* console.log("state.kosarak[index][0].nev");
                 console.log(state.kosarak[index][0].nev); */
             }
             /* 
@@ -368,6 +400,32 @@ $(".kosarak").click(function () {
             } */
             document.getElementById("kosarakFelsorolasa").innerHTML =
                 kosarSorokHTML;
+            $(".zzzzz").click(function () {
+                /* for (let index = 0; index < state.kosarak.length; index++) {
+                    console.log(this.id);
+                    tetelIndex = parseInt(this.id);
+                    for (sorok of state.kosarak[tetelIndex]) {
+                        console.log(sorok.nev);
+                    }
+                } */
+
+                //let thisid = parseInt(this.id);
+                //thisid = thisid + 1;
+                console.log("this.id");
+                console.log(
+                    this.id
+                    /* document.querySelector("#kosarakFelsorolasa").value */
+                );
+                //console.log(state.kosarak[thisid + 1][0].nev);
+                /* let sorIndex = 0;
+                for (let tetelek of state.kosarak) {
+                    console.log(tetelek);
+                    console.log(tetelek[sorIndex]);
+                    sorIndex++;
+                } */
+                console.log("state.kosarak[this.id]");
+                console.log(state.kosarak[this.id]); //INFO: és ha ezt bejárom, megkapom a kosártételeket😋😋😋😋😋😋😋😎
+            });
         }
     }
 });
