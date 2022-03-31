@@ -48,6 +48,13 @@ var kosarbolVisszatoltott = false;
 var kosarbolVisszatoltottId = -1;
 var kosarMegnevezes = "*";
 
+//async function getLastTransaction() {//INFO: kivenni a getdata()-ból
+/* NOTE: get last-transaction */
+//    var response = await fetch("/lasttransaction");
+//    state.lastTransaction = await response.json();
+//}
+
+//getLastTransaction();
 getdata();
 
 /* INFO: termék //ok bekérése START INFO: */
@@ -77,6 +84,7 @@ async function getdata() {
     renderProducts(); /* HACK: fv() hívás HACK: */
 
     /* NOTE: A button click funkciójának figyelése */
+    /* BUG:                        BUG: mit akarsz a pulthoz adni BUG: */
     $(document).ready(function () {
         let arrayIndex = -1;
         let arrayIndextoggle = -1;
@@ -85,7 +93,7 @@ async function getdata() {
         localStorage.setItem("eladottElar", eladottElar);
         let summa = 0;
         let xxx = "";
-        /* BUG: dropdown-item figyelése BUG: */
+        /* BUG: dropdown-item figyelése BUG: mit akarsz a pulthoz adni BUG: */
         $(".btnKeszlet, .dropdown-item, .dropdown-toggle").click(function (e) {
             if (e.target.nodeName == "BUTTON") {
                 arrayIndex = this.id;
@@ -103,6 +111,7 @@ async function getdata() {
                     //sorokNev = state.keszlet[arrayIndex].nev;
                     sorokNev = state.keszlet[arrayIndex].nev; //HACK:
                     sorokId = state.keszlet[arrayIndex].id; //HACK:
+                    sorokKiszerelesId = state.keszlet[arrayIndex].kiszereles_id; //HACK:
 
                     eladottElar =
                         (state.keszlet[arrayIndex].elar /
@@ -127,6 +136,7 @@ async function getdata() {
                     state.pult.push({
                         id: sorokId,
                         nev: sorokNev,
+                        kiszerelesId: sorokKiszerelesId,
                         xkimeresnevnev: sorokXkimeresNevNev,
                         xkimeresnevid: sorokXkimeresNevId,
                         xkimeresnevurtartalom: sorokXkimeresNevUrtartalom,
@@ -138,6 +148,8 @@ async function getdata() {
                         transactionnumber: 7,
                         megjegyzes: "megjegyzes",
                     });
+                    //alert("Szalad készletet módosítani, és lastTransactiont! 🚀");
+                    console.log("Összkészlet módosítás: ");
                     renderPult();
                 }
             } else {
@@ -147,6 +159,7 @@ async function getdata() {
                 eladottElar = state.keszlet[arrayIndex].elar;
                 sorokNev = state.keszlet[arrayIndex].nev; //HACK:
                 sorokId = state.keszlet[arrayIndex].id; //HACK:
+                sorokKiszerelesId = state.keszlet[arrayIndex].kiszereles_id; //HACK:
 
                 /* eladottElar =
                         (state.keszlet[arrayIndex].elar /
@@ -174,6 +187,7 @@ async function getdata() {
                 state.pult.push({
                     id: sorokId,
                     nev: sorokNev,
+                    kiszerelesId: sorokKiszerelesId,
                     xkimeresnevnev: " ",
                     xkimeresnevid: " ",
                     xkimeresnevurtartalom: " ",
@@ -186,11 +200,14 @@ async function getdata() {
                     megjegyzes: "info",
                 });
                 //pultRender(arrayIndex); //BUG:BUG:BUG:BUG:BUG:BUG:BUG: state
+                //alert("Szalad készletet módosítani, és lastTransactiont! 🚀");
+                console.log("Összkészlet módosítás: ");
                 renderPult();
             }
         });
     });
 }
+/* BUG:                        BUG: mit akarsz a pulthoz adni BUG: */
 
 /* TODO:TODO:TODO: RENDERPRODUCT TODO:TODO:TODO: */
 /* HACK: termék button-ok felrajzolása STAR HACK: */
@@ -261,9 +278,18 @@ function renderPult() {
     document.getElementById("pult").innerHTML = tetelSorokHTML;
     document.getElementById("summa").innerHTML = mindosszesen;
     $(".insert-db").click(function (event) {
+        //HACK:HACK:HACK:HACK:HACK:
         let pultTombIndex = this.id;
         state.pult[pultTombIndex].db++;
+        //alert("Szalad készletet módosítani! 🚀");
+        console.log("Összkészlet módosítás: ");
+        console.log(state.pult[pultTombIndex].nev);
+        console.log(state.pult[pultTombIndex].id);
+        console.log("state.pult[pultTombIndex].kiszerelesId");
+        console.log(state.pult[pultTombIndex].kiszerelesId);
+        console.log(state.pult[pultTombIndex]);
         renderPult();
+        //HACK:HACK:HACK:HACK:HACK:
     });
     $(".remove-db").click(function (event) {
         let pultTombIndex = this.id;
@@ -282,19 +308,19 @@ function renderPult() {
 /* TODO:TODO:TODO: UJ KOSARBA TESSZUK TODO:TODO:TODO: */
 //FIXME: FIXME: FIXME:
 function naTegyukEgyUjKosarba() {
-    console.log("kapdBe");
+    //console.log("kapdBe");
     if (foundPult) {
         if (kosarbolVisszatoltott) {
-            console.log("😁🦉😊🤔😁😁😁");
+            //console.log("😁🦉😊🤔😁😁😁");
             /* state.kosarak.push(state.pult);
             state.kosarNevek.push({
             kosarMegnevezes: kosarMegnevezes,
             kosarMegnevezesIndex: state.kosarak.length,
            }); */
             /* state.pult = state.kosarak[this.id]; */
-            console.log("eeeeeees ez megy vissza ======================");
+            //console.log("eeeeeees ez megy vissza ======================");
             state.kosarak[kosarbolVisszatoltottId] = state.pult;
-            console.log(state.kosarak[kosarbolVisszatoltottId]);
+            //console.log(state.kosarak[kosarbolVisszatoltottId]);
             state.pult = [];
             renderPult();
             kosarbolVisszatoltott = false;
@@ -326,7 +352,7 @@ function naTegyukEgyUjKosarba() {
     }
 
     foundKosar = state.kosarak.length >= 0 ? true : false;
-    console.log(state.kosarak.length);
+    //console.log(state.kosarak.length);
 }
 //FIXME: FIXME: FIXME:
 
@@ -340,7 +366,9 @@ function kosarNevSzerintiTarolas() {
 
     state.pult = [];
     renderPult();
-    console.log("state.kosarak--------😎😎😎😎😎😎😋------------------");
+    $(".keyboard").off("click");
+
+    //console.log("state.kosarak--------😎😎😎😎😎😎😋------------------");
 
     /* for (let i = 0; i < state.kosarak.length; i++) {
         for (let sorok of state.kosarak[i]) {
@@ -348,13 +376,11 @@ function kosarNevSzerintiTarolas() {
         }
     } */
 
-    console.log(state.kosarak);
+    /* console.log(state.kosarak);
     console.log(state.kosarNevek);
 
     console.log("state.kosarak.length");
-    console.log(state.kosarak.length);
-
-    $(".keyboard").off("click");
+    console.log(state.kosarak.length); */
 
     // kosarMegnevezes = "jani";
     /* console.log("document.querySelector(#kosarMegnevezesId");
@@ -409,12 +435,12 @@ $(".kosarak").click(function () {
 
                 /* INFO:INFO:INFO:INFO: itt van a kosarnev INFO:INFO:INFO:INFO: */
                 /* INFO:INFO:INFO:INFO: meg a kosarindex   INFO:INFO:INFO:INFO: */
-                console.log("kosarSor 🤔");
+                /* console.log("kosarSor 🤔");
                 console.log(state.kosarNevek[index].kosarMegnevezes);
                 console.log("state.kosarNevek.lenght");
                 console.log(state.kosarNevek.length);
                 console.log("state.kosarak");
-                console.log(state.kosarak);
+                console.log(state.kosarak); */
                 /* console.log("state.kosarak[index][0].nev");
                 console.log(state.kosarak[index][0].nev); */
             }
@@ -456,9 +482,9 @@ $(".kosarak").click(function () {
                     console.log(tetelek[sorIndex]);
                     sorIndex++;
                 } */
-                console.log("state.kosarak[this.id]😋😋😋😋😋😋😋😎");
-                console.log("ha ezt bejárom, megkapom a kosártételeket");
-                console.log(state.kosarak[this.id]); //INFO: és ha ezt bejárom, megkapom a kosártételeket😋😋😋😋😋😋😋😎
+                //console.log("state.kosarak[this.id]😋😋😋😋😋😋😎");
+                //console.log("ha ezt bejárom, megkapom a kosártételeket");
+                //console.log(state.kosarak[this.id]); //INFO: és ha ezt bejárom, megkapom a kosártételeket😋😋😋😋😋😋😎
                 kosarbolVisszatoltott = true;
                 kosarbolVisszatoltottId = this.id;
 

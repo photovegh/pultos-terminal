@@ -4,10 +4,10 @@ const state = {
     kiszereles: [],
 };
 // NOTE: Ezek kellenek a forgalom //okhoz
-const arrayPultNev = [];
-const arrayPultElar = [];
-var productsHTML = "";
-var productsHTMLdrop = "";
+//const arrayPultNev = [];
+//const arrayPultElar = [];
+//var productsHTML = "";
+//var productsHTMLdrop = "";
 var xid = 1;
 
 getdata();
@@ -20,15 +20,15 @@ async function getdata() {
     console.log("lastTransaction 😎");
     console.log(state.lastTransaction[0].ltr);
 
-    /* NOTE: get keszlet */
-    var response = await fetch("/dataread");
-    state.keszlet = await response.json();
-
     /* NOTE: get kiszereles */
     var response = await fetch("/datareadkiszereles");
     state.kiszereles = await response.json();
 
-    /* NOTE: get csoport */
+    /* NOTE: get keszlet INFO: INFO: INFO:*/
+    var response = await fetch("/dataread");
+    state.keszlet = await response.json();
+
+    /* NOTE: get csoport INFO: INFO: INFO:*/
     var response = await fetch("/datareadcsoport");
     state.csoportkategoria = await response.json();
 

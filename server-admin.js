@@ -97,6 +97,14 @@ app.get("/datareadtermekek", (req, res) => {
     });
 });
 
+/* TODO: //datareadkevert 😋😋😋😋😋😋*/
+app.get("/datareadkevert", (req, res) => {
+    con.query("SELECT * FROM kevert", (err, data) => {
+        if (err) throw err;
+        res.send(data);
+    });
+});
+
 /* INFO: config */
 app.get("/config", (req, res) => {
     res.sendFile(__dirname + "/views/config.html");
@@ -118,6 +126,10 @@ app.get("/csoportok", (req, res) => {
 /* INFO: termekek */
 app.get("/termekek", (req, res) => {
     res.sendFile(__dirname + "/views/termekek.html");
+});
+/* INFO: kevert */
+app.get("/kevert", (req, res) => {
+    res.sendFile(__dirname + "/views/kevert.html");
 });
 
 /* INFO: insertxkimeresnev  INFO: START INFO: INFO: INFO: INFO: INFO: INFO:*/

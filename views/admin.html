@@ -15,29 +15,35 @@
     <div class="container-fluid">
 
         <!-- NOTE: felső sav -->
-        <nav class="fixed-top navbar navbar-expand-sm bg-danger navbar-dark d-flex justify-content-around">
+        <nav class="fixed-top navbar navbar-expand-sm bg-light navbar-dark d-flex justify-content-around">
             <div>
                 <form action="/termekek" method="get">
-                    <button type="submit" style="background-color:chartreuse">Termék adatok
-                        😊 </button>
+                    <button type="submit" class="btn btn-success ">Termék adatok
+                        (3) </button>
+                </form>
+            </div>
+            <div>
+                <form action="/kevert" method="get">
+                    <button type="submit" class="btn btn-info ">Kevert italok
+                        (4) </button>
                 </form>
             </div>
             <div>
                 <form action="/xkimeresnev" method="get">
 
-                    <button style="background-color:chartreuse" id="btnxkimeresnev">Kimérhető
-                        mennyiségek 😊</button>
+                    <button class="btn btn-warning " id="btnxkimeresnev">Kimérhető
+                        mennyiségek (2) </button>
                 </form>
             </div>
             <div>
                 <form action="/kiszereles" method="get">
-                    <button type="submit" style="background-color:chartreuse">Kiszerelés felvitele 😊 </button>
+                    <button type="submit" class="btn btn-warning ">Kiszerelés felvitele (2) </button>
                 </form>
             </div>
 
             <div>
-                <form action="/csoportok" method="get">
-                    <button type="submit" style="background-color:chartreuse">Termékcsoportok 😊 </button>
+                <form action=" /csoportok" method="get">
+                    <button type="submit" class="btn btn-danger ">Termékcsoportok (1) </button>
                 </form>
             </div>
             <div>
