@@ -286,10 +286,13 @@ function renderkiszereles() {
     let kiszerelesHTML = "";
     kiszerelesHTML += "<form>";
     for (let vKiszereles of state.kiszereles) {
-        kiszerelesHTML += `
-        <input type="radio" id=${vKiszereles.id} name="kiszerelesRadio" value=${vKiszereles.id} class="kiszerelesRadio">
-        <label for=${vKiszereles.id}>${vKiszereles.nev}</label><br>
-        `;
+        if (vKiszereles.id > 1) {
+            kiszerelesHTML += `
+            <input type="radio" id=${vKiszereles.id} name="kiszerelesRadio" value=${vKiszereles.id} class="kiszerelesRadio">
+            <label for=${vKiszereles.id}>${vKiszereles.nev}</label><br>
+            `;
+        }
+
         //console.log("vKiszereles.id");
         //console.log(vKiszereles.id);
     }
@@ -313,10 +316,12 @@ function rendercsoport() {
     let csoportHTML = "";
     csoportHTML += "<form>";
     for (let vCsoport of state.csoportkategoria) {
-        csoportHTML += `
-        <input type="radio" id=${vCsoport.id} name="csoportRadio" value=${vCsoport.id} class="csoportRadio">
-        <label for=${vCsoport.id}>${vCsoport.nev}</label><br>
-        `;
+        if (vCsoport.id > 1) {
+            csoportHTML += `
+            <input type="radio" id=${vCsoport.id} name="csoportRadio" value=${vCsoport.id} class="csoportRadio">
+            <label for=${vCsoport.id}>${vCsoport.nev}</label><br>
+            `;
+        }
     }
     csoportHTML += "</form>";
     //console.log("**********csoportHTML***********");
