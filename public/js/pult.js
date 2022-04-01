@@ -32,8 +32,8 @@ const state = {
         NEM és NEM ha 2-nél nagyobb a urtartalom = urtartalom * 1
         INFO: a keszlet az összkészlet legyen INFO:
         INFO: az urtartalom  => db vagy urtartalom INFO:
-        INFO: cl  => ha 2 urtartalom / 10;;; 3-tól urtartalom * 1 INFO:
-        INFO: cl  => ha 1 ott 0, ugyanis az összetevők űrtartalma INFO:
+        INFO: cl  => ha 2 urtartalom / 10;;; 3-tól urtartalom * 1 INFO: OKK
+        INFO: cl  => ha 1 ott 0, ugyanis az összetevők űrtartalma INFO: OKK
         INFO: cl  => ha 1 vonódik le összetevőnként küln-külön 😋 INFO:
         INFO: A termékekhez kell egy jelenlegi készlet mező 😎🦉😎 INFO:
  ...NOTE: osszesen elar * db => mindösszesen sor

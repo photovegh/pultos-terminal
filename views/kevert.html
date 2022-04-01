@@ -21,7 +21,8 @@
             <label for="nev">Neve:</label><br>
             <input type="text" id="nev" name="nev"><br><br>
 
-            <button type="button" onclick=adalekPlus()>+ adalékok felsorolása +</button>
+            <button type="button" class="btn btn-primary mr-4 btn-lg" onclick=adalekPlus()>+ adalékok felsorolása
+                +</button>
 
             <!-- <label for="adalekid">Adalék név :</label><br>
             <input type="number" id="adalekid" name="adalekid"><br><br> -->
@@ -37,8 +38,13 @@
 
         <div class="card" id="newVadasz"></div><br><br>
 
-        <button id="newdata">Ujadat hozzáadása </button><br><br>
-
+        <div>
+            <form action="/kevert" method="get">
+                <button id="newdata">Ujadat hozzáadása </button><br><br>
+                <!-- <button type="submit" style="background-color:deeppink ">other
+                    🤔 </button> -->
+            </form>
+        </div>
 
 
 

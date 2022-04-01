@@ -228,8 +228,8 @@ app.post("/insertcsoportok", bodyParser.json(), (req, res) => {
 
 /* BUG: inserttermekek  BUG: START BUG:BUG:BUG:BUG:BUG:BUG:*/
 app.post("/inserttermekek", bodyParser.json(), (req, res) => {
-    const nev = req.body.nev;
-    const beszar = req.body.beszar;
+    //const nev = req.body.nev;
+    //const beszar = req.body.beszar;
     /* NOTE:NOTE:NOTE:NOTE:NOTE: */
     var insertData = [
         req.body.nev,
@@ -265,6 +265,52 @@ app.post("/inserttermekek", bodyParser.json(), (req, res) => {
     res.sendFile(__dirname + "/views/termekek.html");
 });
 /* BUG: inserttermekek  BUG: STOP BUG:BUG:BUG:BUG:BUG:BUG:*/
+
+/* BUG: insertkevert  BUG: START BUG:BUG:BUG:BUG:BUG:BUG:*/
+app.post("/insertkevert", bodyParser.json(), (req, res) => {
+    //const nev = req.body.nev;
+    //const beszar = req.body.beszar;
+    /* NOTE:NOTE:NOTE:NOTE:NOTE: */
+    /* var insertData = [
+        req.body.nev,
+        req.body.beszar,
+        req.body.elar,
+        req.body.leltarozando,
+        req.body.kritikus,
+        req.body.gyujto,
+        req.body.jelenlegiKeszlet,
+        req.body.urtartalom,
+        req.body.cl,
+        req.body.kiszerelesId,
+        req.body.csoportId,
+    ]; */
+    var insertData = [
+        req.body.termek_id,
+        req.body.adalek_id,
+        req.body.xkimeresnev_id,
+    ];
+    /* NOTE:NOTE:NOTE:NOTE:NOTE: */
+
+    /* FIXME:FIXME:FIXME: */
+    con.query(
+        "INSERT INTO kevert (termek_id, adalek_id, xkimeresnev_id) VALUES (?)",
+        /* "INSERT INTO termekek (nev, beszar, elar, leltarozando, kritikus, gyujto, keszlet, urtartalom, cl, kiszereles_id, csoport_id) VALUES (?)" , */
+        [insertData],
+        (err, data) => {
+            if (err) throw err;
+            insertData = [""];
+            try {
+                res.send(data);
+            } catch {
+                if (err) throw err;
+            }
+        }
+    );
+    /* FIXME:FIXME:FIXME: */
+
+    res.sendFile(__dirname + "/views/kevert.html");
+});
+/* BUG: insertkevert  BUG: STOP BUG:BUG:BUG:BUG:BUG:BUG:*/
 
 /* INFO: password authentication */
 function loggerMiddleWare(req, res, next) {

@@ -12,7 +12,16 @@ var termekAdalek = [];
 var kiszerelesAdalek = [];
 
 getdata();
-
+//async function getkevert() {
+/* NOTE: get kevert */
+/*var response = await fetch("/datareadkevert");
+    state.kevert = await response.json();
+} */
+//async function gettermekek() {
+/* NOTE: get keszlet INFO: INFO: INFO:*/
+/* var response = await fetch("/datareadtermekek");
+    state.termekek = await response.json();
+} */
 /* INFO: termék //ok bekérése START INFO: */
 async function getdata() {
     /* NOTE: get last-transaction */
@@ -54,27 +63,89 @@ async function getdata() {
                 const nev = nevInput.value == "" ? "noname" : nevInput.value;
                 nevInput.value = "";
                 /* HACK:HACK:HACK: */
-                const urtartalomInput = document.querySelector("#urtartalom");
-                const urtartalom =
-                    urtartalomInput.value == "" ? "0" : urtartalomInput.value;
-                urtartalomInput.value = "";
+                var beszar = 0;
+                var elar = 0;
+                let arrayIndexTermek = -1;
+                let arrayIndexXkimeresnev = -1;
+                for (let index = 0; index < termekAdalek.length; index++) {
+                    for (let i = 0; i < state.termekek.length; i++) {
+                        if (termekAdalek[index] == state.termekek[i].id) {
+                            arrayIndexTermek = i;
+                        }
+                    }
+                    for (let i = 0; i < state.xkimeresnev.length; i++) {
+                        if (
+                            kiszerelesAdalek[index] == state.xkimeresnev[i].id
+                        ) {
+                            arrayIndexXkimeresnev = i;
+                        }
+                    }
+                    beszar +=
+                        (state.termekek[arrayIndexTermek].beszar /
+                            state.termekek[arrayIndexTermek].cl) *
+                        state.xkimeresnev[arrayIndexXkimeresnev].urtartalom;
+                    elar +=
+                        (state.termekek[arrayIndexTermek].elar /
+                            state.termekek[arrayIndexTermek].cl) *
+                        state.xkimeresnev[arrayIndexXkimeresnev].urtartalom;
+                }
                 /* HACK:HACK:HACK: */
                 var id = xid + 1;
                 /* INFO: insert  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
-                await fetch("/insertkevert/", {
+                await fetch("/inserttermekek/", {
                     method: "POST",
                     headers: {
                         "Content-type": "application/json",
                     },
-                    body: JSON.stringify({ nev: nev, urtartalom: urtartalom }),
+                    body: JSON.stringify({
+                        /* TODO: NOTE: INFO: NOTE: TODO: */
+                        nev: nev,
+                        beszar: beszar,
+                        elar: elar,
+                        leltarozando: "n",
+                        kritikus: 0,
+                        gyujto: 0,
+                        jelenlegiKeszlet: 0,
+                        urtartalom: 0,
+                        cl: 0,
+                        kiszerelesId: 1,
+                        csoportId: 1,
+
+                        /* TODO: NOTE: INFO: NOTE: TODO: */
+                    }),
                 });
+
+                //gettermekek();
+                console.log(state.termekek);
+
+                var ucsoId = state.termekek[state.termekek.length - 1].id + 1;
+                /* INFO: /insertkevert START  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
+
+                for (let index = 0; index < termekAdalek.length; index++) {
+                    await fetch("/insertkevert/", {
+                        method: "POST",
+                        headers: {
+                            "Content-type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            termek_id: ucsoId,
+                            adalek_id: termekAdalek[index],
+                            xkimeresnev_id: kiszerelesAdalek[index],
+                        }),
+                    });
+                }
+                termekAdalek = [];
+                kiszerelesAdalek = [];
+
+                /* INFO: /insertkevert END INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
+
                 /* INFO: insert  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
-                kevertHTML += `<tr >
+                /* kevertHTML += `<tr >
                 <td>${id}</td>
                 <td>${nev}</td>
                 <td>${urtartalom}</td>
                 </tr>
-                `;
+                `; */
                 id++;
                 xid++;
                 document.getElementById("kevert").innerHTML = kevertHTML;
@@ -82,8 +153,18 @@ async function getdata() {
                 //.then((data) => console.log(data["data"]));
                 /* .then((data) => insertRowIntoTable(data["data"])); */
             }
+            //window.onload = renderkevert();
+            //termekAdalek = [];
+            //kiszerelesAdalek = [];
+            adalekokHTML = "";
+            document.getElementById("newVadasz").innerHTML = adalekokHTML;
+            renderkevert();
         });
     });
+
+    //getkevert();
+    //renderkevert();
+    //window.onload = renderkevert();
 }
 
 function renderkevert() {
@@ -155,7 +236,7 @@ function adalekPlus() {
                 break;
             }
         }
-        termekAdalek.push(this.id);
+        termekAdalek.push(this.id); //HACK:HACK:HACK:
         $(".modal .close").click();
         kimertKiszerelesHTML = ""; //NOTE:NOTE:
         $("#myModalKiszereles").modal();
@@ -172,7 +253,7 @@ function adalekPlus() {
                     break;
                 }
             }
-            kiszerelesAdalek.push(this.id);
+            kiszerelesAdalek.push(this.id); //HACK:HACK:HACK:
             $(".modal .close").click();
             //NOTE:NOTE: mi legyen ha megvan a NOTE:NOTE:
             document.getElementById("newVadasz").innerHTML = adalekokHTML;
@@ -181,3 +262,4 @@ function adalekPlus() {
         });
     });
 }
+//window.onload = renderkevert();

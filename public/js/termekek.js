@@ -12,8 +12,8 @@ const state = {
     termekek: [],
 };
 // NOTE: Ezek kellenek a forgalom //okhoz
-const arrayPultNev = [];
-const arrayPultElar = [];
+//const arrayPultNev = [];
+//const arrayPultElar = [];
 var productsHTML = "";
 var productsHTMLdrop = "";
 var xid = 1;
@@ -117,7 +117,11 @@ async function getdata() {
                 urtartalomInput.value = "";
                 /* TODO: NOTE: INFO: NOTE: TODO: */
                 //const cl = urtartalom * 10;
-                const cl = termekKiszereles == 2 ? urtartalom * 10 : 1;
+                //const cl = termekKiszereles == 2 ? urtartalom * 10 : 1;
+                const cl =
+                    termekKiszereles == 2
+                        ? urtartalom * jelenlegiKeszlet * 10
+                        : urtartalom * jelenlegiKeszlet;
                 /* TODO: NOTE: INFO: NOTE: TODO: */
 
                 var id = xid + 1;
