@@ -1,8 +1,12 @@
 const express = require("express");
 const dotenv = require("dotenv"); /* NOTE: környezeti változó */
-const fs = require("fs");
 const conf = dotenv.config();
-const port = conf.parsed.PORT;
+const fs = require("fs");
+var port = conf.parsed.PORT;
+//console.log(typeof port);
+
+//port = parseInt(port);
+//port = 7777;
 var mysql = require("mysql");
 const app = express();
 
@@ -127,8 +131,9 @@ app.get("/pult", loggerMiddleWare, (req, res) => {
     console.log("Pult console OK");
     res.sendFile(__dirname + "/views/pult.html");
 });
-
+//app.listen(55555);
 app.listen(port, () => console.log("server is OK 😋 PORT: " + port));
+//app.listen(7755, () => console.log("server is OK 😋 PORT: "));
 
 //const user = ["Adminisztátor", "Pultos 1", "Pultos 2", "Pultos 3", "Pultos 4"];
 /* const password = [

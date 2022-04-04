@@ -4,3 +4,29 @@ TODO:
 HACK:
 BUG:
 FIXME:
+
+PORT = 7776
+ADMINPORT = 7766
+HOST = 'localhost'
+USER = 'root'
+PSW = ''
+DBF = 'terminal'
+ADMIN = 0000,
+PULTOS1 = 1111,
+PULTOS2 = 2222,
+PULTOS3 = 3333,
+POLTOS4 = 4444
+
+---
+
+PORT = 7777
+ADMINPORT = 7766
+HOST = 'localhost'
+USER = 'pultos'
+PSW = 'Terminal-2022'
+DBF = 'pultosterminal'
+ADMIN = 0000,
+PULTOS1 = 1111,
+PULTOS2 = 2222,
+PULTOS3 = 3333,
+POLTOS4 = 4444

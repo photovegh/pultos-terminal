@@ -1,9 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv"); /* NOTE: környezeti változó */
-const fs = require("fs");
 const conf = dotenv.config();
-const port = conf.parsed.ADMINPORT;
+const fs = require("fs");
+
+var port = conf.parsed.ADMINPORT;
+//console.log(typeof port);
+//port = parseInt(port);
+//port = 7766;
 var mysql = require("mysql");
 const app = express();
 
@@ -205,7 +209,7 @@ app.post("/insertkiszereles", bodyParser.json(), (req, res) => {
 });
 /* INFO: insertkiszereles  INFO: STOP INFO: INFO: INFO: INFO: INFO: INFO:*/
 
-/* INFO: insertcsoportok  INFO: START INFO: INFO: INFO: INFO: INFO: INFO:*/
+/* INFO: insertcsoportok  INFO: START INFO:INFO:INFO:INFO:INFO:INFO:*/
 app.post("/insertcsoportok", bodyParser.json(), (req, res) => {
     const insertData = [req.body.nev];
     const nev = req.body.nev;
@@ -224,8 +228,25 @@ app.post("/insertcsoportok", bodyParser.json(), (req, res) => {
     /* FIXME:FIXME:FIXME: */
     res.sendFile(__dirname + "/views/csoportok.html");
 });
-/* INFO: insertcsoportok  INFO: STOP INFO: INFO: INFO: INFO: INFO: INFO:*/
-
+/* INFO: insertcsoportok  INFO: STOP INFO:INFO:INFO:INFO:INFO:INFO:*/
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+app.patch("/updatecsoportok", bodyParser.json(), (req, res) => {
+    var insertData = [req.body.nev];
+    var id = req.body.id;
+    console.log(insertData);
+    con.query(
+        "UPDATE csoportok SET nev = ? WHERE id = ?",
+        [insertData, id],
+        (err, data) => {
+            try {
+                res.send(data);
+            } catch {
+                if (err) throw err;
+            }
+        }
+    );
+});
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
 /* BUG: inserttermekek  BUG: START BUG:BUG:BUG:BUG:BUG:BUG:*/
 app.post("/inserttermekek", bodyParser.json(), (req, res) => {
     //const nev = req.body.nev;
@@ -330,8 +351,8 @@ function loggerMiddleWare(req, res, next) {
 app.get("/pult", loggerMiddleWare, (req, res) => {
     res.sendFile(__dirname + "/views/pult.html");
 });
-
 app.listen(port, () => console.log("server is OK 😋 ADMINPORT: " + port));
+//app.listen(7766, () => console.log("server is OK 😋 ADMINPORT: " + port));
 
 /* HACK: /datareadkiszereles 😋😋😋😋😋😋 HACK:*/
 /* app.get("/datareadkiszereles", (req, res) => {
