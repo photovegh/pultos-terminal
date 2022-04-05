@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Csoport kategóriák</title> <!-- BUG: -->
+    <title>Csoport kategóriák</title>
     <link href="bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style-admin.css">
 </head>
@@ -23,7 +23,6 @@
             <button id="newdata" class="btn btn-danger mr-4 btn-lg">Ujadat hozzáadása </button><br><br>
         </form>
 
-
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -34,10 +33,9 @@
             <tbody id="xkimeresdata">
             </tbody>
         </table>
+        <div id="adatok"></div>
 
-        <div id="adatok"></div> <!-- BUG: -->
         <!-- BUG:BUG:BUG:BUG:BUG:BUG:BUG: -->
-
         <!-- The Modal -->
         <div class="modal" id="myModal">
             <div class="modal-dialog">
@@ -62,7 +60,6 @@
                         <button type="button" class="btn btn-danger" data-dismiss="modal"
                             onclick="updatecsoportok()">Felülírom !!!</button>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -72,8 +69,7 @@
     <script src="popper.min.js"></script>
     <script src="bootstrap.bundle.min.js"></script>
     <script src="admin.js"></script>
-    <script src="csoportok.js"></script> <!-- BUG: -->
-    <!-- BUG:BUG: BUG: BUG:BUG:-->
+    <script src="csoportok.js"></script>
 </body>
 
 </html>

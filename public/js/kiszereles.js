@@ -1,48 +1,26 @@
 var lastTransaction = -1;
-// NOTE: Ez definiálja a bekért //ok ojektum tömbjét 😎
 const state = {
     kiszereles: [],
 };
-// NOTE: Ezek kellenek a forgalom //okhoz
-//const arrayPultNev = [];
-//const arrayPultElar = [];
-//var productsHTML = "";
-//var productsHTMLdrop = "";
 var xid = 1;
 
 getdata();
 
-/* INFO: termék //ok bekérése START INFO: */
+/* INFO: termék adatok bekérése START INFO: */
 async function getdata() {
     /* NOTE: get last-transaction */
-    var response = await fetch("/lasttransaction");
+    /* var response = await fetch("/lasttransaction");
     state.lastTransaction = await response.json();
     console.log("lastTransaction 😎");
-    console.log(state.lastTransaction[0].ltr);
+    console.log(state.lastTransaction[0].ltr); */
 
     /* NOTE: get kiszereles */
     var response = await fetch("/datareadkiszereles");
     state.kiszereles = await response.json();
 
-    /* NOTE: get keszlet INFO: INFO: INFO:*/
-    var response = await fetch("/dataread");
-    state.keszlet = await response.json();
-
-    /* NOTE: get csoport INFO: INFO: INFO:*/
-    var response = await fetch("/datareadcsoport");
-    state.csoportkategoria = await response.json();
-
-    /* NOTE: get xkimeres INFO: INFO: INFO:*/
-    var response = await fetch("/datareadxkimeres");
-    state.xkimeres = await response.json();
-
-    /* NOTE: get xkimeresnev INFO: INFO: INFO:*/
-    var response = await fetch("/datareadxkimeresnev");
-    state.xkimeresnev = await response.json();
-
     renderkiszereles();
-    /* NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: */
 
+    /* NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE: */
     $(document).ready(function () {
         $("#newdata").click(function () {
             insertMySQL();
@@ -59,7 +37,7 @@ async function getdata() {
                 urtartalomInput.value = "";
                 /* HACK:HACK:HACK: */
                 var id = xid + 1;
-                /* INFO: insert  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
+                /* INFO: insert  INFO:INFO:INFO:INFO:INFO:INFO:INFO: */
                 await fetch("/insertkiszereles/", {
                     method: "POST",
                     headers: {
@@ -67,7 +45,7 @@ async function getdata() {
                     },
                     body: JSON.stringify({ nev: nev, urtartalom: urtartalom }),
                 });
-                /* INFO: insert  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
+                /* INFO: insert  INFO:INFO:INFO:INFO:INFO:INFO:INFO: */
                 kiszerelesHTML += `<tr >
                 <td>${id}</td>
                 <td>${nev}</td>
@@ -78,13 +56,48 @@ async function getdata() {
                 xid++;
                 document.getElementById("kiszereles").innerHTML =
                     kiszerelesHTML;
-                //.then((response) => response.json())
-                //.then((data) => console.log(data["data"]));
-                /* .then((data) => insertRowIntoTable(data["data"])); */
             }
         });
     });
 }
+
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+function updatekiszereles() {
+    const nev = document.getElementById("newNev").value;
+    const urtartalom = document.getElementById("newUrtartalom").value;
+    try {
+        updateMySQL();
+    } catch (e) {}
+    async function updateMySQL() {
+        id = origId;
+
+        const response = await fetch("/updatekiszereles/", {
+            method: "PATCH",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({ nev: nev, urtartalom: urtartalom, id: id }),
+        });
+        console.log(response);
+        let arrowIndex = -1;
+        for (let i = 0; i < state.kiszereles.length; i++) {
+            if (state.kiszereles[i].id == id) {
+                arrowIndex = i;
+            }
+        }
+        state.kiszereles[arrowIndex].nev = nev;
+        state.kiszereles[arrowIndex].urtartalom = urtartalom;
+        renderkiszereles();
+    }
+}
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+
+document.addEventListener("keypress", function (e) {
+    if (e.keyCode === 13 || e.which === 13) {
+        e.preventDefault();
+        return false;
+    }
+});
 
 function renderkiszereles() {
     let index = 0;
@@ -94,17 +107,29 @@ function renderkiszereles() {
         kiszerelesHTML += `<tr >
                 <td>${vkiszereles.id}</td>
                 <td>${vkiszereles.nev}</td>
-                <td>${vkiszereles.urtartalom}</td>
-                </tr>
-
+                <td>${vkiszereles.urtartalom}</td>`;
+        if (vkiszereles.id > 2) {
+            kiszerelesHTML += `<td><button class="updateBtn disabled" id=${vkiszereles.id}>Edit</td>`;
+        }
+        `</tr>
      `;
         index++;
-        xid = vkiszereles.id; /* BUG: */
+        xid = vkiszereles.id;
     }
     document.getElementById("kiszereles").innerHTML = kiszerelesHTML;
+
+    $(".updateBtn").click(function () {
+        let arrowIndex = -1;
+        for (let i = 0; i < state.kiszereles.length; i++) {
+            if (state.kiszereles[i].id == this.id) {
+                arrowIndex = i;
+            }
+        }
+        var origNev = state.kiszereles[arrowIndex].nev;
+        var origUrtartalom = state.kiszereles[arrowIndex].urtartalom;
+        origId = state.kiszereles[arrowIndex].id;
+        $("#myModal").modal();
+        document.getElementById("newNev").value = origNev;
+        document.getElementById("newUrtartalom").value = origUrtartalom;
+    });
 }
-/* keszlet: [],
-    csoportkategoria: [],
-    xkimeres: [],
-    lastTransaction: [],
-    xkimeresnev: [], */

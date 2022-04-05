@@ -5,9 +5,6 @@ const conf = dotenv.config();
 const fs = require("fs");
 
 var port = conf.parsed.ADMINPORT;
-//console.log(typeof port);
-//port = parseInt(port);
-//port = 7766;
 var mysql = require("mysql");
 const app = express();
 
@@ -35,7 +32,6 @@ var con = mysql.createConnection({
     password: "Terminal-2022",
     database: "pultosterminal",
 });
-/* INFO: MySQL connection */
 
 con.connect(function (err) {
     if (err) throw err;
@@ -136,7 +132,7 @@ app.get("/kevert", (req, res) => {
     res.sendFile(__dirname + "/views/kevert.html");
 });
 
-/* INFO: insertxkimeresnev  INFO: START INFO: INFO: INFO: INFO: INFO: INFO:*/
+/* INFO: insertxkimeresnev  INFO:INFO:INFO:INFO:INFO:INFO:INFO: */
 app.post("/insertxkimeresnev", bodyParser.json(), (req, res) => {
     const insertData = [req.body.nev, req.body.urtartalom];
     const nev = req.body.nev;
@@ -155,12 +151,31 @@ app.post("/insertxkimeresnev", bodyParser.json(), (req, res) => {
             }
         }
     );
-    /* FIXME:FIXME:FIXME: */
     res.sendFile(__dirname + "/views/xkimeresnev.html");
 });
-/* INFO: insertxkimeresnev  INFO: STOP INFO: INFO: INFO: INFO: INFO: INFO:*/
 
-/* NOTE: inserxkimeres  NOTE: START NOTE: NOTE: NOTE: NOTE: NOTE: NOTE:*/
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+app.patch("/updatexkimeresnev", bodyParser.json(), (req, res) => {
+    var insertNev = [req.body.nev];
+    var insertUrtartalom = [req.body.urtartalom];
+    var id = req.body.id;
+    console.log(insertNev);
+    console.log(insertUrtartalom);
+    con.query(
+        "UPDATE xkimeresnev SET nev = ? , urtartalom = ? WHERE id = ?",
+        [insertNev, insertUrtartalom, id],
+        (err, data) => {
+            try {
+                res.send(data);
+            } catch {
+                if (err) throw err;
+            }
+        }
+    );
+});
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+
+/* NOTE: inserxkimeres  NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE: */
 app.post("/inserxkimeres", bodyParser.json(), (req, res) => {
     const insertData = [
         req.body.termek_id,
@@ -182,9 +197,9 @@ app.post("/inserxkimeres", bodyParser.json(), (req, res) => {
     /* FIXME:FIXME:FIXME: */
     res.sendFile(__dirname + "/views/xkimeresnev.html");
 });
-/* NOTE: inserxkimeres  NOTE: STOP NOTE: NOTE: NOTE: NOTE: NOTE: NOTE:*/
+/* NOTE: inserxkimeres  NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE: */
 
-/* INFO: insertkiszereles  INFO: START INFO: INFO: INFO: INFO: INFO: INFO:*/
+/* INFO: insertkiszereles  INFO:INFO:INFO:INFO:INFO:INFO:INFO: */
 app.post("/insertkiszereles", bodyParser.json(), (req, res) => {
     const insertData = [req.body.nev, req.body.urtartalom];
     const nev = req.body.nev;
@@ -203,13 +218,32 @@ app.post("/insertkiszereles", bodyParser.json(), (req, res) => {
             }
         }
     );
-    /* FIXME:FIXME:FIXME: */
     res.sendFile(__dirname + "/views/termekek.html");
     //BUG:res.sendFile(__dirname + "/views/kiszereles.html");
 });
-/* INFO: insertkiszereles  INFO: STOP INFO: INFO: INFO: INFO: INFO: INFO:*/
 
-/* INFO: insertcsoportok  INFO: START INFO:INFO:INFO:INFO:INFO:INFO:*/
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+app.patch("/updatekiszereles", bodyParser.json(), (req, res) => {
+    var insertNev = [req.body.nev];
+    var insertUrtartalom = [req.body.urtartalom];
+    var id = req.body.id;
+    console.log(insertNev);
+    console.log(insertUrtartalom);
+    con.query(
+        "UPDATE kiszereles SET nev = ? , urtartalom = ? WHERE id = ?",
+        [insertNev, insertUrtartalom, id],
+        (err, data) => {
+            try {
+                res.send(data);
+            } catch {
+                if (err) throw err;
+            }
+        }
+    );
+});
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+
+/* INFO: insertcsoportok  INFO:INFO:INFO:INFO:INFO:INFO:INFO: */
 app.post("/insertcsoportok", bodyParser.json(), (req, res) => {
     const insertData = [req.body.nev];
     const nev = req.body.nev;
@@ -225,10 +259,9 @@ app.post("/insertcsoportok", bodyParser.json(), (req, res) => {
             }
         }
     );
-    /* FIXME:FIXME:FIXME: */
     res.sendFile(__dirname + "/views/csoportok.html");
 });
-/* INFO: insertcsoportok  INFO: STOP INFO:INFO:INFO:INFO:INFO:INFO:*/
+
 /* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
 app.patch("/updatecsoportok", bodyParser.json(), (req, res) => {
     var insertData = [req.body.nev];
@@ -247,7 +280,7 @@ app.patch("/updatecsoportok", bodyParser.json(), (req, res) => {
     );
 });
 /* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
-/* BUG: inserttermekek  BUG: START BUG:BUG:BUG:BUG:BUG:BUG:*/
+/* BUG: inserttermekek  BUG:BUG:BUG:BUG:BUG:BUG:BUG: */
 app.post("/inserttermekek", bodyParser.json(), (req, res) => {
     //const nev = req.body.nev;
     //const beszar = req.body.beszar;
@@ -285,9 +318,9 @@ app.post("/inserttermekek", bodyParser.json(), (req, res) => {
 
     res.sendFile(__dirname + "/views/termekek.html");
 });
-/* BUG: inserttermekek  BUG: STOP BUG:BUG:BUG:BUG:BUG:BUG:*/
+/* BUG: inserttermekek  BUG:BUG:BUG:BUG:BUG:BUG:BUG: */
 
-/* BUG: insertkevert  BUG: START BUG:BUG:BUG:BUG:BUG:BUG:*/
+/* BUG: insertkevert  BUG:BUG:BUG:BUG:BUG:BUG:BUG: */
 app.post("/insertkevert", bodyParser.json(), (req, res) => {
     //const nev = req.body.nev;
     //const beszar = req.body.beszar;
@@ -331,7 +364,7 @@ app.post("/insertkevert", bodyParser.json(), (req, res) => {
 
     res.sendFile(__dirname + "/views/kevert.html");
 });
-/* BUG: insertkevert  BUG: STOP BUG:BUG:BUG:BUG:BUG:BUG:*/
+/* BUG: insertkevert  BUG:BUG:BUG:BUG:BUG:BUG:BUG: */
 
 /* INFO: password authentication */
 function loggerMiddleWare(req, res, next) {

@@ -1,37 +1,28 @@
 var lastTransaction = -1;
-// NOTE: Ez definiálja a bekért //ok ojektum tömbjét 😎
 const state = {
     xkimeresnev: [],
 };
-// NOTE: Ezek kellenek a forgalom //okhoz
 var xid = 1;
 
 getdata();
 
-/* INFO: termék //ok bekérése START INFO: */
+/* INFO: termék adatok bekérése START INFO: */
 async function getdata() {
-    /* NOTE: get xkimeresnev INFO: INFO: INFO:*/
     var response = await fetch("/datareadxkimeresnev");
     state.xkimeresnev = await response.json();
 
     renderXkimeresnev();
-    /* NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: */
 
+    /* NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE: */
     $(document).ready(function () {
         $("#newdata").click(function () {
             $("#nev").change(function () {
                 let nevInput = $("#nev");
-                let v = $(this).val();
-
+                //let v = $(this).val();
                 let urtartalomInput = document.querySelector("#urtartalom");
-                console.log("nevInput.value");
-                console.log(v);
-                console.log("urtartalomInput.value");
-                console.log(urtartalomInput.value);
-
-                if (v !== null) {
+                /* if (v !== null) {
                     console.log("************************************");
-                }
+                } */
             });
             insertMySQL();
 
@@ -47,7 +38,7 @@ async function getdata() {
                 urtartalomInput.value = "";
                 /* HACK:HACK:HACK: */
                 var id = xid + 1;
-                /* INFO: insertxkimeresnev  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
+                /* INFO: insertxkimeresnev  INFO:INFO:INFO:INFO:INFO:INFO:INFO:*/
                 await fetch("/insertxkimeresnev/", {
                     method: "POST",
                     headers: {
@@ -55,7 +46,6 @@ async function getdata() {
                     },
                     body: JSON.stringify({ nev: nev, urtartalom: urtartalom }),
                 });
-                /* INFO: insertxkimeresnev  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
                 xkimeresnevHTML += `<tr >
                 <td>${id}</td>
                 <td>${nev}</td>
@@ -71,20 +61,72 @@ async function getdata() {
     });
 }
 
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+function updatexkimeresnev() {
+    const nev = document.getElementById("newNev").value;
+    const urtartalom = document.getElementById("newUrtartalom").value;
+    try {
+        updateMySQL();
+    } catch (e) {}
+    async function updateMySQL() {
+        id = origId;
+
+        const response = await fetch("/updatexkimeresnev/", {
+            method: "PATCH",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({ nev: nev, urtartalom: urtartalom, id: id }),
+        });
+        console.log(response);
+        let arrowIndex = -1;
+        for (let i = 0; i < state.xkimeresnev.length; i++) {
+            if (state.xkimeresnev[i].id == id) {
+                arrowIndex = i;
+            }
+        }
+        state.xkimeresnev[arrowIndex].nev = nev;
+        state.xkimeresnev[arrowIndex].urtartalom = urtartalom;
+        renderXkimeresnev();
+    }
+}
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+
+document.addEventListener("keypress", function (e) {
+    if (e.keyCode === 13 || e.which === 13) {
+        e.preventDefault();
+        return false;
+    }
+});
+
 function renderXkimeresnev() {
     let index = 0;
     xkimeresnevHTML = "";
-    console.log(state.xkimeresnev[0].nev);
     for (let vKimeresnev of state.xkimeresnev) {
         xkimeresnevHTML += `<tr >
                 <td>${vKimeresnev.id}</td>
                 <td>${vKimeresnev.nev}</td>
                 <td>${vKimeresnev.urtartalom}</td>
+                <td><button class="updateBtn" id=${vKimeresnev.id}>Edit</td>
                 </tr>
-
      `;
         index++;
-        xid = vKimeresnev.id; /* BUG: */
+        xid = vKimeresnev.id;
     }
     document.getElementById("xkimeresdata").innerHTML = xkimeresnevHTML;
+
+    $(".updateBtn").click(function () {
+        let arrowIndex = -1;
+        for (let i = 0; i < state.xkimeresnev.length; i++) {
+            if (state.xkimeresnev[i].id == this.id) {
+                arrowIndex = i;
+            }
+        }
+        var origNev = state.xkimeresnev[arrowIndex].nev;
+        var origUrtartalom = state.xkimeresnev[arrowIndex].urtartalom;
+        origId = state.xkimeresnev[arrowIndex].id;
+        $("#myModal").modal();
+        document.getElementById("newNev").value = origNev;
+        document.getElementById("newUrtartalom").value = origUrtartalom;
+    });
 }
