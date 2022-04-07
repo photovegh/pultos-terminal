@@ -1,12 +1,9 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const dotenv = require("dotenv"); /* NOTE: környezeti változó */
 const conf = dotenv.config();
 const fs = require("fs");
 var port = conf.parsed.PORT;
-//console.log(typeof port);
-
-//port = parseInt(port);
-//port = 7777;
 var mysql = require("mysql");
 const app = express();
 
@@ -15,11 +12,53 @@ app.use(express.static("public/js"));
 app.use(express.static("public/css"));
 app.use(express.static("public/img"));
 
-/* INFO: lasttransaction */
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+app.patch("/keszletmodositas", bodyParser.json(), (req, res) => {
+    var insertData = [req.body.sumcl];
+    var id = req.body.id;
+    console.log("insertData");
+    console.log(insertData);
+    con.query(
+        "UPDATE termekek SET sumcl = ? WHERE id = ?",
+        [insertData, id],
+        (err, data) => {
+            try {
+                res.send(data);
+            } catch {
+                if (err) throw err;
+            }
+        }
+    );
+});
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+
+/* TODO: //datareadkevert 😋😋😋😋😋😋*/
+app.get("/datareadkevert", (req, res) => {
+    con.query("SELECT * FROM kevert", (err, data) => {
+        if (err) throw err;
+        res.send(data);
+    });
+});
+
+/* INFO: lasttransactionread */
+app.get("/lasttransactionread", (req, res) => {
+    con.query("SELECT * FROM transaction", (err, data) => {
+        if (err) throw err;
+        res.send(data);
+    });
+});
+/* app.get("/@@@@@@@read", (req, res) => {
+    con.query("SELECT * FROM @@@@@@@", (err, data) => {
+        if (err) throw err;
+        res.send(data);
+    });
+}); */
+//BUG:BUG:BUG:BUG:BUG:BUG: torolni
 app.get("/lasttransaction", (req, res) => {
     console.log("lasttransaction OK");
     res.sendFile(__dirname + "/last-transaction.json");
 });
+//BUG:BUG:BUG:BUG:BUG:BUG: torolni
 
 /* INFO: MySQL connection */
 /* var con = mysql.createConnection({

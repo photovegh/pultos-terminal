@@ -80,14 +80,16 @@ async function getdata() {
                             arrayIndexXkimeresnev = i;
                         }
                     }
-                    beszar +=
+                    beszar += Math.round(
                         (state.termekek[arrayIndexTermek].beszar /
                             state.termekek[arrayIndexTermek].cl) *
-                        state.xkimeresnev[arrayIndexXkimeresnev].urtartalom;
-                    elar +=
+                            state.xkimeresnev[arrayIndexXkimeresnev].urtartalom
+                    );
+                    elar += Math.round(
                         (state.termekek[arrayIndexTermek].elar /
                             state.termekek[arrayIndexTermek].cl) *
-                        state.xkimeresnev[arrayIndexXkimeresnev].urtartalom;
+                            state.xkimeresnev[arrayIndexXkimeresnev].urtartalom
+                    );
                 }
                 /* HACK:HACK:HACK: */
                 var id = xid + 1;
@@ -232,7 +234,7 @@ function adalekPlus() {
     $(".adalek").click(function () {
         for (let index = 0; index < state.termekek.length; index++) {
             if (state.termekek[index].id == this.id) {
-                adalekokHTML += `<div>${state.termekek[index].nev}" -> "`;
+                adalekokHTML += `<div>${state.termekek[index].nev} -> `;
                 break;
             }
         }
@@ -242,12 +244,12 @@ function adalekPlus() {
         $("#myModalKiszereles").modal();
         for (let index = 0; index < state.xkimeresnev.length; index++) {
             //if (state.xkimeresnev[index].kiszereles_id == 2)
-            kimertKiszerelesHTML += `<div class = "card m-3 kiszereles" id=${state.xkimeresnev[index].id}><h5>${state.xkimeresnev[index].nev}</h5></div>`;
+            kimertKiszerelesHTML += `<div class = "card m-3 kiszereles" id=${state.xkimeresnev[index].id}><h1>${state.xkimeresnev[index].nev}</h1></div>`;
         }
         document.getElementById("kimertKiszereles").innerHTML =
             kimertKiszerelesHTML;
         $(".kiszereles").click(function () {
-            for (let index = 1; index < state.xkimeresnev.length; index++) {
+            for (let index = 0; index < state.xkimeresnev.length; index++) {
                 if (state.xkimeresnev[index].id == this.id) {
                     adalekokHTML += `${state.xkimeresnev[index].nev}</div>`;
                     break;
@@ -259,6 +261,7 @@ function adalekPlus() {
             document.getElementById("newVadasz").innerHTML = adalekokHTML;
             console.log(termekAdalek);
             console.log(kiszerelesAdalek);
+            console.log();
         });
     });
 }

@@ -9,22 +9,36 @@ const state = {
     pult: [],
     kosarak: [],
     kosarNevek: [],
+    kevert: [],
 };
 
 // NOTE: Ezek kellenek a forgalom adatokhoz
 /*
- termék (lastTransaction) :HACK
+ termék (transaction) :HACK:
  - id
- - név
- - kevert ital osszetevo
- - xkimeresnevnev
- - xkimeresnevid
- -  xkimeresnev urtartalom || 0 HACK: keszlet * cl-ból vonódik ez a mennyiség
- -  termek              cl || 0 HACK: keszlet * cl-ból vonódik ez a mennyiség
+ - transaction number
+ - date
+ - fizetés: kp, kártya, hitel, leltár, beszállító kifizetés ?????
+ - info
+ ======================================================================
+ termék (transaction item) :HACK:
+ - név id
  - db
  - adott eladási kiszereles beszar
  - adott eladási kiszereles elar
- - INFO: fizetés kp, kártya, hitel, leltár, beszállító kifizetés ?????
+ ======================================================================
+
+ INFO: ha a kiszereles_id i
+ - *1* adalek (termek) id x
+ - *1* xkimeresnev id x
+ - *2* adalek (termek) id y
+ - *2* xkimeresnev id y
+ INFO: ha a kiszereles_id i
+
+ - kevert ital osszetevo
+ -  xkimeresnev urtartalom || 0 HACK: keszlet * cl-ból vonódik ez a mennyiség
+ -  termek              cl || 0 HACK: keszlet * cl-ból vonódik ez a mennyiség
+ 
 
  ...NOTE: átgondolni még, hogy mi kell
  ...NOTE: cl vagy darab készletcsökkentése !!! ha 2 vagy 1 vonja a cl-t
@@ -61,6 +75,12 @@ getdata();
 /* TODO:TODO:TODO: GETDATA TODO:TODO:TODO: */
 /*  */
 async function getdata() {
+    /* NOTE: get kevert */
+    var response = await fetch("/datareadkevert");
+    state.kevert = await response.json();
+    console.log("/datareadkevert");
+    console.log(state.kevert);
+
     /* NOTE: get last-transaction */
     var response = await fetch("/lasttransaction");
     state.lastTransaction = await response.json();
@@ -90,6 +110,7 @@ async function getdata() {
         let arrayIndextoggle = -1;
         let eladottElar = -1;
         let sorokNev;
+        let kosarUjsorIndex = -1;
         localStorage.setItem("eladottElar", eladottElar);
         let summa = 0;
         let xxx = "";
@@ -113,25 +134,32 @@ async function getdata() {
                     sorokId = state.keszlet[arrayIndex].id; //HACK:
                     sorokKiszerelesId = state.keszlet[arrayIndex].kiszereles_id; //HACK:
 
-                    eladottElar =
+                    eladottElar = Math.round(
                         (state.keszlet[arrayIndex].elar /
                             state.keszlet[arrayIndex].cl) *
-                        state.xkimeresnev[arrayIndextoggle].urtartalom;
+                            state.xkimeresnev[arrayIndextoggle].urtartalom
+                    );
                     sorokXkimeresNevNev =
                         state.xkimeresnev[arrayIndextoggle].nev; //HACK:
                     sorokXkimeresNevId = state.xkimeresnev[arrayIndextoggle].id;
                     sorokXkimeresNevUrtartalom =
                         state.xkimeresnev[arrayIndextoggle].urtartalom;
 
-                    sorokEladottBeszar =
+                    sorokEladottBeszar = Math.round(
                         (state.keszlet[arrayIndex].beszar /
                             state.keszlet[arrayIndex].cl) *
-                        state.xkimeresnev[arrayIndextoggle].urtartalom;
+                            state.xkimeresnev[arrayIndextoggle].urtartalom
+                    );
+                    /* console.log("beszar");
+                    console.log(state.keszlet[arrayIndex].beszar);
+                    console.log(state.keszlet[arrayIndex].cl);
+                    console.log(state.xkimeresnev[arrayIndextoggle].urtartalom); */
 
-                    sorokEladottElar =
+                    sorokEladottElar = Math.round(
                         (state.keszlet[arrayIndex].elar /
                             state.keszlet[arrayIndex].cl) *
-                        state.xkimeresnev[arrayIndextoggle].urtartalom;
+                            state.xkimeresnev[arrayIndextoggle].urtartalom
+                    );
 
                     state.pult.push({
                         id: sorokId,
@@ -142,14 +170,22 @@ async function getdata() {
                         xkimeresnevurtartalom: sorokXkimeresNevUrtartalom,
                         db: edb,
                         cl: sorokXkimeresNevUrtartalom,
+                        sumcl: state.keszlet[arrayIndex].sumcl,
                         eladottbeszar: sorokEladottBeszar,
                         eladottelar: sorokEladottElar,
                         fizetesmod: "k",
                         transactionnumber: 7,
                         megjegyzes: "megjegyzes",
                     });
-                    //alert("Szalad készletet módosítani, és lastTransactiont! 🚀");
-                    console.log("Összkészlet módosítás: ");
+                    //alert("Szalad készletet módosítani, *** EZT NEM KELL *** és lastTransactiont! 🚀");
+                    /* console.log("Összkészlet módosítás: ");
+                    console.log("Új sor INDEXE:");
+                    console.log(kosarUjsorIndex); */
+                    kosarUjsorIndex = state.pult.length - 1;
+                    termekKeszletModositas(
+                        state.pult[kosarUjsorIndex],
+                        "minus"
+                    );
                     renderPult();
                 }
             } else {
@@ -193,6 +229,7 @@ async function getdata() {
                     xkimeresnevurtartalom: " ",
                     db: edb,
                     cl: state.keszlet[arrayIndex].cl,
+                    sumcl: state.keszlet[arrayIndex].sumcl,
                     eladottbeszar: sorokEladottBeszar,
                     eladottelar: sorokEladottElar,
                     fizetesmod: "c",
@@ -200,8 +237,12 @@ async function getdata() {
                     megjegyzes: "info",
                 });
                 //pultRender(arrayIndex); //BUG:BUG:BUG:BUG:BUG:BUG:BUG: state
-                //alert("Szalad készletet módosítani, és lastTransactiont! 🚀");
-                console.log("Összkészlet módosítás: ");
+                //alert("Szalad készletet módosítani, és *** EZT NEM KELL *** lastTransactiont! 🚀");
+                /* console.log("Összkészlet módosítás: ");
+                console.log("Új sor INDEXE:");
+                console.log(kosarUjsorIndex); */
+                kosarUjsorIndex = state.pult.length - 1;
+                termekKeszletModositas(state.pult[kosarUjsorIndex], "minus");
                 renderPult();
             }
         });
@@ -282,27 +323,126 @@ function renderPult() {
         let pultTombIndex = this.id;
         state.pult[pultTombIndex].db++;
         //alert("Szalad készletet módosítani! 🚀");
-        console.log("Összkészlet módosítás: ");
-        console.log(state.pult[pultTombIndex].nev);
-        console.log(state.pult[pultTombIndex].id);
-        console.log("state.pult[pultTombIndex].kiszerelesId");
-        console.log(state.pult[pultTombIndex].kiszerelesId);
-        console.log(state.pult[pultTombIndex]);
+        console.log("Összkészlet módosítás: .insert-db");
+        //console.log(state.pult[pultTombIndex].nev);
+        //console.log(state.pult[pultTombIndex].id);
+        //console.log("state.pult[pultTombIndex].kiszerelesId");
+        //console.log(state.pult[pultTombIndex].kiszerelesId);
+        //console.log(state.pult[pultTombIndex]);
+        termekKeszletModositas(state.pult[pultTombIndex], "minus");
         renderPult();
         //HACK:HACK:HACK:HACK:HACK:
     });
     $(".remove-db").click(function (event) {
         let pultTombIndex = this.id;
         state.pult[pultTombIndex].db--;
+        console.log("Összkészlet módosítás: .remove-db");
+        termekKeszletModositas(state.pult[pultTombIndex], "plus");
         renderPult();
     });
     $(".delete-db").click(function (event) {
         let pultTombIndex = this.id;
+        console.log("Összkészlet módosítás: .delete-db");
+        termekKeszletModositas(state.pult[pultTombIndex], "reset");
+        /* BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:
+Naon vigyázz itt undefined lesz a state.pult a splice()-nyel
+BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG: */
         state.pult.splice(pultTombIndex, 1);
+        //termekKeszletModositas(state.pult[pultTombIndex]);
         renderPult();
     });
     //foundKosar = tetelSorokHTML == "" ? false : true;
     foundPult = tetelSorokHTML == "" ? false : true;
+}
+
+/* TODO:TODO:TODO: TERMEK KESZLET MODOSITAS TODO:TODO:TODO: */
+/* 
+- ha új sor kerül a kosárba, a komplett kosár state objectumot küldöm, tehát a last sor kell módosítani a termék készleten!!!
+- ha meglévő sorba módosítom a db-t csak a konkrét termék objektumát küldöm
+*/
+function termekKeszletModositas(sendData, muvelet) {
+    console.log("termekKeszletModositas()");
+    console.log(sendData);
+    console.log(muvelet);
+    if (sendData.kiszerelesId == 1) {
+        console.log("kiszerelesId OK state.kevert.length");
+        for (let index = 0; index < state.kevert.length; index++) {
+            if (sendData.id == state.kevert[index].termek_id) {
+                console.log("-----------------------");
+                console.log(state.kevert[index].adalek_id);
+                for (let i = 0; i < state.keszlet.length; i++) {
+                    if (state.kevert[index].adalek_id == state.keszlet[i].id) {
+                        console.log("ok");
+                        console.log(state.keszlet[i].nev);
+                        //console.log("sumcl !!!!!!!!!!!!!!!!!!!");
+                        //console.log(state.keszlet[i].sumcl);
+                        for (let ii = 0; ii < state.xkimeresnev.length; ii++) {
+                            if (
+                                state.kevert[index].xkimeresnev_id ==
+                                state.xkimeresnev[ii].id
+                            ) {
+                                console.log(state.xkimeresnev[ii].nev);
+                                if (muvelet == "minus") {
+                                    state.keszlet[i].sumcl =
+                                        state.keszlet[i].sumcl -
+                                        state.xkimeresnev[ii].urtartalom;
+                                }
+                                if (muvelet == "plus") {
+                                    state.keszlet[i].sumcl =
+                                        state.keszlet[i].sumcl +
+                                        state.xkimeresnev[ii].urtartalom;
+                                }
+                                if (muvelet == "reset") {
+                                    state.keszlet[i].sumcl =
+                                        state.keszlet[i].sumcl +
+                                        state.xkimeresnev[ii].urtartalom *
+                                            sendData.db;
+                                }
+                                tarolj(
+                                    state.keszlet[i].id,
+                                    state.keszlet[i].sumcl
+                                );
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        //let sumcl = -1;
+        console.log("egyeeeeeeeeb");
+        if (muvelet == "minus") {
+            sendData.sumcl = sendData.sumcl - sendData.cl;
+        }
+        if (muvelet == "plus") {
+            sendData.sumcl = sendData.sumcl + sendData.cl;
+        }
+        if (muvelet == "reset") {
+            sendData.sumcl = sendData.sumcl + sendData.cl * sendData.db;
+        }
+        tarolj(sendData.id, sendData.sumcl);
+    }
+}
+
+function tarolj(id, sumcl) {
+    console.log("tarolj");
+    console.log(id);
+    console.log(sumcl);
+    console.log("*************************");
+
+    try {
+        updateMySQL();
+    } catch (e) {}
+    async function updateMySQL() {
+        const response = await fetch("/keszletmodositas/", {
+            method: "PATCH",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({ id: id, sumcl: sumcl }),
+        });
+        //console.log(response);
+    }
 }
 
 /* TODO:TODO:TODO: UJ KOSARBA TESSZUK TODO:TODO:TODO: */

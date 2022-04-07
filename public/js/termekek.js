@@ -118,11 +118,9 @@ async function getdata() {
                 /* TODO: NOTE: INFO: NOTE: TODO: */
                 //const cl = urtartalom * 10;
                 //const cl = termekKiszereles == 2 ? urtartalom * 10 : 1;
-                const cl =
-                    termekKiszereles == 2
-                        ? urtartalom * jelenlegiKeszlet * 10
-                        : urtartalom * jelenlegiKeszlet;
+                const cl = termekKiszereles == 2 ? urtartalom * 10 : 1;
                 /* TODO: NOTE: INFO: NOTE: TODO: */
+                const sumcl = jelenlegiKeszlet * cl;
 
                 var id = xid + 1;
                 /* INFO: inserttermekek  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
@@ -139,9 +137,10 @@ async function getdata() {
                         leltarozando: leltarozando,
                         kritikus: kritikus,
                         gyujto: gyujto,
-                        jelenlegiKeszlet: jelenlegiKeszlet,
                         urtartalom: urtartalom,
+                        jelenlegiKeszlet: jelenlegiKeszlet,
                         cl: cl,
+                        sumcl: sumcl,
                         kiszerelesId: termekKiszereles,
                         csoportId: csoportKiszereles,
 

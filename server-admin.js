@@ -292,9 +292,10 @@ app.post("/inserttermekek", bodyParser.json(), (req, res) => {
         req.body.leltarozando,
         req.body.kritikus,
         req.body.gyujto,
-        req.body.jelenlegiKeszlet,
         req.body.urtartalom,
+        req.body.jelenlegiKeszlet,
         req.body.cl,
+        req.body.sumcl,
         req.body.kiszerelesId,
         req.body.csoportId,
     ];
@@ -302,7 +303,7 @@ app.post("/inserttermekek", bodyParser.json(), (req, res) => {
 
     /* FIXME:FIXME:FIXME: */
     con.query(
-        "INSERT INTO termekek (nev, beszar, elar, leltarozando, kritikus, gyujto, keszlet, urtartalom, cl, kiszereles_id, csoport_id) VALUES (?)",
+        "INSERT INTO termekek (nev, beszar, elar, leltarozando, kritikus, gyujto, urtartalom, keszlet,  cl, sumcl, kiszereles_id, csoport_id) VALUES (?)",
         [insertData],
         (err, data) => {
             if (err) throw err;
