@@ -16,7 +16,7 @@
     <nav class="fixed-top navbar navbar-expand-sm bg-danger navbar-dark d-flex justify-content-around">
         <div>
             <form action="/" method="get">
-                <button type="submit" class="btn btn-success">Kilépés!</button>
+                <button type="button" class="btn btn-success kilepes">Kilépés!</button>
             </form>
         </div>
         <div>
@@ -147,7 +147,8 @@
     <!-- @media NOTE: -->
 
     <div class="absolute">
-        <button type="button" class="btn btn-primary mr-4 btn-lg">Bevitel</button>
+        <button type="button" class="btn btn-primary mr-4 btn-lg">** Kp **</button>
+        <button type="button" class="btn btn-primary mr-4 btn-lg">Kártya</button>
         <button type="button" class="btn btn-secondary mr-4 btn-lg">Hitel</button>
         <button type="button" class="btn btn-warning mr-4 btn-lg kosarBt"
             onclick="naTegyukEgyUjKosarba()">Kosárba</button>
@@ -157,15 +158,27 @@
     <div class="fixed-bottom bg-danger text-white p-2 ">
         <form action="/config" method="get">
             <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-dark kpKivet">Kasszából kivét.</button>
+                <p id="datum"></p>
+                <p>Pultos: John Doe</p>
 
-                <button type="submit" class="btn btn-primary">⚡ config ⚡ </button>
+                <!-- <button type="submit" class="btn btn-dark">Kasszából kivét.</button> -->
                 <span id="summa">Mindösszesen</span>
             </div>
         </form>
     </div>
     <!-- NOTE: also sav END -->
 
-
+    <!-- NOTE: TOAST -->
+    <div class="toast mt-3">
+        <div class="toast-header">
+            Üres kosár törlése
+        </div>
+        <div class="toast-body">
+            Ezt most törlöm mert üres kosár!
+        </div>
+    </div>
+    </div>
 
     <!-- The HACK: kosarakModal -->
     <div class="modal" id="kosarakModal">
@@ -184,6 +197,40 @@
                 </div>
 
                 <!-- Modal footer -->
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+    <!-- The HACK: kosarakModal -->
+
+    <!-- The Modal -->
+    <div class="modal" id="myModalKivet">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Beszállítók kifizetése.</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/action_page.php">
+                        <label for="kifName">Kinek:</label><br>
+                        <input type="text" id="kifName" name="kifName"><br>
+                        <label for="kifOssz">Mennyit:</label><br>
+                        <input type="number" id="kifOssz" name="kifOssz"><br><br>
+                        <label for="kifMegj">Megjegyzés:</label><br>
+                        <textarea name="kifMegj" rows="10" cols="30"></textarea>
+                        <br><br>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
@@ -191,7 +238,7 @@
             </div>
         </div>
     </div>
-    <!-- The HACK: kosarakModal -->
+
     <!-- The HACK: kosarMegnevezes -->
     <div class="modal" id="kosarMegnevezesModal">
         <div class="modal-dialog">
