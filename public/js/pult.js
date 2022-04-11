@@ -1,11 +1,16 @@
 const datum = new Date();
-var lastTransaction = -1;
+//var lastTransaction = -1;
+var trNumber = "";
+var pultos = 2;
+var lastTransactionId = -1;
+createTrNumber();
+console.log("app trNumber");
+console.log(trNumber);
 // NOTE: Ez definiálja a bekért adat ojektum tömbjét 😎
 const state = {
     keszlet: [],
     csoportkategoria: [],
     xkimeres: [],
-    lastTransaction: [],
     xkimeresnev: [],
     pult: [],
     kosarak: [],
@@ -13,23 +18,34 @@ const state = {
     kevert: [],
 };
 
+// lastTransaction: [],
 // NOTE: Ezek kellenek a forgalom adatokhoz
 /*
+======================================================================
  termék (transaction) :HACK:
  - id
- - transaction number
+ - transaction number FIXME:FIXME:
  - date
  - pultos
- - fizetés: kp, kártya, hitel, leltár, beszállító kifizetés ?????
- - info
+ - fizetés: kp, kártya, hitel, leltár, beszállító kifizetés FIXME:
+ --- k: kp
+ --- c: bank card
+ --- h: hitel (info: kie a hitel) NOTE:
+ --- l: leltar (info: ???) NOTE:
+ --- b: beszállító kifizetés (info: kinek let kifizetve) NOTE:
+ - info FIXME:
  ======================================================================
  termék (transaction item) :HACK:
- - név id
- - db
- - adott eladási kiszereles beszar
- - adott eladási kiszereles elar
+ - - transaction number_id FIXME:FIXME:
+ - termék id FIXME:
+ - db FIXME:
+ - adott eladási kiszereles beszar FIXME:
+ - adott eladási kiszereles elar FIXME:
+ - xkimeresnev id FIXME:
  ======================================================================
-
+ - cl: azonnali FIXME:
+ - sumcl: azonnali FIXME:
+ ======================================================================
  INFO: ha a kiszereles_id i
  - *1* adalek (termek) id x
  - *1* xkimeresnev id x
@@ -70,12 +86,12 @@ async function getdata() {
     /* NOTE: get kevert */
     var response = await fetch("/datareadkevert");
     state.kevert = await response.json();
-    console.log("/datareadkevert");
-    console.log(state.kevert);
+    //console.log("/datareadkevert");
+    //console.log(state.kevert);
 
     /* NOTE: get last-transaction */
-    var response = await fetch("/lasttransaction");
-    state.lastTransaction = await response.json();
+    /* var response = await fetch("/lasttransaction");
+    state.lastTransaction = await response.json(); */
 
     /* NOTE: get keszlet */
     var response = await fetch("/dataread");
@@ -117,6 +133,7 @@ async function getdata() {
             xButtonOrP = e.target.nodeName;
             if (state.keszlet[arrayIndex].kiszereles_id == 2) {
                 if (e.target.nodeName == "P") {
+                    sorokKiszerelesId = state.keszlet[arrayIndex].kiszereles_id; //HACK:
                     arrayIndextoggle = this.id; //HACK:
                     sorokNev = state.keszlet[arrayIndex].nev; //HACK:
                     sorokId = state.keszlet[arrayIndex].id; //HACK:
@@ -158,6 +175,7 @@ async function getdata() {
                         fizetesmod: "k",
                         transactionnumber: 7,
                         megjegyzes: "megjegyzes",
+                        datum: datum,
                     });
                     kosarUjsorIndex = state.pult.length - 1;
                     termekKeszletModositas(
@@ -180,7 +198,7 @@ async function getdata() {
                     nev: sorokNev,
                     kiszerelesId: sorokKiszerelesId,
                     xkimeresnevnev: " ",
-                    xkimeresnevid: " ",
+                    xkimeresnevid: -1,
                     xkimeresnevurtartalom: " ",
                     db: edb,
                     cl: state.keszlet[arrayIndex].cl,
@@ -190,11 +208,13 @@ async function getdata() {
                     fizetesmod: "c",
                     transactionnumber: 21,
                     megjegyzes: "info",
+                    datum: datum,
                 });
                 kosarUjsorIndex = state.pult.length - 1;
                 termekKeszletModositas(state.pult[kosarUjsorIndex], "minus");
                 renderPult();
             }
+            console.log(state.pult);
         });
     });
 }
@@ -301,7 +321,7 @@ function termekKeszletModositas(sendData, muvelet) {
                                 state.kevert[index].xkimeresnev_id ==
                                 state.xkimeresnev[ii].id
                             ) {
-                                console.log(state.xkimeresnev[ii].nev);
+                                //console.log(state.xkimeresnev[ii].nev);
                                 if (muvelet == "minus") {
                                     state.keszlet[i].sumcl =
                                         state.keszlet[i].sumcl -
@@ -342,6 +362,7 @@ function termekKeszletModositas(sendData, muvelet) {
     }
 }
 
+/* TODO:TODO:TODO: TAROLJ TODO:TODO:TODO: */
 function tarolj(id, sumcl) {
     try {
         updateMySQL();
@@ -455,6 +476,92 @@ $(".kosarak").click(function () {
     foundKosar = state.kosarak.length > 0 ? true : false;
 });
 
+/* TODO:TODO:TODO: TR KP TODO:TODO:TODO: */
+function trKp() {
+    let trFizetesMod = "k";
+    trNumber = createTrNumber();
+    let megjegyzes = "*";
+    createTranactionData(trNumber, trFizetesMod, megjegyzes);
+}
+
+/* TODO:TODO:TODO: TRANSACTIONS TODO:TODO:TODO: */
+function createTranactionData(trNumber, trFizetesMod, megjegyzes) {
+    try {
+        updateMySQL();
+        updateLastId();
+    } catch (e) {}
+    async function updateMySQL() {
+        const response = await fetch("/inserttransactions/", {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                trnumber: trNumber,
+                trdate: datum,
+                trfizetesmod: trFizetesMod,
+                megjegyzes: megjegyzes,
+                pultos: pultos,
+            }),
+        });
+    }
+    async function updateLastId() {
+        var response = await fetch("/lasttransactionid");
+        lastTransactionId = await response.json();
+        lastTransactionId = lastTransactionId[0]["max(id)"];
+        console.log("lastTransactionId OK ");
+        console.log(lastTransactionId);
+        for (let pultItem of state.pult) {
+            console.log("lastTransactionId");
+            console.log(lastTransactionId);
+            console.log(pultItem.id);
+            console.log(pultItem.db);
+            console.log(pultItem.eladottbeszar);
+            console.log(pultItem.eladottelar);
+            console.log(datum);
+            console.log(pultItem.xkimeresnevid);
+            insertForgalomData(
+                lastTransactionId,
+                pultItem.id,
+                pultItem.db,
+                pultItem.eladottbeszar,
+                pultItem.eladottelar,
+                datum,
+                pultItem.xkimeresnevid
+            );
+        }
+    }
+}
+
+/* TODO:TODO:TODO: FORGALOM TODO:TODO:TODO: */
+async function insertForgalomData(
+    lastTransactionId,
+    id,
+    db,
+    eladottbeszar,
+    eladottelar,
+    datum,
+    xkimeresnevid
+) {
+    console.log("forgalom data ok++++++");
+    const response = await fetch("/insertforgalom/", {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+            transaction_id: lastTransactionId,
+            termekid: id,
+            db: db,
+            eladottbeszar: eladottbeszar,
+            eladottelar: eladottelar,
+            eladottdate: datum,
+            xkimeresnevid: xkimeresnevid,
+        }),
+    });
+}
+
+/* TODO:TODO:TODO: KP KIVET TODO:TODO:TODO: */
 $(".kpKivet").click(function () {
     $("#myModalKivet").modal();
 });
@@ -465,5 +572,24 @@ let datumHTML =
     " - " +
     datum.getDate();
 document.getElementById("datum").innerHTML = datumHTML;
+
+/* TODO:TODO:TODO: CREATE TR NUMBER TODO:TODO:TODO: */
+function createTrNumber() {
+    trNumber =
+        datum.getFullYear() +
+        "." +
+        datum.getMonth() +
+        "." +
+        datum.getDay() +
+        "." +
+        datum.getHours() +
+        "." +
+        datum.getMinutes() +
+        "." +
+        datum.getSeconds() +
+        "." +
+        datum.getMilliseconds();
+    return trNumber;
+}
 
 window.onload = renderPult();

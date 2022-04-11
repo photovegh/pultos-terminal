@@ -14,7 +14,7 @@ app.use(express.static("public/js"));
 app.use(express.static("public/css"));
 app.use(express.static("public/img"));
 
-/* INFO: lasttransaction */
+/* INFO: lasttransaction BUG:BUG: TOROLNI NEM KELL BUG:BUG:*/
 app.get("/lasttransaction", (req, res) => {
     res.sendFile(__dirname + "/last-transaction.json");
 });

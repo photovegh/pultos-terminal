@@ -26,6 +26,11 @@
         </div>
         <div>
             <form action="/" method="get">
+                <button type="button" class="btn btn-secondary">HITEL rendezése</button>
+            </form>
+        </div>
+        <div>
+            <form action="/" method="get">
                 <button type="button" class="btn btn-warning kosarak">KOSARAK</button>
             </form>
         </div>
@@ -147,9 +152,9 @@
     <!-- @media NOTE: -->
 
     <div class="absolute">
-        <button type="button" class="btn btn-primary mr-4 btn-lg">** Kp **</button>
-        <button type="button" class="btn btn-primary mr-4 btn-lg">Kártya</button>
-        <button type="button" class="btn btn-secondary mr-4 btn-lg">Hitel</button>
+        <button type="button" class="btn btn-primary mr-4 btn-lg" onclick="trKp()">** Kp **</button>
+        <button type="button" class="btn btn-primary mr-4 btn-lg" id="trCard">Kártya</button>
+        <button type="button" class="btn btn-secondary mr-4 btn-lg" id="trHitel">Hitel</button>
         <button type="button" class="btn btn-warning mr-4 btn-lg kosarBt"
             onclick="naTegyukEgyUjKosarba()">Kosárba</button>
     </div>

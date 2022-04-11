@@ -13,6 +13,71 @@ app.use(express.static("public/css"));
 app.use(express.static("public/img"));
 
 /* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+/* NOTE: inserttransactions  NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE: */
+app.post("/inserttransactions", bodyParser.json(), (req, res) => {
+    const insertData = [
+        req.body.trnumber,
+        req.body.trdate,
+        req.body.trfizetesmod,
+        req.body.megjegyzes,
+        req.body.pultos,
+    ];
+    /* FIXME:FIXME:FIXME: */
+    con.query(
+        "INSERT INTO transactions (trnumber, trdate, trfizetesmod, megjegyzes, pultos) VALUES (?)",
+        [insertData],
+        (err, data) => {
+            try {
+                res.send(data);
+            } catch {
+                if (err) throw err;
+            }
+        }
+    );
+    console.log("insertData/////////////");
+    console.log(insertData);
+    /* FIXME:FIXME:FIXME: */
+});
+
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+/* NOTE: insertforgalom  NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE: */
+app.post("/insertforgalom", bodyParser.json(), (req, res) => {
+    const insertData = [
+        req.body.transaction_id,
+        req.body.termekid,
+        req.body.db,
+        req.body.eladottbeszar,
+        req.body.eladottelar,
+        req.body.eladottdate,
+        req.body.xkimeresnevid,
+    ];
+    /* FIXME:FIXME:FIXME: */
+    con.query(
+        "INSERT INTO forgalom (transaction_id, termekid, db, eladottbeszar, eladottelar, eladottdate, xkimeresnevid) VALUES (?)",
+        [insertData],
+        (err, data) => {
+            try {
+                res.send(data);
+            } catch {
+                if (err) throw err;
+            }
+        }
+    );
+    console.log("insertData************");
+    console.log(insertData);
+    /* FIXME:FIXME:FIXME: */
+});
+
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+/* TODO: //lasttransactionid 😋😋😋😋😋😋*/
+app.get("/lasttransactionid", (req, res) => {
+    con.query("SELECT max(id) FROM transactions", (err, data) => {
+        if (err) throw err;
+        res.send(data);
+    });
+});
+
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
 app.patch("/keszletmodositas", bodyParser.json(), (req, res) => {
     var insertData = [req.body.sumcl];
     var id = req.body.id;

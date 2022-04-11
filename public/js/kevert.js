@@ -110,6 +110,7 @@ async function getdata() {
                         jelenlegiKeszlet: 0,
                         urtartalom: 0,
                         cl: 0,
+                        sumcl: 0,
                         kiszerelesId: 1,
                         csoportId: 1,
 
