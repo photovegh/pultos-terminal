@@ -1,11 +1,20 @@
-const datum = new Date();
+const trNumberDatum = new Date();
+var datum = new Date().toLocaleString();
+//const datum = new Date().toLocaleDateString();
+//const ido = new Date().toLocaleDateString("en-CA");
+//console.log(datum);
 //var lastTransaction = -1;
 var trNumber = "";
 var pultos = 2;
 var lastTransactionId = -1;
+var trFizetesMod = "";
+var megjegyzes = "";
+var kivetMegnevezes = "";
+var osszegKivet = "";
+var osszeg = -1;
 createTrNumber();
-console.log("app trNumber");
-console.log(trNumber);
+//console.log("app trNumber");
+//console.log(trNumber);
 // NOTE: Ez definiálja a bekért adat ojektum tömbjét 😎
 const state = {
     keszlet: [],
@@ -16,6 +25,7 @@ const state = {
     kosarak: [],
     kosarNevek: [],
     kevert: [],
+    fullTransactions: [],
 };
 
 // lastTransaction: [],
@@ -159,7 +169,7 @@ async function getdata() {
                             state.keszlet[arrayIndex].cl) *
                             state.xkimeresnev[arrayIndextoggle].urtartalom
                     );
-
+                    datum = theTime();
                     state.pult.push({
                         id: sorokId,
                         nev: sorokNev,
@@ -193,6 +203,7 @@ async function getdata() {
                 sorokEladottBeszar = state.keszlet[arrayIndex].beszar;
 
                 sorokEladottElar = state.keszlet[arrayIndex].elar;
+                datum = theTime();
                 state.pult.push({
                     id: sorokId,
                     nev: sorokNev,
@@ -392,6 +403,7 @@ function naTegyukEgyUjKosarba() {
             document.querySelector("#kosarMegnevezesId").value = "";
             kosarMegnevezes = "";
             $("#kosarMegnevezesModal").modal();
+            $(".keyboard").off("click");
             $(".keyboard").on("click", function () {
                 inputKey = "";
                 inputKey = this.id;
@@ -417,7 +429,7 @@ function kosarNevSzerintiTarolas() {
 
     state.pult = [];
     renderPult();
-    $(".keyboard").off("click");
+    //$(".keyboard").off("click");
 }
 
 /* TODO:TODO:TODO: KILEPES TODO:TODO:TODO: */
@@ -483,6 +495,52 @@ function trKp() {
     let megjegyzes = "*";
     createTranactionData(trNumber, trFizetesMod, megjegyzes);
 }
+/* TODO:TODO:TODO: TR CARD TODO:TODO:TODO: */
+function trCard() {
+    let trFizetesMod = "c";
+    trNumber = createTrNumber();
+    let megjegyzes = "+";
+    createTranactionData(trNumber, trFizetesMod, megjegyzes);
+}
+//BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:
+/* TODO:TODO:TODO: TR HITEL TODO:TODO:TODO: */
+function nevesitettHitel() {
+    trFizetesMod = "h";
+    trNumber = createTrNumber();
+    megjegyzes = "";
+
+    document.querySelector("#hitelMegnevezesId").value = "";
+    hitelMegnevezes = "";
+
+    if (kosarbolVisszatoltott) {
+        megjegyzes = state.kosarNevek[kosarbolVisszatoltottId].kosarMegnevezes;
+        console.log(
+            "state.kosarNevek[kosarbolVisszatoltottId].kosarMegnevezes"
+        );
+        console.log(state.kosarNevek[kosarbolVisszatoltottId].kosarMegnevezes);
+        trHitel();
+    } else {
+        if (foundPult) {
+            $("#hitelMegnevezesModal").modal();
+            $(".keyboard").off("click");
+            $(".keyboard").on("click", function () {
+                inputKey = "";
+                inputKey = this.id;
+                inputKey = this.value;
+                hitelMegnevezes += inputKey;
+                document.querySelector("#hitelMegnevezesId").value =
+                    hitelMegnevezes;
+                megjegyzes = hitelMegnevezes;
+                console.log(megjegyzes);
+            });
+        }
+    }
+}
+//BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:
+function trHitel() {
+    createTranactionData(trNumber, trFizetesMod, megjegyzes);
+    //$(".keyboard").off("click");
+}
 
 /* TODO:TODO:TODO: TRANSACTIONS TODO:TODO:TODO: */
 function createTranactionData(trNumber, trFizetesMod, megjegyzes) {
@@ -491,6 +549,7 @@ function createTranactionData(trNumber, trFizetesMod, megjegyzes) {
         updateLastId();
     } catch (e) {}
     async function updateMySQL() {
+        datum = theTime();
         const response = await fetch("/inserttransactions/", {
             method: "POST",
             headers: {
@@ -509,28 +568,34 @@ function createTranactionData(trNumber, trFizetesMod, megjegyzes) {
         var response = await fetch("/lasttransactionid");
         lastTransactionId = await response.json();
         lastTransactionId = lastTransactionId[0]["max(id)"];
-        console.log("lastTransactionId OK ");
-        console.log(lastTransactionId);
+        //console.log("lastTransactionId OK ");
+        //console.log(lastTransactionId);
         for (let pultItem of state.pult) {
-            console.log("lastTransactionId");
-            console.log(lastTransactionId);
-            console.log(pultItem.id);
-            console.log(pultItem.db);
-            console.log(pultItem.eladottbeszar);
-            console.log(pultItem.eladottelar);
-            console.log(datum);
-            console.log(pultItem.xkimeresnevid);
+            //console.log("lastTransactionId");
+            //console.log(lastTransactionId);
+            //console.log(pultItem.id);
+            //console.log(pultItem.db);
+            //console.log(pultItem.eladottbeszar);
+            //console.log(pultItem.eladottelar);
+            //console.log(datum);
+            //console.log(pultItem.xkimeresnevid);
             insertForgalomData(
                 lastTransactionId,
                 pultItem.id,
                 pultItem.db,
                 pultItem.eladottbeszar,
                 pultItem.eladottelar,
-                datum,
+                pultItem.datum,
                 pultItem.xkimeresnevid
             );
         }
     }
+}
+
+/* TODO:TODO:TODO: FORGALOM TODO:TODO:TODO: */
+function trKivet() {
+    console.log("penztarbol kivet OKKKKKKKK");
+    alert("Irány levonni a forgalomból ...");
 }
 
 /* TODO:TODO:TODO: FORGALOM TODO:TODO:TODO: */
@@ -540,10 +605,10 @@ async function insertForgalomData(
     db,
     eladottbeszar,
     eladottelar,
-    datum,
+    xDatum,
     xkimeresnevid
 ) {
-    console.log("forgalom data ok++++++");
+    //console.log("forgalom data ok++++++");
     const response = await fetch("/insertforgalom/", {
         method: "POST",
         headers: {
@@ -555,41 +620,115 @@ async function insertForgalomData(
             db: db,
             eladottbeszar: eladottbeszar,
             eladottelar: eladottelar,
-            eladottdate: datum,
+            eladottdate: xDatum,
             xkimeresnevid: xkimeresnevid,
         }),
     });
+    console.log("response ??????????????????");
+    console.log(response);
+    //INFO:INFO:INFO: leellenorizni !!!!!!! INFO:INFO:INFO:
+    console.log("foundPult");
+    console.log(foundPult);
+    console.log("foundKosar");
+    console.log(foundKosar);
+    console.log("kosarbolVisszatoltott");
+    console.log(kosarbolVisszatoltott);
+    console.log("kosarbolVisszatoltottId");
+    console.log(kosarbolVisszatoltottId);
+    console.log("kosarMegnevezes");
+    console.log(kosarMegnevezes);
+
+    console.log("state.kosarak AAAAAAAAAAAAA");
+    console.log(state.kosarak);
+    foundPult = false;
+    if (kosarbolVisszatoltott) {
+        kosarbolVisszatoltott = false;
+        state.kosarak.splice(kosarbolVisszatoltottId, 1);
+        state.kosarNevek.splice(kosarbolVisszatoltottId, 1);
+        kosarbolVisszatoltottId = -1;
+    }
+    if (foundKosar.length == 0) {
+        foundKosar = false;
+    }
+    console.log("state.kosarak XXXXXXXXXXXXXXX");
+    console.log(state.kosarak);
+
+    state.pult = [];
+    renderPult();
+    //INFO:INFO:INFO: leellenorizni !!!!!!! INFO:INFO:INFO:
 }
 
 /* TODO:TODO:TODO: KP KIVET TODO:TODO:TODO: */
 $(".kpKivet").click(function () {
-    $("#myModalKivet").modal();
+    //$("#myModalKivet").modal();
+    $("#kivetMegnevezesModal").modal();
+    $(".keyboard").off("click");
+    document.querySelector("#kivetMegnevezesId").value = "";
+    $(".keyboard").on("click", function () {
+        inputKey = "";
+        inputKey = this.id;
+        inputKey = this.value;
+        kivetMegnevezes += inputKey;
+        document.querySelector("#kivetMegnevezesId").value = kivetMegnevezes;
+        kivet = kivetMegnevezes;
+        console.log("kivet");
+        console.log(kivet);
+    });
 });
-let datumHTML =
-    datum.getFullYear() +
+
+function kivetOsszegNumber() {
+    $("#osszegModal").modal();
+    $(".calc").off("click");
+    document.querySelector("#osszegKivetId").value = "";
+    $(".calc").on("click", function () {
+        inputKey = "";
+        inputKey = this.id;
+        inputKey = this.value;
+        console.log(this.value);
+        osszegKivet += inputKey;
+        document.querySelector("#osszegKivetId").value = osszegKivet;
+        osszeg = parseInt(osszegKivet);
+        console.log("osszeg");
+        console.log(osszeg);
+    });
+    osszegKivet = "";
+}
+
+let datumHTML = datum;
+/* let datumHTML =
+    trNumberDatum.getFullYear() +
     " - " +
-    (datum.getMonth() + 1) +
+    (trNumberDatum.getMonth() + 1) +
     " - " +
-    datum.getDate();
+    trNumberDatum.getDate(); */
 document.getElementById("datum").innerHTML = datumHTML;
 
 /* TODO:TODO:TODO: CREATE TR NUMBER TODO:TODO:TODO: */
 function createTrNumber() {
     trNumber =
-        datum.getFullYear() +
+        trNumberDatum.getFullYear() +
         "." +
-        datum.getMonth() +
+        trNumberDatum.getMonth() +
         "." +
-        datum.getDay() +
+        trNumberDatum.getDay() +
         "." +
-        datum.getHours() +
+        trNumberDatum.getHours() +
         "." +
-        datum.getMinutes() +
+        trNumberDatum.getMinutes() +
         "." +
-        datum.getSeconds() +
+        trNumberDatum.getSeconds() +
         "." +
-        datum.getMilliseconds();
+        trNumberDatum.getMilliseconds();
     return trNumber;
+}
+/* TODO:TODO:TODO: theTime TODO:TODO:TODO: */
+function theTime() {
+    var xDatum = new Date().toLocaleString();
+    return xDatum;
+}
+
+function getFullTransactions() {
+    console.log("Itt rendezzük a hiteleket ... 😉");
 }
 
 window.onload = renderPult();

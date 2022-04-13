@@ -26,7 +26,8 @@
         </div>
         <div>
             <form action="/" method="get">
-                <button type="button" class="btn btn-secondary">HITEL rendezése</button>
+                <button type="button" class="btn btn-secondary" id="hitelRendezes" onclick="getFullTransactions()">HITEL
+                    rendezése</button>
             </form>
         </div>
         <div>
@@ -40,149 +41,150 @@
     <!-- @media NOTE: -->
     <div class="app_page1">
         <div class="row">
-            <div class="col-sm-9" id="left""><!-- BUG: ball-->
+            <div class="col-sm-9" id="left">
+                <!-- BUG: ball-->
                 <div id=" termekdrop"></div>
-            <div id="termek"></div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <h1>aaa</h1>
-        </div>
-        <div class="col-sm-3" id="right">
-            <!-- BUG: jobb-->
-            <div id="pultos">
-                <div id="pult"></div>
+                <div id="termek"></div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <h1>aaa</h1>
             </div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <h1>www</h1>
-        </div><!-- BUG: -->
-    </div>
-    <!-- @media NOTE: -->
+            <div class="col-sm-3" id="right">
+                <!-- BUG: jobb-->
+                <div id="pultos">
+                    <div id="pult"></div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <h1>www</h1>
+            </div><!-- BUG: -->
+        </div>
+        <!-- @media NOTE: -->
 
-    <div class="absolute">
-        <button type="button" class="btn btn-primary mr-4 btn-lg" onclick="trKp()">** Kp **</button>
-        <button type="button" class="btn btn-primary mr-4 btn-lg" id="trCard">Kártya</button>
-        <button type="button" class="btn btn-secondary mr-4 btn-lg" id="trHitel">Hitel</button>
-        <button type="button" class="btn btn-warning mr-4 btn-lg kosarBt"
-            onclick="naTegyukEgyUjKosarba()">Kosárba</button>
-    </div>
+        <div class="absolute">
+            <button type="button" class="btn btn-primary mr-4 btn-lg" onclick="trKp()">** Kp **</button>
+            <button type="button" class="btn btn-primary mr-4 btn-lg" onclick="trCard()">Kártya</button>
+            <button type="button" class="btn btn-secondary mr-4 btn-lg" onclick="nevesitettHitel()">Hitel</button>
+            <button type="button" class="btn btn-warning mr-4 btn-lg kosarBt"
+                onclick="naTegyukEgyUjKosarba()">Kosárba</button>
+        </div>
 
-    <!-- NOTE: also sav START -->
-    <div class="fixed-bottom bg-danger text-white p-2 ">
-        <form action="/config" method="get">
-            <div class="d-flex justify-content-between">
-                <button type="button" class="btn btn-dark kpKivet">Kasszából kivét.</button>
-                <p id="datum"></p>
-                <p>Pultos: John Doe</p>
+        <!-- NOTE: also sav START -->
+        <div class="fixed-bottom bg-danger text-white p-2 ">
+            <form action="/config" method="get">
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-dark kpKivet">Kasszából kivét.</button>
+                    <p id="datum"></p>
+                    <p>Pultos: John Doe</p>
 
-                <!-- <button type="submit" class="btn btn-dark">Kasszából kivét.</button> -->
-                <span id="summa">Mindösszesen</span>
+                    <!-- <button type="submit" class="btn btn-dark">Kasszából kivét.</button> -->
+                    <span id="summa">Mindösszesen</span>
+                </div>
+            </form>
+        </div>
+        <!-- NOTE: also sav END -->
+
+        <!-- NOTE: TOAST -->
+        <div class="toast mt-3">
+            <div class="toast-header">
+                Üres kosár törlése
             </div>
-        </form>
-    </div>
-    <!-- NOTE: also sav END -->
-
-    <!-- NOTE: TOAST -->
-    <div class="toast mt-3">
-        <div class="toast-header">
-            Üres kosár törlése
+            <div class="toast-body">
+                Ezt most törlöm mert üres kosár!
+            </div>
         </div>
-        <div class="toast-body">
-            Ezt most törlöm mert üres kosár!
-        </div>
-    </div>
     </div>
 
     <!-- The HACK: kosarakModal -->
@@ -374,9 +376,274 @@
     </div>
     <!-- The HACK: kosarMegnevezes -->
 
+    <!-- The HACK:HACK:HACK:HACK:HACK: hitelMegnevezes -->
+    <div class="modal" id="hitelMegnevezesModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Kinek megy a hitel</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <label for="hitelMegnevezes">Név :</label><br>
+                    <input type="text" id="hitelMegnevezesId" name="hitelMegnevezes">
+                    <div>
+                        <!-- <button class="keyboard" id="a">a</button><button class="keyboard" id="b">b</button> -->
+                        <!-- INFO: -->
+                        <div class="vKeyboard-container d-flex row">
+
+                            <div class=" vKeyboard-letters " id="vKeyboard-letters">
+                                <div class="row vKeyboardRow vKeyboard-offsetRow1 justify-content-center m-1">
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-A" value="A">A</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-Z" value="Z">Z</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-E" value="E">E</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-R" value="R">R</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-T" value="T">T</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-Y" value="Y">Y</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-U" value="U">U</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-I" value="I">I</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-O" value="O">O</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-P" value="P">P</button>
+                                </div>
+                                <div class="row vKeyboardRow vKeyboard-offsetRow2 justify-content-center">
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-Q" value="Q">Q</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-S" value="S">S</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-D" value="D">D</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-F" value="F">F</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-G" value="G">G</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-H" value="H">H</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-J" value="J">J</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-K" value="K">K</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-L" value="L">L</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-M" value="M">M</button>
+                                </div>
+                                <div class="row vKeyboardRow vKeyboard-offsetRow3 justify-content-center">
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-W" value="W">W</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-X" value="X">X</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-C" value="C">C</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-V" value="V">V</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-B" value="B">B</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-N" value="N">N</button>
+                                    <span class="vKeyboard-spacer"></span>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-symbol m-1"
+                                        id="keyboard-tiret" value="-">-</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-symbol m-1"
+                                        id="keyboard-underscore" value="_">_</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-symbol m-1"
+                                        id="keyboard-@" value="@">@</button>
+                                </div>
+                                <div class="row vKeyboardRow justify-content-center">
+                                    <!-- INFO: -->
+                                    <button type="button col"
+                                        class="btn keyboard btn-primary vKeyboard-symbol vKeyboard-space"
+                                        id="keyboard-space" value=" ">
+                                        <span class="vKeyboard-space-character">┗━━━━━━━━━━━┛</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- INFO: -->
+
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger" data-dismiss="modal" id=""
+                        onclick="trHitel()">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- The HACK:HACK:HACK:HACK:HACK: hiteMegnevezes -->
+
+    <!-- The HACK:HACK:HACK:HACK:HACK:HACK:HACK:HACK:HACK:HACK: kivetMegnevezes -->
+    <div class="modal" id="kivetMegnevezesModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Kinek megy a kivet</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <label for="kivetMegnevezes">Név :</label><br>
+                    <input type="text" id="kivetMegnevezesId" name="kivetMegnevezes">
+                    <div>
+                        <!-- <button class="keyboard" id="a">a</button><button class="keyboard" id="b">b</button> -->
+                        <!-- INFO: -->
+                        <div class="vKeyboard-container d-flex row">
+
+                            <div class=" vKeyboard-letters " id="vKeyboard-letters">
+                                <div class="row vKeyboardRow vKeyboard-offsetRow1 justify-content-center m-1">
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-A" value="A">A</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-Z" value="Z">Z</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-E" value="E">E</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-R" value="R">R</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-T" value="T">T</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-Y" value="Y">Y</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-U" value="U">U</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-I" value="I">I</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-O" value="O">O</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-P" value="P">P</button>
+                                </div>
+                                <div class="row vKeyboardRow vKeyboard-offsetRow2 justify-content-center">
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-Q" value="Q">Q</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-S" value="S">S</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-D" value="D">D</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-F" value="F">F</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-G" value="G">G</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-H" value="H">H</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-J" value="J">J</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-K" value="K">K</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-L" value="L">L</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-M" value="M">M</button>
+                                </div>
+                                <div class="row vKeyboardRow vKeyboard-offsetRow3 justify-content-center">
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-W" value="W">W</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-X" value="X">X</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-C" value="C">C</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-V" value="V">V</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-B" value="B">B</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-N" value="N">N</button>
+                                    <span class="vKeyboard-spacer"></span>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-symbol m-1"
+                                        id="keyboard-tiret" value="-">-</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-symbol m-1"
+                                        id="keyboard-underscore" value="_">_</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-symbol m-1"
+                                        id="keyboard-@" value="@">@</button>
+                                </div>
+                                <div class="row vKeyboardRow justify-content-center">
+                                    <!-- INFO: -->
+                                    <button type="button col"
+                                        class="btn keyboard btn-primary vKeyboard-symbol vKeyboard-space"
+                                        id="keyboard-space" value=" ">
+                                        <span class="vKeyboard-space-character">┗━━━━━━━━━━━┛</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- INFO: -->
+
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger" data-dismiss="modal" id=""
+                        onclick="kivetOsszegNumber()">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- The HACK:HACK:HACK:HACK:HACK:HACK:HACK:HACK:HACK:HACK: kivetMegnevezes -->
+
+    <!-- The Modal -->
+    <div class="modal" id="osszegModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Mennyit ?</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="" method="GET" id="pswForm" name="myForm">
+                        <input type="number" id="osszegKivetId" /></br>
+                        <input type="button" value="1" id="1" class="m-2 btn-lg btn btn-primary pinButton calc" />
+                        <input type="button" value="2" id="2" class="m-2 btn-lg btn btn-primary pinButton calc" />
+                        <input type="button" value="3" id="3" class="m-2 btn-lg btn btn-primary pinButton calc" /><br>
+                        <input type="button" value="4" id="4" class="m-2 btn-lg btn btn-primary pinButton calc" />
+                        <input type="button" value="5" id="5" class="m-2 btn-lg btn btn-primary pinButton calc" />
+                        <input type="button" value="6" id="6" class="m-2 btn-lg btn btn-primary pinButton calc" /><br>
+                        <input type="button" value="7" id="7" class="m-2 btn-lg btn btn-primary pinButton calc" />
+                        <input type="button" value="8" id="8" class="m-2 btn-lg btn btn-primary pinButton calc" />
+                        <input type="button" value="9" id="9" class="m-2 btn-lg btn btn-primary pinButton calc" /><br>
+                        <input type="button" value="C" id="clear" class="m-2 btn-lg btn btn-danger pinButton clear" />
+                        <input type="button" value="0" id="0" class="m-2 btn-lg btn btn-primary pinButton calc" />
+                        <!-- <input type="button" value="enter" id="enter" class="m-2 btn-lg btn btn-warning pinButton enter"
+                            onclick="trKivet()" /> -->
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="trKivet()">Close</button>
+                </div>
+
+            </div>
+        </div>
     </div>
 
-
+    </div>
 
     <script src="jquery.slim.min.js"></script>
     <script src="popper.min.js"></script>

@@ -76,6 +76,8 @@ app.get("/lasttransactionid", (req, res) => {
         res.send(data);
     });
 });
+/* TODO: //lasttransactionid 😋😋😋😋😋😋*/
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
 
 /* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
 app.patch("/keszletmodositas", bodyParser.json(), (req, res) => {
@@ -118,6 +120,16 @@ app.get("/lasttransactionread", (req, res) => {
         res.send(data);
     });
 }); */
+app.get("/gettransactions", (req, res) => {
+    con.query(
+        "SELECT * FROM transactions WHERE trdate >= '2022-04-11T19:00:00'",
+        (err, data) => {
+            if (err) throw err;
+            res.send(data);
+        }
+    );
+});
+
 //BUG:BUG:BUG:BUG:BUG:BUG: torolni
 app.get("/lasttransaction", (req, res) => {
     console.log("lasttransaction OK");
