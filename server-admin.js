@@ -65,6 +65,13 @@ app.get("/datareadcsoport", (req, res) => {
     });
 });
 
+/* INFO: /datareadforgalom 😋😋😋😋😋😋*/
+app.get("/datareadforgalom", (req, res) => {
+    con.query("SELECT * FROM forgalom", (err, data) => {
+        if (err) throw err;
+        res.send(data);
+    });
+});
 /* TODO: /datareadkiszerelés 😋😋😋😋😋😋*/
 app.get("/datareadkiszereles", (req, res) => {
     con.query("SELECT * FROM kiszereles", (err, data) => {
@@ -108,6 +115,11 @@ app.get("/datareadkevert", (req, res) => {
 /* INFO: config */
 app.get("/config", (req, res) => {
     res.sendFile(__dirname + "/views/config.html");
+});
+
+/* INFO: forgalom */
+app.get("/forgalom", (req, res) => {
+    res.sendFile(__dirname + "/views/forgalom.html");
 });
 
 /* INFO: xkimeresnev */
@@ -269,6 +281,25 @@ app.patch("/updatecsoportok", bodyParser.json(), (req, res) => {
     console.log(insertData);
     con.query(
         "UPDATE csoportok SET nev = ? WHERE id = ?",
+        [insertData, id],
+        (err, data) => {
+            try {
+                res.send(data);
+            } catch {
+                if (err) throw err;
+            }
+        }
+    );
+});
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+app.patch("/updatetermekek", bodyParser.json(), (req, res) => {
+    var insertData = [req.body.nev];
+    var id = req.body.id;
+    console.log(insertData);
+    console.log(id);
+    con.query(
+        "UPDATE termekek SET nev = ? WHERE id = ?",
         [insertData, id],
         (err, data) => {
             try {

@@ -93,11 +93,13 @@ getdata();
 /* INFO: termék //ok bekérése START INFO: */
 /* TODO:TODO:TODO: GETDATA TODO:TODO:TODO: */
 async function getdata() {
+    /* NOTE: get gettransactions */
+    var response = await fetch("/gettransactions");
+    state.fullTransactions = await response.json();
+
     /* NOTE: get kevert */
     var response = await fetch("/datareadkevert");
     state.kevert = await response.json();
-    //console.log("/datareadkevert");
-    //console.log(state.kevert);
 
     /* NOTE: get last-transaction */
     /* var response = await fetch("/lasttransaction");

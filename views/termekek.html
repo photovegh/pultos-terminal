@@ -107,6 +107,37 @@
             </tbody>
         </table>
         <div id="adatok"></div>
+
+        <!-- BUG:BUG:BUG:BUG:BUG:BUG:BUG: -->
+        <!-- The Modal -->
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Mi legyen a termék neve?</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form>
+                            <label for="newNev">Új név:</label><br>
+                            <input type="text" id="newNev" name="newNev"><br>
+                        </form>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"
+                            onclick="updatetermekek()">Felülírom !!!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- BUG:BUG:BUG:BUG:BUG:BUG:BUG: -->
+
     </div>
     <script src="jquery.slim.min.js"></script>
     <script src="popper.min.js"></script>

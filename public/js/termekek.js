@@ -161,7 +161,7 @@ async function getdata() {
 
                     for (vKimeresNev of state.xkimeresnev) {
                         createXkimeresHTML += `<h4 class = "xKimeresSelect" title=0 id = ${vKimeresNev.id} 
-                        style = "color: red" >${vKimeresNev.nev}</h4>`;
+                        style = "background: coral" >${vKimeresNev.nev}</h4>`;
                         myObject = {
                             xKim: {
                                 elemID: vKimeresNev.id,
@@ -185,9 +185,13 @@ async function getdata() {
                         this.title == 0
                             ? this.setAttribute("title", 1)
                             : this.setAttribute("title", 0);
+                        /* this.title == 1
+                            ? (this.class = "btn btn-success xKimeresSelect")
+                            : (this.class = "btn btn-danger xKimeresSelect"); */
                         this.title == 1
-                            ? (this.style.color = "green")
-                            : (this.style.color = "red");
+                            ? /* this.style.color = "green" */
+                              (this.style.background = "greenyellow")
+                            : (this.style.background = "coral");
 
                         this.title == 1
                             ? (myArray[index].xKim.tarolhato = 1)
@@ -271,6 +275,7 @@ function rendertermekek() {
                 <td>${vTermekek.id}</td>
                 <td>${vTermekek.nev}</td>
                 <td>${vTermekek.beszar}</td>
+                <td><button class="updateBtn" id=${vTermekek.id}>Edit</td>
                 </tr>
 
      `;
@@ -278,6 +283,19 @@ function rendertermekek() {
         xid = vTermekek.id; /* BUG: */
     }
     document.getElementById("termekek").innerHTML = termekekHTML;
+
+    $(".updateBtn").click(function () {
+        let arrowIndex = -1;
+        for (let i = 0; i < state.termekek.length; i++) {
+            if (state.termekek[i].id == this.id) {
+                arrowIndex = i;
+            }
+        }
+        var origNev = state.termekek[arrowIndex].nev;
+        origId = state.termekek[arrowIndex].id;
+        $("#myModal").modal();
+        document.getElementById("newNev").value = origNev;
+    });
 }
 /* HACK: */
 function renderkiszereles() {
@@ -337,15 +355,42 @@ function rendercsoport() {
     /* BUG: */
 }
 /* HACK: */
-
 function figyel() {
     if (document.getElementById("nev").value == "") {
         console.log("******* mezo UUURRREEESSS *******");
     }
     console.log("******* Ok *******");
 }
-
 /* HACK: */
+
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+function updatetermekek() {
+    const nev = document.getElementById("newNev").value;
+    try {
+        updateMySQL();
+    } catch (e) {}
+    async function updateMySQL() {
+        id = origId;
+
+        const response = await fetch("/updatetermekek/", {
+            method: "PATCH",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({ nev: nev, id: id }),
+        });
+        console.log(response);
+        let arrowIndex = -1;
+        for (let i = 0; i < state.termekek.length; i++) {
+            if (state.termekek[i].id == id) {
+                arrowIndex = i;
+            }
+        }
+        state.termekek[arrowIndex].nev = nev;
+        rendertermekek();
+    }
+}
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
 
 /* addBtn.onclick = function () {
     const nameInput = document.querySelector("#name-input");
