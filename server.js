@@ -21,10 +21,11 @@ app.post("/inserttransactions", bodyParser.json(), (req, res) => {
         req.body.trfizetesmod,
         req.body.megjegyzes,
         req.body.pultos,
+        req.body.kibeosszeg,
     ];
     /* FIXME:FIXME:FIXME: */
     con.query(
-        "INSERT INTO transactions (trnumber, trdate, trfizetesmod, megjegyzes, pultos) VALUES (?)",
+        "INSERT INTO transactions (trnumber, trdate, trfizetesmod, megjegyzes, pultos, kibeosszeg) VALUES (?)",
         [insertData],
         (err, data) => {
             try {

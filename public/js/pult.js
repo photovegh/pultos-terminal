@@ -1,4 +1,5 @@
 const trNumberDatum = new Date();
+const keyboardTemplateHTML = keyboardTemplateRender();
 var datum = new Date().toLocaleString();
 //const datum = new Date().toLocaleDateString();
 //const ido = new Date().toLocaleDateString("en-CA");
@@ -12,6 +13,7 @@ var megjegyzes = "";
 var kivetMegnevezes = "";
 var osszegKivet = "";
 var osszeg = -1;
+var mindosszesenTransaction = -1;
 createTrNumber();
 //console.log("app trNumber");
 //console.log(trNumber);
@@ -299,6 +301,7 @@ function renderPult() {
     }
     document.getElementById("pult").innerHTML = tetelSorokHTML;
     document.getElementById("summa").innerHTML = mindosszesen;
+    mindosszesenTransaction = mindosszesen;
     $(".insert-db").click(function (event) {
         //HACK:HACK:HACK:HACK:HACK:
         let pultTombIndex = this.id;
@@ -405,6 +408,10 @@ function naTegyukEgyUjKosarba() {
             document.querySelector("#kosarMegnevezesId").value = "";
             kosarMegnevezes = "";
             $("#kosarMegnevezesModal").modal();
+            //FIXME:
+            document.getElementById("keyboardTemplateKosar").innerHTML =
+                keyboardTemplateHTML;
+            //FIXME:
             $(".keyboard").off("click");
             $(".keyboard").on("click", function () {
                 inputKey = "";
@@ -495,14 +502,26 @@ function trKp() {
     let trFizetesMod = "k";
     trNumber = createTrNumber();
     let megjegyzes = "*";
-    createTranactionData(trNumber, trFizetesMod, megjegyzes);
+    createTranactionData(
+        trNumber,
+        trFizetesMod,
+        megjegyzes,
+        mindosszesenTransaction
+    );
+    //mindosszesenTransaction = -1
 }
 /* TODO:TODO:TODO: TR CARD TODO:TODO:TODO: */
 function trCard() {
     let trFizetesMod = "c";
     trNumber = createTrNumber();
     let megjegyzes = "+";
-    createTranactionData(trNumber, trFizetesMod, megjegyzes);
+    createTranactionData(
+        trNumber,
+        trFizetesMod,
+        megjegyzes,
+        mindosszesenTransaction
+    );
+    //mindosszesenTransaction = -1
 }
 //BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:
 /* TODO:TODO:TODO: TR HITEL TODO:TODO:TODO: */
@@ -524,6 +543,10 @@ function nevesitettHitel() {
     } else {
         if (foundPult) {
             $("#hitelMegnevezesModal").modal();
+            //FIXME:
+            document.getElementById("keyboardTemplateHitel").innerHTML =
+                keyboardTemplateHTML;
+            //FIXME:
             $(".keyboard").off("click");
             $(".keyboard").on("click", function () {
                 inputKey = "";
@@ -540,12 +563,17 @@ function nevesitettHitel() {
 }
 //BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:
 function trHitel() {
-    createTranactionData(trNumber, trFizetesMod, megjegyzes);
+    createTranactionData(
+        trNumber,
+        trFizetesMod,
+        megjegyzes,
+        mindosszesenTransaction
+    );
     //$(".keyboard").off("click");
 }
 
 /* TODO:TODO:TODO: TRANSACTIONS TODO:TODO:TODO: */
-function createTranactionData(trNumber, trFizetesMod, megjegyzes) {
+function createTranactionData(trNumber, trFizetesMod, megjegyzes, osszeg) {
     try {
         updateMySQL();
         updateLastId();
@@ -563,6 +591,7 @@ function createTranactionData(trNumber, trFizetesMod, megjegyzes) {
                 trfizetesmod: trFizetesMod,
                 megjegyzes: megjegyzes,
                 pultos: pultos,
+                kibeosszeg: osszeg,
             }),
         });
     }
@@ -597,7 +626,17 @@ function createTranactionData(trNumber, trFizetesMod, megjegyzes) {
 /* TODO:TODO:TODO: FORGALOM TODO:TODO:TODO: */
 function trKivet() {
     console.log("penztarbol kivet OKKKKKKKK");
+    console.log("kivet neve");
+    console.log(kivet);
+    console.log("kivet osszeg");
+    osszeg = osszeg * -1;
+    console.log(osszeg);
     alert("Irány levonni a forgalomból ...");
+    //FIXME:
+    let trFizetesMod = "b";
+    trNumber = createTrNumber();
+    let megjegyzes = kivet;
+    createTranactionData(trNumber, trFizetesMod, megjegyzes, osszeg);
 }
 
 /* TODO:TODO:TODO: FORGALOM TODO:TODO:TODO: */
@@ -664,6 +703,10 @@ async function insertForgalomData(
 $(".kpKivet").click(function () {
     //$("#myModalKivet").modal();
     $("#kivetMegnevezesModal").modal();
+    //FIXME:
+    document.getElementById("keyboardTemplateKivet").innerHTML =
+        keyboardTemplateHTML;
+    //FIXME:
     $(".keyboard").off("click");
     document.querySelector("#kivetMegnevezesId").value = "";
     $(".keyboard").on("click", function () {
@@ -734,3 +777,91 @@ function getFullTransactions() {
 }
 
 window.onload = renderPult();
+
+function keyboardTemplateRender() {
+    return `
+    <div class="vKeyboard-container d-flex row">
+
+                            <div class=" vKeyboard-letters " id="vKeyboard-letters">
+                                <div class="row vKeyboardRow vKeyboard-offsetRow1 justify-content-center m-1">
+                                <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                id="keyboard-Q" value="Q">Q</button>
+                                <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                id="keyboard-W" value="W">W</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-E" value="E">E</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-R" value="R">R</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-T" value="T">T</button>
+                                        <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-Z" value="Z">Z</button>
+                                    
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-U" value="U">U</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-I" value="I">I</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-O" value="O">O</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-P" value="P">P</button>
+                                </div>
+                                <div class="row vKeyboardRow vKeyboard-offsetRow2 justify-content-center">
+                                <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-A" value="A">A</button>
+                                    
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-S" value="S">S</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-D" value="D">D</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-F" value="F">F</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-G" value="G">G</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-H" value="H">H</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-J" value="J">J</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-K" value="K">K</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-L" value="L">L</button>
+                                    
+                                </div>
+                                <div class="row vKeyboardRow vKeyboard-offsetRow3 justify-content-center">
+                                <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-Y" value="Y">Y</button>
+                                    
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-X" value="X">X</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-C" value="C">C</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-V" value="V">V</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-B" value="B">B</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-N" value="N">N</button>
+                                        <button type="button col" class="btn keyboard btn-primary vKeyboard-letter m-1"
+                                        id="keyboard-M" value="M">M</button>
+                                    <span class="vKeyboard-spacer"></span>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-symbol m-1"
+                                        id="keyboard-tiret" value="-">-</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-symbol m-1"
+                                        id="keyboard-underscore" value="_">_</button>
+                                    <button type="button col" class="btn keyboard btn-primary vKeyboard-symbol m-1"
+                                        id="keyboard-@" value="@">@</button>
+                                </div>
+                                <div class="row vKeyboardRow justify-content-center">
+                                    
+                                    <button type="button col"
+                                        class="btn keyboard btn-primary vKeyboard-symbol vKeyboard-space"
+                                        id="keyboard-space" value=" ">
+                                        <span class="vKeyboard-space-character">┗━━━━━━━━━━━┛</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+    `;
+}
