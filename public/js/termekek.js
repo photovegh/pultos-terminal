@@ -85,12 +85,27 @@ async function getdata() {
                 const elar = elarInput.value == "" ? "0" : elarInput.value;
                 elarInput.value = "";
 
-                const leltarozandoInput =
+                const leltarozandoInput = document.querySelectorAll(
+                    'input[name="leltarozando"]'
+                );
+                var leltarozando = "*";
+                console.log(leltarozandoInput);
+                for (selected of leltarozandoInput) {
+                    if (selected.checked) {
+                        console.log(selected.value);
+                        console.log(leltarozando);
+
+                        leltarozando = selected.value;
+                    }
+                }
+                /* const leltarozandoInput =
                     document.querySelector("#leltarozando");
-                const leltarozando =
+                const leltarozando = leltarozandoInput.value; */
+                //const leltarozando = leltarozandoInput.value == "i" ? "i" : "n";
+                /* const leltarozando =
                     leltarozandoInput.value == ""
                         ? "i"
-                        : leltarozandoInput.value;
+                        : leltarozandoInput.value; */
                 leltarozandoInput.value = "";
 
                 const kritikusInput = document.querySelector("#kritikus");
@@ -115,11 +130,12 @@ async function getdata() {
                 const urtartalom =
                     urtartalomInput.value == "" ? "0" : urtartalomInput.value;
                 urtartalomInput.value = "";
-                /* TODO: NOTE: INFO: NOTE: TODO: */
+                /* BUG:BUG:BUG:BUG:BUG:  */
                 //const cl = urtartalom * 10;
                 //const cl = termekKiszereles == 2 ? urtartalom * 10 : 1;
-                const cl = termekKiszereles == 2 ? urtartalom * 10 : 1;
-                /* TODO: NOTE: INFO: NOTE: TODO: */
+                const cl =
+                    termekKiszereles == 2 ? parseInt(urtartalom * 100) : 1;
+                /* BUG:BUG:BUG:BUG:BUG: */
                 const sumcl = jelenlegiKeszlet * cl;
 
                 var id = xid + 1;

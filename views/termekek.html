@@ -30,9 +30,13 @@
                 <label for="elar">Eladási ár :</label><br>
                 <input type="number" id="elar" name="elar"><br>
             </div>
-            <div class="shadow p-2 mb-1 bg-white rounded">
-                <label for="leltarozando">Leltározando (i/n):</label><br>
-                <input type="text" id="leltarozando" name="leltarozando" size="1" value="i"><br>
+            <div class="shadow p-2 mb-1 bg-white rounded">Leltározandó:<br>
+
+                <input type="radio" id="leltarozando" name="leltarozando" size="1" value="i" checked>
+                <label for="leltarozando">IGEN</label><br>
+                <input type="radio" id="leltarozando" name="leltarozando" size="1" value="n">
+                <label for="leltarozando">NEM</label><br>
+
             </div>
             <div class="shadow p-2 mb-1 bg-white rounded">
                 <label for="kritikus">Kritikus mennyiség :</label><br>
@@ -47,8 +51,9 @@
                 <input type="number" id="jelenlegiKeszlet" name="jelenlegiKeszlet"><br>
             </div>
             <div class="shadow p-2 mb-1 bg-white rounded">
-                <label for="urtartalom">A termék beszerzési űrtartalma <span style="background-color:chartreuse ;">
-                        ! CSAK KIMÉRT termék esetén deciliterben ! </span> / MINDEN MÁS esetben 1 :</label><br>
+                <label for="urtartalom">A termék beszerzési űrtartalma vagy darab esetén 1 <span
+                        style="background-color:chartreuse ;">
+                        ! CSAK KIMÉRT termék esetén LITERBEN ! </span> / MINDEN MÁS esetben 1 :</label><br>
                 <input type="number" id="urtartalom" name="urtartalom"><br>
             </div>
             <div class="shadow p-3 mb-5 bg-white rounded">
