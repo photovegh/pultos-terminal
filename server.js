@@ -22,10 +22,11 @@ app.post("/inserttransactions", bodyParser.json(), (req, res) => {
         req.body.megjegyzes,
         req.body.pultos,
         req.body.kibeosszeg,
+        req.body.kibeosszegbeszar,
     ];
     /* FIXME:FIXME:FIXME: */
     con.query(
-        "INSERT INTO transactions (trnumber, trdate, trfizetesmod, megjegyzes, pultos, kibeosszeg) VALUES (?)",
+        "INSERT INTO transactions (trnumber, trdate, trfizetesmod, megjegyzes, pultos, kibeosszeg, kibeosszegbeszar) VALUES (?)",
         [insertData],
         (err, data) => {
             try {

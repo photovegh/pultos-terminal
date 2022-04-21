@@ -1,4 +1,4 @@
-const trNumberDatum = new Date();
+var trNumberDatum = new Date();
 const keyboardTemplateHTML = keyboardTemplateRender();
 var datum = new Date().toLocaleString();
 //const datum = new Date().toLocaleDateString();
@@ -14,6 +14,7 @@ var kivetMegnevezes = "";
 var osszegKivet = "";
 var osszeg = -1;
 var mindosszesenTransaction = -1;
+var mindosszesenTransactionBeszar = -1;
 createTrNumber();
 //console.log("app trNumber");
 //console.log(trNumber);
@@ -278,6 +279,8 @@ function renderPult() {
     //FIXME: FIXME: FIXME:
     var tetelSorokHTML = "";
     var mindosszesen = 0;
+    var mindosszesenElar = 0;
+    var mindosszesenBeszar = 0;
     var tombIndex = 0;
     for (var sorok of state.pult) {
         tetelSorokHTML += `
@@ -298,10 +301,14 @@ function renderPult() {
         `;
         tombIndex++;
         mindosszesen += sorok.eladottelar * sorok.db;
+        mindosszesenBeszar += sorok.eladottbeszar * sorok.db;
     }
     document.getElementById("pult").innerHTML = tetelSorokHTML;
     document.getElementById("summa").innerHTML = mindosszesen;
     mindosszesenTransaction = mindosszesen;
+    mindosszesenTransactionBeszar = mindosszesenBeszar;
+    console.log("mindosszesenTransactionBeszar ******************");
+    console.log(mindosszesenTransactionBeszar);
     $(".insert-db").click(function (event) {
         //HACK:HACK:HACK:HACK:HACK:
         let pultTombIndex = this.id;
@@ -506,7 +513,8 @@ function trKp() {
         trNumber,
         trFizetesMod,
         megjegyzes,
-        mindosszesenTransaction
+        mindosszesenTransaction,
+        mindosszesenTransactionBeszar
     );
     //mindosszesenTransaction = -1
 }
@@ -519,7 +527,8 @@ function trCard() {
         trNumber,
         trFizetesMod,
         megjegyzes,
-        mindosszesenTransaction
+        mindosszesenTransaction,
+        mindosszesenTransactionBeszar
     );
     //mindosszesenTransaction = -1
 }
@@ -567,13 +576,20 @@ function trHitel() {
         trNumber,
         trFizetesMod,
         megjegyzes,
-        mindosszesenTransaction
+        mindosszesenTransaction,
+        mindosszesenTransactionBeszar
     );
     //$(".keyboard").off("click");
 }
 
 /* TODO:TODO:TODO: TRANSACTIONS TODO:TODO:TODO: */
-function createTranactionData(trNumber, trFizetesMod, megjegyzes, osszeg) {
+function createTranactionData(
+    trNumber,
+    trFizetesMod,
+    megjegyzes,
+    osszeg,
+    ossegBeszar
+) {
     try {
         updateMySQL();
         updateLastId();
@@ -592,6 +608,7 @@ function createTranactionData(trNumber, trFizetesMod, megjegyzes, osszeg) {
                 megjegyzes: megjegyzes,
                 pultos: pultos,
                 kibeosszeg: osszeg,
+                kibeosszegbeszar: ossegBeszar,
             }),
         });
     }
@@ -636,7 +653,14 @@ function trKivet() {
     let trFizetesMod = "b";
     trNumber = createTrNumber();
     let megjegyzes = kivet;
-    createTranactionData(trNumber, trFizetesMod, megjegyzes, osszeg);
+    let trKivetNincsBeszar = 0;
+    createTranactionData(
+        trNumber,
+        trFizetesMod,
+        megjegyzes,
+        osszeg,
+        trKivetNincsBeszar
+    );
 }
 
 /* TODO:TODO:TODO: FORGALOM TODO:TODO:TODO: */
@@ -750,12 +774,13 @@ document.getElementById("datum").innerHTML = datumHTML;
 
 /* TODO:TODO:TODO: CREATE TR NUMBER TODO:TODO:TODO: */
 function createTrNumber() {
+    trNumberDatum = new Date();
     trNumber =
         trNumberDatum.getFullYear() +
         "." +
-        trNumberDatum.getMonth() +
+        (trNumberDatum.getMonth() + 1) +
         "." +
-        trNumberDatum.getDay() +
+        trNumberDatum.getDate() +
         "." +
         trNumberDatum.getHours() +
         "." +
@@ -764,6 +789,12 @@ function createTrNumber() {
         trNumberDatum.getSeconds() +
         "." +
         trNumberDatum.getMilliseconds();
+    console.log("trNumber ++++++++++++++++++++++++++");
+    console.log(trNumberDatum);
+    console.log(trNumber);
+    console.log(trNumberDatum.getFullYear());
+    console.log(trNumberDatum.getMonth() + 1);
+    console.log(trNumberDatum.getDate());
     return trNumber;
 }
 /* TODO:TODO:TODO: theTime TODO:TODO:TODO: */
