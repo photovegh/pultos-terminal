@@ -40,6 +40,42 @@ app.post("/inserttransactions", bodyParser.json(), (req, res) => {
     console.log(insertData);
     /* FIXME:FIXME:FIXME: */
 });
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+/* NOTE: modifytransactions  NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE: */
+app.patch("/modifytransactions", bodyParser.json(), (req, res) => {
+    const insertDataMod = [req.body.trfizetesmod];
+    const insertDataMegjegyzes = [req.body.megjegyzes];
+    const id = req.body.id;
+
+    /* FIXME:FIXME:FIXME: */
+    con.query(
+        "UPDATE transactions SET trfizetesmod = ?WHERE id = ?",
+        [insertDataMod, id],
+
+        (err, data) => {
+            try {
+                res.send(data);
+            } catch {
+                if (err) throw err;
+            }
+        }
+    );
+    con.query(
+        "UPDATE transactions SET megjegyzes = ? WHERE id = ?",
+        [insertDataMegjegyzes, id],
+        (err, data) => {
+            try {
+                res.send(data);
+            } catch {
+                if (err) throw err;
+            }
+        }
+    );
+    console.log("insertData/////////////");
+    console.log(insertDataMod);
+    console.log(insertDataMegjegyzes);
+    /* FIXME:FIXME:FIXME: */
+});
 
 /* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
 /* NOTE: insertforgalom  NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE: */
@@ -128,6 +164,28 @@ app.get("/gettransactions", (req, res) => {
         res.send(data);
     });
 });
+app.get("/gettransactionshitel/:id", (req, res) => {
+    console.log("id 😋");
+    var sendParameter = req.params.id;
+    console.log(sendParameter);
+    con.query(
+        /* "SELECT * FROM transactions WHERE trfizetesmod = 'h'", */
+        `SELECT * FROM transactions WHERE trfizetesmod = "${sendParameter}"`,
+        (err, data) => {
+            if (err) throw err;
+            res.send(data);
+        }
+    );
+});
+/* app.get("/gettransactionshitel", (req, res) => {
+    con.query(
+        "SELECT * FROM transactions WHERE trfizetesmod = 'h'",
+        (err, data) => {
+            if (err) throw err;
+            res.send(data);
+        }
+    );
+}); */
 /* "SELECT * FROM transactions WHERE trdate >= '2022-04-11T19:00:00'", */
 
 //BUG:BUG:BUG:BUG:BUG:BUG: torolni

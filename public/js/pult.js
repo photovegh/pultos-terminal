@@ -15,10 +15,13 @@ var osszegKivet = "";
 var osszeg = -1;
 var mindosszesenTransaction = -1;
 var mindosszesenTransactionBeszar = -1;
+var fizetoHitelesId = -1;
+var fizetoHitelesMegjegyzes = "";
+var fizetoHitelesIndex = -1;
 createTrNumber();
 //console.log("app trNumber");
 //console.log(trNumber);
-// NOTE: Ez definiálja a bekért adat ojektum tömbjét 😎
+/* 
 const state = {
     keszlet: [],
     csoportkategoria: [],
@@ -29,6 +32,19 @@ const state = {
     kosarNevek: [],
     kevert: [],
     fullTransactions: [],
+};
+*/
+// NOTE: Ez definiálja a bekért adat ojektum tömbjét 😎
+const state = {
+    keszlet: [],
+    csoportkategoria: [],
+    xkimeres: [],
+    xkimeresnev: [],
+    pult: [],
+    kosarak: [],
+    kosarNevek: [],
+    kevert: [],
+    fullTransactionsHitel: [],
 };
 
 // lastTransaction: [],
@@ -97,8 +113,14 @@ getdata();
 /* TODO:TODO:TODO: GETDATA TODO:TODO:TODO: */
 async function getdata() {
     /* NOTE: get gettransactions */
-    var response = await fetch("/gettransactions");
-    state.fullTransactions = await response.json();
+    /* var response = await fetch("/gettransactions");
+    state.fullTransactions = await response.json(); */
+
+    /* NOTE: get gettransactionshitel */
+    var id = "h";
+    var response = await fetch(`/gettransactionshitel/${id}`);
+    //var response = await fetch("/gettransactionshitel");
+    state.fullTransactionsHitel = await response.json();
 
     /* NOTE: get kevert */
     var response = await fetch("/datareadkevert");
@@ -789,12 +811,6 @@ function createTrNumber() {
         trNumberDatum.getSeconds() +
         "." +
         trNumberDatum.getMilliseconds();
-    console.log("trNumber ++++++++++++++++++++++++++");
-    console.log(trNumberDatum);
-    console.log(trNumber);
-    console.log(trNumberDatum.getFullYear());
-    console.log(trNumberDatum.getMonth() + 1);
-    console.log(trNumberDatum.getDate());
     return trNumber;
 }
 /* TODO:TODO:TODO: theTime TODO:TODO:TODO: */
@@ -803,9 +819,84 @@ function theTime() {
     return xDatum;
 }
 
-function getFullTransactions() {
-    console.log("Itt rendezzük a hiteleket ... 😉");
+/* TODO:TODO:TODO: HITELRENDEZES MOD TODO:TODO:TODO: */
+function hitelFizetesKp() {
+    let id = fizetoHitelesId;
+    let trFizetesMod = "k";
+    let hitelTrDatum = new Date().toLocaleString();
+    let megjegyzes =
+        "x " + fizetoHitelesMegjegyzes + " rendezve: " + hitelTrDatum;
+    modifyTranactionData(id, trFizetesMod, megjegyzes);
+    state.fullTransactionsHitel[fizetoHitelesIndex].trFizetesMod = trFizetesMod;
+    state.fullTransactionsHitel.splice(fizetoHitelesIndex, 1);
+    fizetoHitelesId = -1;
+    fizetoHitelesMegjegyzes = "";
+    fizetoHitelesIndex = -1;
 }
+function hitelFizetesCard() {
+    let id = fizetoHitelesId;
+    let trFizetesMod = "c";
+    let hitelTrDatum = new Date().toLocaleString();
+    let megjegyzes =
+        "x " + fizetoHitelesMegjegyzes + " rendezve: " + hitelTrDatum;
+    modifyTranactionData(id, trFizetesMod, megjegyzes);
+    state.fullTransactionsHitel[fizetoHitelesIndex].trFizetesMod = trFizetesMod;
+    state.fullTransactionsHitel.splice(fizetoHitelesIndex, 1);
+    fizetoHitelesId = -1;
+    fizetoHitelesMegjegyzes = "";
+    fizetoHitelesIndex = -1;
+}
+/* TODO:TODO:TODO: HITELRENDEZESTRANSACTION TODO:TODO:TODO: */
+function modifyTranactionData(id, trFizetesMod, megjegyzes) {
+    try {
+        updateMySQL();
+    } catch (e) {}
+    async function updateMySQL() {
+        //datum = theTime();
+        const response = await fetch("/modifytransactions/", {
+            method: "PATCH",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                id: id,
+                trfizetesmod: trFizetesMod,
+                megjegyzes: megjegyzes,
+            }),
+        });
+    }
+}
+
+function fullTransactionsHitel() {
+    let hitelListHTML = "";
+    $("#hitelRendezesModal").modal();
+    hitelListHTML = hitelStateRender();
+
+    document.getElementById("hitelList").innerHTML = hitelListHTML;
+    $(".hitelListRendez").off("click");
+
+    //document.querySelector("#osszegKivetId").value = "";
+    $(".hitelListRendez").on("click", function (e) {
+        fizetoHitelesId = this.id;
+        fizetoHitelesMegjegyzes = e.target.dataset.megjegyzes;
+        fizetoHitelesIndex = e.target.dataset.index;
+        $("#hitelRendezesModal .close").click();
+        $("#fizetoHitelesModModal").modal();
+    });
+}
+function hitelStateRender() {
+    let hitelListHTML = "";
+    let index = 0;
+    for (hitel of state.fullTransactionsHitel) {
+        hitelListHTML += `<h5 class='card hitelListRendez' data-megjegyzes=${hitel.megjegyzes} data-index=${index} id='${hitel.id}'>${hitel.megjegyzes} összeg: ${hitel.kibeosszeg} * ${hitel.id}</h5>`;
+        index++;
+    }
+    return hitelListHTML;
+}
+/* function getFullTransactions() {
+    console.log("Itt rendezzük a hiteleket ... 😉");
+    console.log(state.fullTransactions);
+} */
 
 window.onload = renderPult();
 

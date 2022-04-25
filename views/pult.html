@@ -26,7 +26,8 @@
         </div>
         <div>
             <form action="/" method="get">
-                <button type="button" class="btn btn-secondary" id="hitelRendezes" onclick="getFullTransactions()">HITEL
+                <button type="button" class="btn btn-secondary" id="hitelRendezes"
+                    onclick="fullTransactionsHitel()">HITEL
                     rendezése</button>
             </form>
         </div>
@@ -356,6 +357,64 @@
         </div>
     </div>
     <!-- The HACK:HACK:HACK:HACK:HACK:HACK:HACK:HACK:HACK:HACK: kivetMegnevezes -->
+
+    <!-- The HACK:HACK:HACK:HACK: hitelRendezesModal -->
+    <div class="modal" id="hitelRendezesModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Hetelek rendezése:</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" id="hitelList">
+
+                </div>
+
+                <!-- Modal footer -->
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">kp</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">card</button>
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+
+    <!-- The HACK:HACK:HACK:HACK: hitelRendezesModal -->
+    <!-- The HACK:HACK:HACK:HACK: fizetoHitelesModModal -->
+    <div class="modal" id="fizetoHitelesModModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Hogyan rendezi?:</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <!-- <div class="modal-body" id="hitelList">
+
+                </div> -->
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="hitelFizetesKp()">** Kp
+                        **</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        onclick="hitelFizetesCard()">Kártya</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Mégse</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- The HACK:HACK:HACK:HACK: fizetoHitelesModModal -->
 
     <!-- The Modal -->
     <div class="modal" id="osszegModal">
