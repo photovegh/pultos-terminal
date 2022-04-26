@@ -36,8 +36,6 @@ app.post("/inserttransactions", bodyParser.json(), (req, res) => {
             }
         }
     );
-    console.log("insertData/////////////");
-    console.log(insertData);
     /* FIXME:FIXME:FIXME: */
 });
 /* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
@@ -46,12 +44,10 @@ app.patch("/modifytransactions", bodyParser.json(), (req, res) => {
     const insertDataMod = [req.body.trfizetesmod];
     const insertDataMegjegyzes = [req.body.megjegyzes];
     const id = req.body.id;
-
     /* FIXME:FIXME:FIXME: */
     con.query(
-        "UPDATE transactions SET trfizetesmod = ?WHERE id = ?",
-        [insertDataMod, id],
-
+        "UPDATE transactions SET trfizetesmod = ?, megjegyzes = ? WHERE id = ?",
+        [insertDataMod, insertDataMegjegyzes, id],
         (err, data) => {
             try {
                 res.send(data);
@@ -60,20 +56,6 @@ app.patch("/modifytransactions", bodyParser.json(), (req, res) => {
             }
         }
     );
-    con.query(
-        "UPDATE transactions SET megjegyzes = ? WHERE id = ?",
-        [insertDataMegjegyzes, id],
-        (err, data) => {
-            try {
-                res.send(data);
-            } catch {
-                if (err) throw err;
-            }
-        }
-    );
-    console.log("insertData/////////////");
-    console.log(insertDataMod);
-    console.log(insertDataMegjegyzes);
     /* FIXME:FIXME:FIXME: */
 });
 
@@ -101,8 +83,6 @@ app.post("/insertforgalom", bodyParser.json(), (req, res) => {
             }
         }
     );
-    console.log("insertData************");
-    console.log(insertData);
     /* FIXME:FIXME:FIXME: */
 });
 
@@ -121,8 +101,6 @@ app.get("/lasttransactionid", (req, res) => {
 app.patch("/keszletmodositas", bodyParser.json(), (req, res) => {
     var insertData = [req.body.sumcl];
     var id = req.body.id;
-    console.log("insertData");
-    console.log(insertData);
     con.query(
         "UPDATE termekek SET sumcl = ? WHERE id = ?",
         [insertData, id],
@@ -165,9 +143,7 @@ app.get("/gettransactions", (req, res) => {
     });
 });
 app.get("/gettransactionshitel/:id", (req, res) => {
-    console.log("id 😋");
     var sendParameter = req.params.id;
-    console.log(sendParameter);
     con.query(
         /* "SELECT * FROM transactions WHERE trfizetesmod = 'h'", */
         `SELECT * FROM transactions WHERE trfizetesmod = "${sendParameter}"`,
@@ -190,7 +166,6 @@ app.get("/gettransactionshitel/:id", (req, res) => {
 
 //BUG:BUG:BUG:BUG:BUG:BUG: torolni
 app.get("/lasttransaction", (req, res) => {
-    console.log("lasttransaction OK");
     res.sendFile(__dirname + "/last-transaction.json");
 });
 //BUG:BUG:BUG:BUG:BUG:BUG: torolni
@@ -223,7 +198,6 @@ con.query("SELECT * FROM termekek", (err, data) => {
 
 /* INFO: induló képernyő */
 app.get("/", (req, res) => {
-    console.log("PIN pad console OK");
     res.sendFile(__dirname + "/views/index.html");
 });
 
@@ -267,11 +241,10 @@ app.get("/datareadxkimeresnev", (req, res) => {
     });
 });
 
-/* INFO: /dataread2 😋😋😋😋😋😋*/
+/* INFO:INFO:INFO:INFO:INFO:INFO:INFO:INFO:INFO: /dataread2 😋😋😋😋😋😋*/
 app.get("/dataread2", (req, res) => {
     con.query("SELECT * FROM termekek", (err, rows) => {
         if (err) throw err;
-        console.log(rows);
         var xxx = [];
         let i = 0;
         rows.forEach((row) => {
@@ -284,7 +257,6 @@ app.get("/dataread2", (req, res) => {
 
 /* INFO: config */
 app.get("/config", (req, res) => {
-    console.log("PIN pad console OK");
     res.sendFile(__dirname + "/views/config.html");
 });
 /* INFO: password authentication */
@@ -302,12 +274,9 @@ function loggerMiddleWare(req, res, next) {
 }
 
 app.get("/pult", loggerMiddleWare, (req, res) => {
-    console.log("Pult console OK");
     res.sendFile(__dirname + "/views/pult.html");
 });
-//app.listen(55555);
 app.listen(port, () => console.log("server is OK 😋 PORT: " + port));
-//app.listen(7755, () => console.log("server is OK 😋 PORT: "));
 
 //const user = ["Adminisztátor", "Pultos 1", "Pultos 2", "Pultos 3", "Pultos 4"];
 /* const password = [
