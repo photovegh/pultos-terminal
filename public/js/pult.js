@@ -469,7 +469,7 @@ $(".kilepes").click(function () {
     if (state.kosarak > "" || state.pult > "") {
         alert("Előbb a kosarakat és a pultot üríteni kell !!!");
     } else {
-        window.location.href = "http://test:7777";
+        window.location.href = "http://localhost:7777";
     }
 });
 
@@ -520,6 +520,20 @@ $(".kosarak").click(function () {
 /* TODO:TODO:TODO: TR KP TODO:TODO:TODO: */
 function trKp() {
     let trFizetesMod = "k";
+    trNumber = createTrNumber();
+    let megjegyzes = "*";
+    createTranactionData(
+        trNumber,
+        trFizetesMod,
+        megjegyzes,
+        mindosszesenTransaction,
+        mindosszesenTransactionBeszar
+    );
+    //mindosszesenTransaction = -1
+}
+/* TODO:TODO:TODO: TR KP 2 😁 TODO:TODO:TODO: */
+function trKp2() {
+    let trFizetesMod = "m";
     trNumber = createTrNumber();
     let megjegyzes = "*";
     createTranactionData(
