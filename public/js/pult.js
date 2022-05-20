@@ -250,6 +250,11 @@ async function getdata() {
                 termekKeszletModositas(state.pult[kosarUjsorIndex], "minus");
                 renderPult();
             }
+            /* HACK: now */
+            document.getElementById("csoportnevKijelzo").innerHTML =
+                state.csoportkategoria[
+                    state.keszlet[arrayIndex].csoport_id - 1
+                ].nev;
         });
     });
 }
