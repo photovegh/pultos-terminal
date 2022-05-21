@@ -33,7 +33,9 @@ async function getdata() {
                 /* HACK:HACK:HACK: */
                 const urtartalomInput = document.querySelector("#urtartalom");
                 const urtartalom =
-                    urtartalomInput.value == "" ? "0" : urtartalomInput.value;
+                    urtartalomInput.value == ""
+                        ? "0"
+                        : urtartalomInput.value * 100;
                 urtartalomInput.value = "";
                 /* HACK:HACK:HACK: */
                 var id = xid + 1;

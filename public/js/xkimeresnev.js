@@ -34,7 +34,9 @@ async function getdata() {
                 /* HACK:HACK:HACK: */
                 const urtartalomInput = document.querySelector("#urtartalom");
                 const urtartalom =
-                    urtartalomInput.value == "" ? "0" : urtartalomInput.value;
+                    urtartalomInput.value == ""
+                        ? "0"
+                        : urtartalomInput.value * 100;
                 urtartalomInput.value = "";
                 /* HACK:HACK:HACK: */
                 var id = xid + 1;
@@ -64,7 +66,7 @@ async function getdata() {
 /* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
 function updatexkimeresnev() {
     const nev = document.getElementById("newNev").value;
-    const urtartalom = document.getElementById("newUrtartalom").value;
+    const urtartalom = document.getElementById("newUrtartalom").value * 100;
     try {
         updateMySQL();
     } catch (e) {}
@@ -123,7 +125,7 @@ function renderXkimeresnev() {
             }
         }
         var origNev = state.xkimeresnev[arrowIndex].nev;
-        var origUrtartalom = state.xkimeresnev[arrowIndex].urtartalom;
+        var origUrtartalom = state.xkimeresnev[arrowIndex].urtartalom / 100;
         origId = state.xkimeresnev[arrowIndex].id;
         $("#myModal").modal();
         document.getElementById("newNev").value = origNev;

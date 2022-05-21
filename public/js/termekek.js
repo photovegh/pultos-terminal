@@ -128,13 +128,16 @@ async function getdata() {
 
                 const urtartalomInput = document.querySelector("#urtartalom");
                 const urtartalom =
-                    urtartalomInput.value == "" ? "0" : urtartalomInput.value;
+                    urtartalomInput.value == ""
+                        ? "0"
+                        : parseInt(urtartalomInput.value * 100);
                 urtartalomInput.value = "";
                 /* BUG:BUG:BUG:BUG:BUG:  */
                 //const cl = urtartalom * 10;
                 //const cl = termekKiszereles == 2 ? urtartalom * 10 : 1;
-                const cl =
-                    termekKiszereles == 2 ? parseInt(urtartalom * 100) : 1;
+                const cl = termekKiszereles == 2 ? parseInt(urtartalom) : 1;
+                /* const cl =
+                    termekKiszereles == 2 ? parseInt(urtartalom * 100) : 1; */
                 /* BUG:BUG:BUG:BUG:BUG: */
                 const sumcl = jelenlegiKeszlet * cl;
 
