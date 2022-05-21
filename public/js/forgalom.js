@@ -113,3 +113,41 @@ function renderforgalom() {
     }
 } */
 /* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+function datepicker() {
+    const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ];
+    console.log("datepicker() OK 😊");
+    var datum = new Date();
+    var defaultDateStart =
+        datum.getFullYear() +
+        "-" +
+        (datum.getMonth() + 1) +
+        "-" +
+        datum.getDate();
+    document.getElementById("forgalomStartDate").text = defaultDateStart;
+    const startDate = document.getElementById("forgalomStartDate").value;
+    const endDate = document.getElementById("forgalomEndDate").value;
+    console.log(startDate);
+    console.log(endDate);
+    var datum = new Date();
+    var defaultDateStart =
+        datum.getFullYear() +
+        "-" +
+        (datum.getMonth() + 1) +
+        "-" +
+        datum.getDate();
+    console.log(defaultDateStart);
+    alert("Tesztelés alatt!!! 😊");
+}
