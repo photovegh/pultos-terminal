@@ -4,7 +4,8 @@ const state = {
 
 var xid = 1;
 var origId = -1;
-console.log("mi a tokom van😋");
+var startFilterDate = "";
+var endFilterDate = "2099. 12. 31.";
 getdata();
 
 /* INFO: forgalom adatok bekérése START INFO: */
@@ -14,38 +15,6 @@ async function getdata() {
     state.forgalom = await response.json();
 
     renderforgalom();
-
-    /* NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE:NOTE: */
-    /* $(document).ready(function () {
-        $("#newdata").click(function () {
-            try {
-                insertMySQL();
-            } catch (e) {
-                alert("catch vizsgálata!!!");
-            }
-            async function insertMySQL() {
-                const nevInput = document.querySelector("#nev");
-                const nev = nevInput.value;
-                nevInput.value = "*";
-                var id = xid + 1;
-                await fetch("/insertcsoportok/", {
-                    method: "POST",
-                    headers: {
-                        "Content-type": "application/json",
-                    },
-                    body: JSON.stringify({ nev: nev }),
-                });
-                csoportokHTML += `<tr >
-                <td>${nev}</td>
-                </tr>
-                `;
-                id++;
-                xid++;
-                document.getElementById("xkimeresdata").innerHTML =
-                    csoportokHTML;
-            }
-        });
-    });*/
 }
 
 document.addEventListener("keypress", function (e) {
@@ -57,15 +26,20 @@ document.addEventListener("keypress", function (e) {
 
 //BUG:BUG:BUG:BUG:BUG:BUG:BUG:
 function renderforgalom() {
-    console.log("mi a tokom van");
     let index = 0;
     forgalomHTML = "";
     for (let vForgalom of state.forgalom) {
-        forgalomHTML += `<tr >
+        if (
+            vForgalom.eladottdate >= startFilterDate &&
+            vForgalom.eladottdate <= endFilterDate
+        ) {
+            forgalomHTML += `<tr >
         <td>${vForgalom.id}</td><td>${vForgalom.transaction_id}</td><td>${vForgalom.termekid}</td><td>${vForgalom.db}</td><td>${vForgalom.eladottbeszar}</td><td>${vForgalom.eladottelar}</td><td>${vForgalom.eladottdate}</td><td>${vForgalom.transaction_id}</td>
         <td><button class="updateBtn" id=${vForgalom.xkimeresnevid}>Edit</td>
         </tr>
         `;
+        }
+
         index++;
         xid = vForgalom.id;
     }
@@ -86,68 +60,21 @@ function renderforgalom() {
 }
 
 /* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
-/* function updatecsoportok() {
-    const nev = document.getElementById("newNev").value;
-    try {
-        updateMySQL();
-    } catch (e) {}
-    async function updateMySQL() {
-        id = origId;
-
-        const response = await fetch("/updatecsoportok/", {
-            method: "PATCH",
-            headers: {
-                "Content-type": "application/json",
-            },
-            body: JSON.stringify({ nev: nev, id: id }),
-        });
-        console.log(response);
-        let arrowIndex = -1;
-        for (let i = 0; i < state.csoportok.length; i++) {
-            if (state.csoportok[i].id == id) {
-                arrowIndex = i;
-            }
-        }
-        state.csoportok[arrowIndex].nev = nev;
-        rendercsoportok();
-    }
-} */
-/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
 function datepicker() {
-    const monthNames = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-    ];
-    console.log("datepicker() OK 😊");
-    var datum = new Date();
-    var defaultDateStart =
-        datum.getFullYear() +
-        "-" +
-        (datum.getMonth() + 1) +
-        "-" +
-        datum.getDate();
-    document.getElementById("forgalomStartDate").text = defaultDateStart;
     const startDate = document.getElementById("forgalomStartDate").value;
+    startFilterDate = dateConvertPickerToSQL(startDate);
     const endDate = document.getElementById("forgalomEndDate").value;
-    console.log(startDate);
-    console.log(endDate);
-    var datum = new Date();
-    var defaultDateStart =
-        datum.getFullYear() +
-        "-" +
-        (datum.getMonth() + 1) +
-        "-" +
-        datum.getDate();
-    console.log(defaultDateStart);
-    alert("Tesztelés alatt!!! 😊");
+    if (endDate !== "") {
+        endFilterDate = dateConvertPickerToSQL(endDate);
+    }
+    renderforgalom();
+}
+function dateConvertPickerToSQL(convertDatePicker) {
+    let convertDateSQL = "";
+    let tempDateArray = convertDatePicker.split("-");
+    if (tempDateArray.length > 1) {
+        convertDateSQL = `${tempDateArray[0]}. ${tempDateArray[1]}. ${tempDateArray[2]}. `;
+    }
+    convertDateSQL = `${tempDateArray[0]}. ${tempDateArray[1]}. ${tempDateArray[2]}. `;
+    return convertDateSQL;
 }
