@@ -11,18 +11,26 @@
 </head>
 
 <body>
-    <div class="container text-center">
+    <div class="container">
+        <div class="card bg-danger text-white">
+            <h4 class="card-body text-center">K I M É R H E T Ő * M E N N Y I S É G E K</h4>
+        </div>
         <br>
-        <form action="/" method="get">
-            <button type="submit" class="btn btn-primary mr-4 btn-lg">⚡ Vissza a menühöz ⚡ </button>
-        </form>
+        <div class="text-center">
+            <form action="/" method="get">
+                <button type="submit" class="btn btn-primary mr-4 btn-lg">⚡ Vissza a menühöz ⚡ </button>
+            </form>
+        </div>
 
         <form>
             <label for="nev">Neve (feles ...):</label><br>
             <input type="text" id="nev" name="nev"><br><br>
             <label for="urtartalom">Űrtartalom <kbd> literben !!!</kbd>:</label><br>
             <input type="number" id="urtartalom" name="urtartalom"><br><br>
-            <button id="newdata" class="btn btn-danger mr-4 btn-lg">Ujadat hozzáadása </button><br><br>
+            <div class="text-center">
+                <button id="newdata" class="btn btn-danger mr-4 btn-lg">Ujadat hozzáadása </button>
+            </div>
+            <br><br>
         </form>
 
         <table class="table table-striped">
