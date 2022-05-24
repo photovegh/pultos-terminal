@@ -84,3 +84,26 @@ INFO: A termékekhez kell egy jelenlegi készlet mező 😎🦉😎 INFO:
 ...NOTE: osszesen elar \* db => mindösszesen sor
 
 \*/
+
+[
+{
+"pin": "00",
+"name": "Zoli"
+},
+{
+"pin": "1",
+"name": "Laci"
+},
+{
+"pin": "02",
+"name": "John Doe"
+},
+{
+"pin": "1234",
+"name": "Jane Doe"
+},
+{
+"pin": "kutykurutty",
+"name": "admin"
+}
+]

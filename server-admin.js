@@ -14,6 +14,34 @@ app.use(express.static("public/js"));
 app.use(express.static("public/css"));
 app.use(express.static("public/img"));
 
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+app.post("/updatepultosok", bodyParser.json(), (req, res) => {
+    console.log("req.body.data");
+    console.log(req.body.data);
+    const content = req.body.data;
+    console.log(content);
+    /* fs.writeFile("psww.json", JSON.stringify(content), (err) => {
+        if (err) {
+            console.error(err);
+        }
+        console.log("file write OK");
+    }); */
+    //res.sendFile(__dirname + "/views/admin.html");
+});
+
+/* INFO: pultosokadmin BUG:BUG: test version 😁 BUG:BUG:*/
+app.get("/pultosokadmin", (req, res) => {
+    res.sendFile(__dirname + "/views/pultosok-admin.html");
+    /* res.sendFile(__dirname + "/psw.json"); */
+    console.log("backEnd pultosokadmin ok");
+});
+/* INFO: pultosokadminpsw BUG:BUG: password JSON send 😁 BUG:BUG:*/
+app.get("/pultosokadminpsw", (req, res) => {
+    /* res.sendFile(__dirname + "/views/pultosok-admin.html"); */
+    res.sendFile(__dirname + "/psw.json");
+    console.log("backEnd PSW ok");
+});
+
 /* INFO: lasttransaction BUG:BUG: TOROLNI NEM KELL BUG:BUG:*/
 app.get("/lasttransaction", (req, res) => {
     res.sendFile(__dirname + "/last-transaction.json");
