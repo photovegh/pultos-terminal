@@ -196,11 +196,6 @@ con.query("SELECT * FROM termekek", (err, data) => {
     termekeks = data;
 });
 
-/* INFO: induló képernyő */
-app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/views/index.html");
-});
-
 /* INFO: /dataread 😋😋😋😋😋😋*/
 app.get("/dataread", (req, res) => {
     con.query("SELECT * FROM termekek", (err, data) => {
@@ -259,6 +254,12 @@ app.get("/dataread2", (req, res) => {
 app.get("/config", (req, res) => {
     res.sendFile(__dirname + "/views/config.html");
 });
+
+/* INFO: induló képernyő */
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/views/index.html");
+});
+
 /* INFO: password authentication */
 function loggerMiddleWare(req, res, next) {
     const pin = true;
@@ -267,11 +268,18 @@ function loggerMiddleWare(req, res, next) {
         next();
     } else {
         /* res.status(401).send("Authentical error is NEMOK 🤔 "); */
-        res.status(200).sendFile(__dirname + "/views/index.html");
-        /* console.log("loggerMiddleWare is NEMOK 🤔 ");
-        return; */
+        //res.status(200).sendFile(__dirname + "/views/index.html");
+        console.log("loggerMiddleWare is NEMOK 🤔 ");
+        return;
     }
 }
+
+/* INFO: pultosokadminpsw BUG:BUG: password JSON send 😁 BUG:BUG:*/
+app.get("/pultosokadminpsw", (req, res) => {
+    /* res.sendFile(__dirname + "/views/pultosok-admin.html"); */
+    res.sendFile(__dirname + "/psw.json");
+    console.log("backEnd PSW ok");
+});
 
 app.get("/pult", loggerMiddleWare, (req, res) => {
     res.sendFile(__dirname + "/views/pult.html");

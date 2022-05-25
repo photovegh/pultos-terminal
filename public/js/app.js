@@ -1,5 +1,21 @@
-const users = ["Adminisztátor", "Pultos 1", "Pultos 2", "Pultos 3", "Pultos 4"];
-const passwords = ["0", "1", "2", "3", "4"];
+const users = [];
+const passwords = [];
+
+const state = {
+    pultosokPSW: [],
+};
+
+getdata();
+
+async function getdata() {
+    /* NOTE: get admin INFO: INFO: INFO:*/
+    var response = await fetch("/pultosokadminpsw");
+    state.pultosokPSW = await response.json();
+    for (let pultosPSW of state.pultosokPSW) {
+        users.push(pultosPSW.name);
+        passwords.push(pultosPSW.pin);
+    }
+}
 
 $(document).ready(function () {
     const input_value = $("#password");
@@ -34,7 +50,7 @@ $(document).ready(function () {
         /* INFO: na akkor vizsgáljuk meg a belépőt */
         //console.log("ez most az admin");
 
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 4; i++) {
             if (passwords[i] == psw) {
                 console.log(users[i]);
                 /*                 alert(

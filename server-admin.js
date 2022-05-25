@@ -20,12 +20,12 @@ app.post("/updatepultosok", bodyParser.json(), (req, res) => {
     console.log(req.body.data);
     const content = req.body.data;
     console.log(content);
-    /* fs.writeFile("psww.json", JSON.stringify(content), (err) => {
+    fs.writeFile("psw.json", JSON.stringify(content), (err) => {
         if (err) {
             console.error(err);
         }
         console.log("file write OK");
-    }); */
+    });
     //res.sendFile(__dirname + "/views/admin.html");
 });
 

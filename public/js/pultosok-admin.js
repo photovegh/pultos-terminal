@@ -1,4 +1,3 @@
-console.log("pultosok admin frontEnd ok");
 /* INFO: termék adatok bekérése START INFO: */
 
 const state = {
@@ -39,7 +38,6 @@ async function getdata() {
 
     pultosokHTML += `<button type="button" class="btn btn-primary btn-block ml-2 mt-4 p-3 " style="width:700px" onclick="pultosokAdminTarol()">Tárolom</button>`;
     document.getElementById("pultosokList").innerHTML = pultosokHTML;
-    console.log(state.pultosokPSW);
 }
 function pultosokAdminTarol() {
     var data = [];
@@ -48,17 +46,8 @@ function pultosokAdminTarol() {
     for (let index = 0; index < 5; index++) {
         newPinData = document.getElementById("newPin" + index).value;
         newPinName = document.getElementById("newName" + index).value;
-        //data.push("pin", newPinData, "name", newPinName);
         data.push({ pin: newPinData, name: newPinName });
-        //data.push(`{pin: ${newPinData}, name: ${newPinName}}`);
-        /* data.push(
-            `{"pin": "${
-                document.getElementById("newPin" + index).value
-            }", "name": "${document.getElementById("newName" + index).value}"}`
-        ); */
     }
-    console.log(data);
-    console.log(data[3]);
     updatePultosokFe();
 
     async function updatePultosokFe() {
@@ -70,6 +59,7 @@ function pultosokAdminTarol() {
             body: JSON.stringify({ data: data }),
         });
     }
-    alert("Tesztelés alatt!!! 😊");
-    window.location.href = "http://localhost:7766";
+    //alert("Tesztelés alatt!!! 😊");
+    //window.location.href = "http://localhost:7766";
+    //window.location.href = "http://photovegh.synology.me:7766/";
 }

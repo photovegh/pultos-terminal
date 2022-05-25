@@ -1,9 +1,12 @@
 var trNumberDatum = new Date();
 const keyboardTemplateHTML = keyboardTemplateRender();
 var datum = new Date().toLocaleString();
-//const datum = new Date().toLocaleDateString();
-//const ido = new Date().toLocaleDateString("en-CA");
 //var lastTransaction = -1;
+
+const userLocalName = localStorage.getItem("user");
+console.log(userLocalName);
+document.getElementById("localStorageName").innerHTML = userLocalName;
+
 var trNumber = "";
 var pultos = 2;
 var lastTransactionId = -1;
