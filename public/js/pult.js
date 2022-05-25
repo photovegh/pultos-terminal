@@ -537,8 +537,26 @@ function trKp() {
         mindosszesenTransaction,
         mindosszesenTransactionBeszar
     );
-    //mindosszesenTransaction = -1
+    if (mindosszesenTransaction > 0) {
+        visszajaro();
+    }
 }
+
+function visszajaro() {
+    $("#visszajaroModal").modal();
+    let cimletek = [500, 1000, 2000, 5000, 10000, 20000];
+    let visszajaroCimlet = "";
+    for (cimlet of cimletek) {
+        if (mindosszesenTransaction < cimlet) {
+            visszajaroCimlet += `<h4><kbd>${cimlet}</kbd> cimletből visszajár: <span class="font-weight-bold"> ${
+                cimlet - mindosszesenTransaction
+            },- </span> Ft</h4>`;
+        }
+    }
+
+    document.getElementById("cimletFelsorolas").innerHTML = visszajaroCimlet;
+}
+
 /* TODO:TODO:TODO: TR KP 2 😁 TODO:TODO:TODO: */
 function trKp2() {
     let trFizetesMod = "m";
@@ -551,7 +569,9 @@ function trKp2() {
         mindosszesenTransaction,
         mindosszesenTransactionBeszar
     );
-    //mindosszesenTransaction = -1
+    if (mindosszesenTransaction > 0) {
+        visszajaro();
+    }
 }
 /* TODO:TODO:TODO: TR CARD TODO:TODO:TODO: */
 function trCard() {
