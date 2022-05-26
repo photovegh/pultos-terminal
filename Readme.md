@@ -1,4 +1,7 @@
 pult.js 488
+admin.js 9
+pultosok-admin.js 64
+termekek.js 266
 
 /_ INFO:HACK:HACK:HACK: modosit HACK:HACK:HACK:INFO: _/
 //window.location.href = "http://localhost:7777";
