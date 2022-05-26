@@ -167,6 +167,10 @@ app.get("/csoportok", (req, res) => {
 app.get("/termekek", (req, res) => {
     res.sendFile(__dirname + "/views/termekek.html");
 });
+/* INFO: termekek-adatlap */
+app.get("/termekek-adatlap", (req, res) => {
+    res.sendFile(__dirname + "/views/termekek-adatlap.html");
+});
 /* INFO: kevert */
 app.get("/kevert", (req, res) => {
     res.sendFile(__dirname + "/views/kevert.html");
@@ -222,6 +226,8 @@ app.post("/inserxkimeres", bodyParser.json(), (req, res) => {
         req.body.termek_nev,
         req.body.xkimeresnev_id,
     ];
+    /* FIXME:FIXME:FIXME: */
+    console.log(insertData);
     /* FIXME:FIXME:FIXME: */
     con.query(
         "INSERT INTO xkimeres (termek_id, termek_nev, xkimeresnev_id) VALUES (?)",
@@ -322,13 +328,27 @@ app.patch("/updatecsoportok", bodyParser.json(), (req, res) => {
 /* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
 /* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
 app.patch("/updatetermekek", bodyParser.json(), (req, res) => {
-    var insertData = [req.body.nev];
+    var insertNev = [req.body.nev];
+    var insertBeszar = [req.body.beszar];
+    var insertElar = [req.body.elar];
+    var insertLeltarozando = [req.body.leltarozando];
+    var insertKritikus = [req.body.kritikus];
+    var insertGyujto = [req.body.gyujto];
+
     var id = req.body.id;
-    console.log(insertData);
+    console.log(insertNev);
     console.log(id);
     con.query(
-        "UPDATE termekek SET nev = ? WHERE id = ?",
-        [insertData, id],
+        "UPDATE termekek SET nev = ?, beszar = ?, elar = ?, leltarozando = ?,kritikus = ?, gyujto = ? WHERE id = ?",
+        [
+            insertNev,
+            insertBeszar,
+            insertElar,
+            insertLeltarozando,
+            insertKritikus,
+            insertGyujto,
+            id,
+        ],
         (err, data) => {
             try {
                 res.send(data);
@@ -338,6 +358,13 @@ app.patch("/updatetermekek", bodyParser.json(), (req, res) => {
         }
     );
 });
+/* req.body.nev,
+        req.body.beszar,
+        req.body.elar,
+        req.body.leltarozando,
+        req.body.kritikus,
+        req.body.gyujto,
+    ]; */
 /* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
 /* BUG: inserttermekek  BUG:BUG:BUG:BUG:BUG:BUG:BUG: */
 app.post("/inserttermekek", bodyParser.json(), (req, res) => {

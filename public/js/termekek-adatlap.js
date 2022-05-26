@@ -1,7 +1,3 @@
-const vissza = localStorage.getItem("adminLocal");
-console.log("hol vagzok 😁");
-console.log(vissza);
-
 var lastTransaction = -1;
 var termekKiszereles = 9;
 var csoportKiszereles = 5;
@@ -61,12 +57,12 @@ async function getdata() {
         // BUG: esetleg rendertermekek() BUG:
     }
 
-    /* INFO:HACK:HACK:HACK: torol HACK:HACK:HACK:INFO: */
     rendertermekek();
-    /* INFO:HACK:HACK:HACK: torol HACK:HACK:HACK:INFO: */
     /* HACK: */
-    renderkiszereles();
-    rendercsoport();
+    /* INFO:HACK:HACK:HACK: torol HACK:HACK:HACK:INFO: */
+    //renderkiszereles();
+    //rendercsoport();
+    /* INFO:HACK:HACK:HACK: torol HACK:HACK:HACK:INFO: */
     /* HACK: */
     /* NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: */
 
@@ -262,9 +258,6 @@ async function getdata() {
                                 }),
                             });
                             /* INFO: inserxkimeres  INFO: INFO: INFO: INFO: */
-                            /* INFO: Visszaloni a gyokerbe  INFO:INFO:INFO:INFO: */
-                            //window.location.href = vissza;
-                            /* INFO: Visszaloni a gyokerbe  INFO:INFO:INFO:INFO: */
                         }
                     });
                     //BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:
@@ -272,19 +265,16 @@ async function getdata() {
                 //INFO:INFO:INFO:INFO:INFO:INFO:INFO:INFO:INFO:
 
                 /* INFO: inserttermekek  INFO: INFO: INFO: INFO: INFO: INFO: INFO:*/
-                /* FIXME:FIXME:FIXME: */
-                termekekHTML = "";
                 termekekHTML += `<tr >
                 <td>${id}</td>
                 <td>${nev}</td>
                 <td>${beszar}</td>
                 </tr>
                 `;
-                /* FIXME:FIXME:FIXME: */
+
                 id++;
                 xid++;
-                //document.getElementById("termekek").innerHTML = termekekHTML;
-                /* FIXME:FIXME:FIXME: */
+                document.getElementById("termekek").innerHTML = termekekHTML;
                 document.getElementById("totalForm").reset();
             }
         });
@@ -296,23 +286,29 @@ async function getdata() {
     console.log("nev:");
     console.log(nev);
 } */
-/* INFO:HACK:HACK:HACK: torol HACK:HACK:HACK:INFO: */
+
 function rendertermekek() {
     let index = 0;
     termekekHTML = "";
+    //console.log(state.termekek[0].nev);
     for (let vTermekek of state.termekek) {
         termekekHTML += `<tr >
                 <td>${vTermekek.id}</td>
                 <td>${vTermekek.nev}</td>
                 <td>${vTermekek.beszar}</td>
+                <td>${vTermekek.elar}</td>
+                <td>${vTermekek.leltarozando}</td>
+                <td>${vTermekek.kritikus}</td>
+                <td>${vTermekek.gyujto}</td>
                 <td><button class="updateBtn" id=${vTermekek.id}>Edit</td>
                 </tr>
 
      `;
         index++;
-        xid = vTermekek.id;
+        xid = vTermekek.id; /* BUG: */
     }
     document.getElementById("termekek").innerHTML = termekekHTML;
+
     $(".updateBtn").click(function () {
         let arrowIndex = -1;
         for (let i = 0; i < state.termekek.length; i++) {
@@ -320,16 +316,28 @@ function rendertermekek() {
                 arrowIndex = i;
             }
         }
+        /* INFO:HACK:HACK:HACK: */
         var origNev = state.termekek[arrowIndex].nev;
+        var origBeszar = state.termekek[arrowIndex].beszar;
+        var origElar = state.termekek[arrowIndex].elar;
+        var origLeltarozando = state.termekek[arrowIndex].leltarozando;
+        var origKritikus = state.termekek[arrowIndex].kritikus;
+        var origGyujto = state.termekek[arrowIndex].gyujto;
+        /* HACK:HACK:HACK:INFO: */
         origId = state.termekek[arrowIndex].id;
         $("#myModal").modal();
+        /* INFO:HACK:HACK:HACK: */
         document.getElementById("newNev").value = origNev;
+        document.getElementById("newBeszar").value = origBeszar;
+        document.getElementById("newElar").value = origElar;
+        document.getElementById("newLeltarozando").value = origLeltarozando;
+        document.getElementById("newKritikus").value = origKritikus;
+        document.getElementById("newGyujto").value = origGyujto;
+        /* HACK:HACK:HACK:INFO: */
     });
 }
 /* INFO:HACK:HACK:HACK: torol HACK:HACK:HACK:INFO: */
-/* HACK: */
-function renderkiszereles() {
-    /* var termekKiszereles = 0; */
+/* function renderkiszereles() {
     let kiszerelesHTML = "";
     kiszerelesHTML += "<form>";
     for (let vKiszereles of state.kiszereles) {
@@ -339,15 +347,9 @@ function renderkiszereles() {
             <label for=${vKiszereles.id}>${vKiszereles.nev}</label><br>
             `;
         }
-
-        //console.log("vKiszereles.id");
-        //console.log(vKiszereles.id);
     }
     kiszerelesHTML += "</form>";
-    //console.log("**********kiszerelesHTML***********");
-    //console.log(kiszerelesHTML);
     document.getElementById("kiszerelesSelect").innerHTML = kiszerelesHTML;
-    /* BUG: */
     $(".kiszerelesRadio").click(function () {
         termekKiszereles = this.id;
         console.log("kiszerelesRadio OK");
@@ -355,11 +357,12 @@ function renderkiszereles() {
         console.log("termekKiszereles");
         console.log(termekKiszereles);
     });
-    /* BUG: */
-}
+} */
+/* INFO:HACK:HACK:HACK: torol HACK:HACK:HACK:INFO: */
+
 /* HACK: https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_form_horizontal&stacked=h HACK: */
-function rendercsoport() {
-    /* var csoportKiszereles = 0; */
+/* INFO:HACK:HACK:HACK: torol HACK:HACK:HACK:INFO: */
+/* function rendercsoport() {
     let csoportHTML = "";
     csoportHTML += "<form>";
     for (let vCsoport of state.csoportkategoria) {
@@ -371,10 +374,7 @@ function rendercsoport() {
         }
     }
     csoportHTML += "</form>";
-    //console.log("**********csoportHTML***********");
-    //console.log(csoportHTML);
     document.getElementById("csoportSelect").innerHTML = csoportHTML;
-    /* BUG: */
     $(".csoportRadio").click(function () {
         csoportKiszereles = this.id;
         console.log("csoportRadio OK");
@@ -382,8 +382,8 @@ function rendercsoport() {
         console.log("csoportKiszereles");
         console.log(csoportKiszereles);
     });
-    /* BUG: */
-}
+} */
+/* INFO:HACK:HACK:HACK: torol HACK:HACK:HACK:INFO: */
 /* HACK: */
 function figyel() {
     if (document.getElementById("nev").value == "") {
@@ -395,7 +395,14 @@ function figyel() {
 
 /* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
 function updatetermekek() {
+    /* INFO:HACK:HACK:HACK: */
     const nev = document.getElementById("newNev").value;
+    const beszar = document.getElementById("newBeszar").value;
+    const elar = document.getElementById("newElar").value;
+    const leltarozando = document.getElementById("newLeltarozando").value;
+    const kritikus = document.getElementById("newKritikus").value;
+    const gyujto = document.getElementById("newGyujto").value;
+    /* HACK:HACK:HACK:INFO: */
     try {
         updateMySQL();
     } catch (e) {}
@@ -407,7 +414,15 @@ function updatetermekek() {
             headers: {
                 "Content-type": "application/json",
             },
-            body: JSON.stringify({ nev: nev, id: id }),
+            body: JSON.stringify({
+                id: id,
+                nev: nev,
+                beszar: beszar,
+                elar: elar,
+                leltarozando: leltarozando,
+                kritikus: kritikus,
+                gyujto: gyujto,
+            }),
         });
         console.log(response);
         let arrowIndex = -1;
@@ -417,6 +432,11 @@ function updatetermekek() {
             }
         }
         state.termekek[arrowIndex].nev = nev;
+        state.termekek[arrowIndex].beszar = beszar;
+        state.termekek[arrowIndex].elar = elar;
+        state.termekek[arrowIndex].leltarozando = leltarozando;
+        state.termekek[arrowIndex].kritikus = kritikus;
+        state.termekek[arrowIndex].gyujto = gyujto;
         rendertermekek();
     }
 }

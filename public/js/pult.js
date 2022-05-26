@@ -1,3 +1,7 @@
+const vissza = localStorage.getItem("adminLocal");
+console.log("hol vagzok 😁");
+console.log(vissza);
+
 var trNumberDatum = new Date();
 const keyboardTemplateHTML = keyboardTemplateRender();
 var datum = new Date().toLocaleString();
@@ -5,6 +9,8 @@ var datum = new Date().toLocaleString();
 
 const userLocalName = localStorage.getItem("user");
 console.log(userLocalName);
+console.log("hol vagzok 😁");
+console.log(vissza);
 document.getElementById("localStorageName").innerHTML = userLocalName;
 
 var trNumber = "";
@@ -477,7 +483,10 @@ $(".kilepes").click(function () {
     if (state.kosarak > "" || state.pult > "") {
         alert("Előbb a kosarakat és a pultot üríteni kell !!!");
     } else {
-        window.location.href = "http://localhost:7777";
+        /* INFO:HACK:HACK:HACK: modosit HACK:HACK:HACK:INFO: */
+        //window.location.href = "http://localhost:7777";
+        window.location.href = "http://photovegh.synology.me:7777/";
+        /* INFO:HACK:HACK:HACK: modosit HACK:HACK:HACK:INFO: */
     }
 });
 

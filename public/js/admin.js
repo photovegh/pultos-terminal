@@ -4,6 +4,11 @@
 
 console.log("Ez az adminisztációs Js ami pl figyeli az input mezőket");
 console.log("🤔😋😋😋😋😋🤔😎😎😎");
+console.log("Hol a fenebe vagyok? 😂😂😂");
+/* alert("The URL of this page is: " + window.location.href); */
+var adminURL = window.location.href;
+localStorage.setItem("adminLocal", adminURL);
+console.log(adminURL);
 
 /* function figyel() {
     if (document.getElementById("nev") == "*") {

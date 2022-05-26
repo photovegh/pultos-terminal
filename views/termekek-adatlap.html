@@ -11,21 +11,29 @@
 </head>
 
 <body>
-    <div class="container ">
-        <div class="container ">
-            <div class="card bg-danger text-white">
-                <h4 class="card-body text-center">* U J * T E R M É K *</h4>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="card bg-success text-white">
+                <h4 class="card-body text-center">T E R M É K * A D A T L A P</h4>
             </div>
             <br>
             <div class="container text-center">
                 <form action="/" method="get">
                     <button type="submit" class="btn btn-primary mr-4 btn-lg ">⚡ Vissza a menühöz ⚡ </button>
-                </form>
+                </form><br>
+                <!-- </div> -->
+
+                <div>
+                    <form action="/termekek" method="get">
+                        <button type="submit" class="btn btn-danger  mr-4 btn-lg ">Uj Terék felvitele
+                            (3) </button>
+                    </form><br>
+                </div>
             </div>
 
             <!-- HACK:HACK:HACK:HACK: innen az uj termek HACK:HACK:HACK:HACK: -->
 
-            <form id="totalForm">
+            <!-- <form id="totalForm">
                 <div class="shadow p-2 mb-1 bg-white rounded">
                     <label for="nev">Termék neve:</label>
                     <input type="text" id="nev" name="nev" required><br>
@@ -80,8 +88,9 @@
             <div class="container text-center">
                 <button id="newdata" class="btn btn-danger mr-4 btn-lg">Ujadat hozzáadása </button><br><br>
             </div>
-
+ -->
             <!-- Kimért termékek és a kimért mennyiség PÁROSÍTÁSA INFO: Modal INFO: -->
+            <!-- <div class="container-fluid"> -->
             <div class="modal" id="createXkimeres">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -108,17 +117,21 @@
                     </div>
                 </div>
             </div>
+            <!-- </div> -->
 
             <!-- HACK:HACK:HACK:HACK: eddig az uj termek HACK:HACK:HACK:HACK: -->
 
             <!-- FIXME:FIXME:FIXME:FIXME:FIXME: -->
-
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>Id</th>
                         <th>Neve</th>
                         <th>Beszerzési ár</th>
+                        <th>Eladási ár</th>
+                        <th>Leltározandó</th>
+                        <th>Kritikus mennyiség</th>
+                        <th>Gyüjtő mennyiség</th>
                     </tr>
                 </thead>
                 <tbody id="termekek">
@@ -129,26 +142,66 @@
             <!-- BUG:BUG:BUG:BUG:BUG:BUG:BUG: -->
             <!-- The Modal -->
             <div class="modal" id="myModal">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-xl">
                     <div class="modal-content">
 
                         <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Mi legyen a termék neve?</h4>
+                        <div class="modal-header bg-info text-white">
+                            <h4 class="modal-title">Termék alapadatok változtatása</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
 
                         <!-- Modal body -->
                         <div class="modal-body">
-                            <form>
-                                <label for="newNev">Új név:</label><br>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <!-- <th>Id</th> -->
+                                        <th>Neve</th>
+                                        <th>Beszerzési ár</th>
+                                        <th>Eladási ár</th>
+                                        <th>Leltározandó</th>
+                                        <th>Kritikus mennyiség</th>
+                                        <th>Gyüjtő mennyiség</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="termekModosit">
+                                    <td>
+                                        <input type="text" id="newNev" name="newNev">
+                                    </td>
+                                    <td>
+                                        <input type="number" id="newBeszar" name="newBeszar" style="width: 7em">
+                                    </td>
+                                    <td>
+                                        <input type="number" id="newElar" name="newElar" style="width: 7em">
+                                    </td>
+                                    <td>
+                                        <select id="newLeltarozando" name="newLeltarozando" form="carform">
+                                            <option value="i">i</option>
+                                            <option value="n">n</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="number" id="newKritikus" name="newKritikus" style="width: 7em">
+                                    </td>
+                                    <td>
+                                        <input type="number" id="newGyujto" name="newGyujto" style="width: 7em">
+                                    </td>
+                                </tbody>
+                            </table>
+                            <!-- <form>
+                                <label for="newNev">Új név <span>
+                                        &#9
+                                    </span></label>
                                 <input type="text" id="newNev" name="newNev"><br>
-                            </form>
+                                <label for="newBeszar">Beszerzési ár:</label>
+                                <input type="text" id="newBeszar" name="newBeszar"><br>
+                            </form> -->
                         </div>
 
                         <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal"
+                        <div class="modal-footer bg-info text-white">
+                            <button type="button" class="btn btn-danger " data-dismiss="modal"
                                 onclick="updatetermekek()">Felülírom !!!</button>
                         </div>
                     </div>
@@ -161,8 +214,8 @@
         <script src="jquery.slim.min.js"></script>
         <script src="popper.min.js"></script>
         <script src="bootstrap.bundle.min.js"></script>
-        <script src="admin.js"></script>
-        <script src="termekek.js"></script><!-- BUG:BUG: BUG: BUG:BUG:-->
+        <!-- INFO: EZ A JS NEM UZEMEL 😁 <script src="admin.js"></script> -->
+        <script src="termekek-adatlap.js"></script><!-- BUG:BUG: BUG: BUG:BUG:-->
 </body>
 
 </html>
