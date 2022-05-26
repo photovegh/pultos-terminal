@@ -1,3 +1,10 @@
+pult.js 488
+
+/_ INFO:HACK:HACK:HACK: modosit HACK:HACK:HACK:INFO: _/
+//window.location.href = "http://localhost:7777";
+window.location.href = "http://photovegh.synology.me:7777/";
+/_ INFO:HACK:HACK:HACK: modosit HACK:HACK:HACK:INFO: _/
+
 NOTE: megjegyzes
 INFO: FONTOS
 TODO:
