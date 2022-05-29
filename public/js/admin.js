@@ -59,13 +59,12 @@ function addStockQuantity(id, nev, keszlet) {
 }
 
 function renderTermekek() {
-    console.log("renderTermekek function is OK");
-    console.log("szukit");
-    console.log(szukit);
     productsAreaHTML = "";
-
+    var prodNev = "";
     for (product of state.termekek) {
-        if (product.nev.search(keresValue) >= 0) {
+        /* if (product.nev.search(keresValue) >= 0) { */
+        product.nev.toLowerCase();
+        if (product.nev.toLowerCase().search(keresValue.toLowerCase()) >= 0) {
             console.log("true 😋😋🥰🥰🥰");
             productsAreaHTML += `<button type="button" class="btn btn-primary m-2 p-2 productsButton" id=${product.id} data-nev=${product.nev}>${product.nev} - ${product.id}</button>`;
             console.log(product.nev);
