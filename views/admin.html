@@ -12,6 +12,7 @@
 
 <body>
 
+    <!-- NOTE: felső fix sav -->
     <div class="container-fluid">
 
         <!-- NOTE: felső sav -->
@@ -81,6 +82,22 @@
 
     </div>
 
+    <!-- NOTE: valid product area -->
+    <div class="container-fluid">
+        <div class="text-center">
+            <h2>A már rögzített termékek készletáltozás felvitele (arubeszerzés)</h2>
+            <div class="font-weight-bold m-2 p-2">
+                Termékek szűkítése: <input type="text" name="nevSzukit" id="nevSzukit">
+                <button type="button" class="btn btn-success" id="szukit-btn">Szűrés</button>
+            </div>
+            <div id="productArea">
+                <!-- <button type="button" class="btn btn-primary" id="productArea"></button> -->
+            </div>
+            <h2>Szótöredékre is szűkíthető</h2>
+            <!-- <button type="button" class="btn btn-primary xyzNAME" data-testId="yes" id="xyzID">mi a mano</button> -->
+        </div>
+    </div>
+
     <!-- NOTE: also sav -->
     <!-- <div class="fixed-bottom bg-danger text-white p-2">
         <form action="/config" method="get">
@@ -89,7 +106,34 @@
         </form>
     </div> -->
 
+    <!-- The Modal -->
+    <div class="modal fade" id="addStockQuantityModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
 
+                <!-- Modal Header -->
+                <div class="modal-header bg-info  text-white"><br>
+                    <h4 class="modal-title " id="addStockQuantityName"></h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" id="addStockQuantity">
+                    <h4>Leltározot készlet: <span id="addStockQuantityKeszlet"></span> </h4>
+                    Készletváltozás: <input type="number" name="addQuantity" id="addQuantity">
+                    <h1></h1>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer bg-info">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                        onclick="keszletValtozas()">Hozzáad</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <script src="jquery.slim.min.js"></script>
     <script src="popper.min.js"></script>

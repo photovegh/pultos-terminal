@@ -1,14 +1,98 @@
+const state = {
+    termekek: [],
+};
+var productsAreaHTML = "";
+getdata();
+
+/* const element = document.getElementById("myBtn"); */
+var keszlet = 0;
+var nev = "";
+var valtoztatas = 0;
+document.getElementById("nevSzukit").value = "";
+var szukit = document.getElementById("nevSzukit").value;
+console.log("szukit");
+console.log(szukit);
+var keresValue = "";
+
+const szukitBtn = document.querySelector("#szukit-btn");
+szukitBtn.onclick = function () {
+    keresValue = document.querySelector("#nevSzukit").value;
+    renderTermekek();
+    productsButtonRender();
+};
+
+function productsButtonRender() {
+    $(".productsButton").click(function (e) {
+        if (e.target.nodeName == "BUTTON") {
+            for (product of state.termekek) {
+                if (product.id == this.id) {
+                    nev = product.nev;
+                    keszlet = product.keszlet;
+                }
+            }
+            addStockQuantity(this.id, nev, keszlet);
+        }
+    });
+}
+
+async function getdata() {
+    var response = await fetch("/datareadtermekek");
+    state.termekek = await response.json();
+    console.log("getdata function is OK");
+    console.log(state.termekek[0]);
+
+    renderTermekek();
+
+    $(document).ready(function () {
+        productsButtonRender();
+    });
+}
+
+function addStockQuantity(id, nev, keszlet) {
+    console.log("addEventListener(click), addStockQuantity)");
+    console.log(id);
+    console.log(nev);
+
+    $("#addStockQuantityModal").modal();
+    document.getElementById("addStockQuantityName").innerHTML = nev + "<br>";
+    document.getElementById("addStockQuantityKeszlet").innerHTML = keszlet;
+}
+
+function renderTermekek() {
+    console.log("renderTermekek function is OK");
+    console.log("szukit");
+    console.log(szukit);
+    productsAreaHTML = "";
+
+    for (product of state.termekek) {
+        if (product.nev.search(keresValue) >= 0) {
+            console.log("true 😋😋🥰🥰🥰");
+            productsAreaHTML += `<button type="button" class="btn btn-primary m-2 p-2 productsButton" id=${product.id} data-nev=${product.nev}>${product.nev} - ${product.id}</button>`;
+            console.log(product.nev);
+        }
+    }
+    document.getElementById("productArea").innerHTML = productsAreaHTML;
+}
+
+function keszletValtozas() {
+    valtoztatas = document.getElementById("addQuantity").value;
+    console.log("valtoztatas");
+    console.log(valtoztatas);
+    document.getElementById("addQuantity").value = "";
+    valtoztatas = 0;
+}
+
 /* NOTE: INPUT NotNull !!!! NOTE: */
 
 /* NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: NOTE: */
 
 console.log("Ez az adminisztációs Js ami pl figyeli az input mezőket");
 console.log("🤔😋😋😋😋😋🤔😎😎😎");
-console.log("Hol a fenebe vagyok? 😂😂😂");
-/* alert("The URL of this page is: " + window.location.href); */
+/* console.log("Hol a fenebe vagyok? 😂😂😂");
+alert("The URL of this page is: " + window.location.href);
 var adminURL = window.location.href;
 localStorage.setItem("adminLocal", adminURL);
-console.log(adminURL);
+console.log(adminURL); */
 
 /* function figyel() {
     if (document.getElementById("nev") == "*") {
