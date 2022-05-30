@@ -326,6 +326,31 @@ app.patch("/updatecsoportok", bodyParser.json(), (req, res) => {
     );
 });
 /* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+/* TODO:TODO:TODO:INFO:TODO:TODO:TODO:TODO: */
+app.patch("/updatetermekekbeszerzes", bodyParser.json(), (req, res) => {
+    var id = req.body.id;
+    console.log(id);
+    var insertKeszlet = [req.body.keszlet];
+    var insertCl = [req.body.cl];
+    var insertSumcl = [req.body.sumcl];
+    console.log("insertKeszlet");
+    console.log(insertKeszlet);
+    console.log(insertCl);
+    console.log(insertSumcl);
+    con.query(
+        "UPDATE termekek SET keszlet = ?, cl = ?, sumcl = ? WHERE id = ?",
+        [insertKeszlet, insertCl, insertSumcl, id],
+        (err, data) => {
+            try {
+                res.send(data);
+            } catch {
+                if (err) throw err;
+            }
+        }
+    );
+});
+/* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+
 /* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
 app.patch("/updatetermekek", bodyParser.json(), (req, res) => {
     var insertNev = [req.body.nev];

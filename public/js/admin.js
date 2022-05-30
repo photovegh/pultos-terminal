@@ -4,14 +4,15 @@ const state = {
 var productsAreaHTML = "";
 getdata();
 
-/* const element = document.getElementById("myBtn"); */
 var keszlet = 0;
 var nev = "";
+var kiszerelesId = -1;
 var valtoztatas = 0;
+var idSend = 0;
+var cl = 0;
+var sumcl = 0;
 document.getElementById("nevSzukit").value = "";
 var szukit = document.getElementById("nevSzukit").value;
-console.log("szukit");
-console.log(szukit);
 var keresValue = "";
 
 const szukitBtn = document.querySelector("#szukit-btn");
@@ -28,9 +29,13 @@ function productsButtonRender() {
                 if (product.id == this.id) {
                     nev = product.nev;
                     keszlet = product.keszlet;
+                    kiszerelesId = product.kiszereles_id;
+                    idSend = this.id;
+                    cl = product.cl;
+                    sumcl = product.sumcl;
                 }
             }
-            addStockQuantity(this.id, nev, keszlet);
+            addStockQuantity(idSend, nev, keszlet);
         }
     });
 }
@@ -38,8 +43,6 @@ function productsButtonRender() {
 async function getdata() {
     var response = await fetch("/datareadtermekek");
     state.termekek = await response.json();
-    console.log("getdata function is OK");
-    console.log(state.termekek[0]);
 
     renderTermekek();
 
@@ -48,11 +51,7 @@ async function getdata() {
     });
 }
 
-function addStockQuantity(id, nev, keszlet) {
-    console.log("addEventListener(click), addStockQuantity)");
-    console.log(id);
-    console.log(nev);
-
+function addStockQuantity(idSend, nev, keszlet) {
     $("#addStockQuantityModal").modal();
     document.getElementById("addStockQuantityName").innerHTML = nev + "<br>";
     document.getElementById("addStockQuantityKeszlet").innerHTML = keszlet;
@@ -60,14 +59,9 @@ function addStockQuantity(id, nev, keszlet) {
 
 function renderTermekek() {
     productsAreaHTML = "";
-    var prodNev = "";
     for (product of state.termekek) {
-        /* if (product.nev.search(keresValue) >= 0) { */
-        product.nev.toLowerCase();
         if (product.nev.toLowerCase().search(keresValue.toLowerCase()) >= 0) {
-            console.log("true 😋😋🥰🥰🥰");
             productsAreaHTML += `<button type="button" class="btn btn-primary m-2 p-2 productsButton" id=${product.id} data-nev=${product.nev}>${product.nev} - ${product.id}</button>`;
-            console.log(product.nev);
         }
     }
     document.getElementById("productArea").innerHTML = productsAreaHTML;
@@ -75,10 +69,62 @@ function renderTermekek() {
 
 function keszletValtozas() {
     valtoztatas = document.getElementById("addQuantity").value;
-    console.log("valtoztatas");
-    console.log(valtoztatas);
+    valtoztatas = parseInt(valtoztatas);
+    if (isNaN(valtoztatas)) {
+        valtoztatas = 0;
+    } else {
+        console.log("isNaN 😁");
+    }
     document.getElementById("addQuantity").value = "";
-    valtoztatas = 0;
+
+    /* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+    updatetermekekbeszerzes(valtoztatas);
+    function updatetermekekbeszerzes(valtoztatas) {
+        try {
+            updateMySQL(valtoztatas);
+        } catch (e) {}
+        async function updateMySQL(valtoztatas) {
+            let origId = idSend;
+            keszlet = parseInt(keszlet) + valtoztatas;
+            if (kiszerelesId == 2) {
+                cl = parseInt(cl);
+                sumcl = parseInt(sumcl) + valtoztatas * cl;
+            } else {
+                cl = cl;
+                sumcl = parseInt(sumcl) + valtoztatas;
+            }
+
+            //INFO:
+            for (productNew of state.termekek) {
+                if ((productNew.id = origId)) {
+                    productNew.keszlet = keszlet;
+                    productNew.cl = cl;
+                    productNew.sumcl = sumcl;
+                }
+            }
+
+            const response = await fetch("/updatetermekekbeszerzes/", {
+                method: "PATCH",
+                headers: {
+                    "Content-type": "application/json",
+                },
+                body: JSON.stringify({
+                    id: idSend,
+                    keszlet: keszlet,
+                    cl: cl,
+                    sumcl: sumcl,
+                }),
+            });
+            console.log(response);
+        }
+    }
+
+    /* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
+    //INFO:
+    //INFO:
+    window.location.href = "/";
+    //INFO:
+    //INFO:
 }
 
 /* NOTE: INPUT NotNull !!!! NOTE: */
@@ -87,73 +133,3 @@ function keszletValtozas() {
 
 console.log("Ez az adminisztációs Js ami pl figyeli az input mezőket");
 console.log("🤔😋😋😋😋😋🤔😎😎😎");
-/* console.log("Hol a fenebe vagyok? 😂😂😂");
-alert("The URL of this page is: " + window.location.href);
-var adminURL = window.location.href;
-localStorage.setItem("adminLocal", adminURL);
-console.log(adminURL); */
-
-/* function figyel() {
-    if (document.getElementById("nev") == "*") {
-        console.log("******* mezo URES *******");
-    }
-} */
-
-/* HACK: fv() hívás HACK: */
-//renderProducts();
-/* NOTE: A button click funkciójának figyelése */
-/*   $(document).ready(function () {
-        let arrayIndex = -1;
-        let arrayIndextoggle = -1;
-        let vElar = -1;
-        let vNev;
-        localStorage.setItem("vElar", vElar);
-        let summa = 0;
-        let xxx = "";
-
-        $(".btnKeszlet, .dropdown-item, .dropdown-toggle").click(function (e) {
-            if (e.target.nodeName == "BUTTON") {
-                arrayIndex = this.id;
-            }
-            
-            let xButtonOrP = "";
-            console.log("click 😊");
-            console.log("arrayIndex");
-            console.log(arrayIndex);
-            console.log("arrayIndextoggle");
-            console.log(arrayIndextoggle);
-            xButtonOrP = e.target.nodeName;
-            console.log(xButtonOrP);
-
-            if (state.keszlet[arrayIndex].kiszereles_id == 2) {
-                if (e.target.nodeName == "P") {
-                    arrayIndextoggle = this.id;
-
-                    vNev = state.keszlet[arrayIndex].nev;
-                    vElar =
-                        (state.keszlet[arrayIndex].elar /
-                            state.keszlet[arrayIndex].cl) *
-                        state.xkimeresnev[arrayIndextoggle].urtartalom;
-
-                    arrayPultNev.push(state.keszlet[arrayIndex].nev);
-                    arrayPultElar.push(vElar);
-                }
-               
-                console.log("vNev");
-                console.log(vNev);
-                console.log("vElar");
-                console.log(vElar);
-              
-            } else {
-             
-                arrayPultNev.push(state.keszlet[arrayIndex].nev);
-                arrayPultElar.push(state.keszlet[arrayIndex].elar);
-                vElar = state.keszlet[arrayIndex].elar;
-               
-                vNev = state.keszlet[arrayIndex].nev;
-                vElar = state.keszlet[arrayIndex].elar;
-            }
-        });
-    }); */
-
-/* INFO: termék //ok bekérése END INFO: */

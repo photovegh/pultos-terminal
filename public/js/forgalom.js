@@ -61,20 +61,26 @@ function renderforgalom() {
 
 /* TODO:TODO:TODO:TODO:TODO:TODO:TODO: */
 function datepicker() {
+    let dateCode = "s";
     const startDate = document.getElementById("forgalomStartDate").value;
-    startFilterDate = dateConvertPickerToSQL(startDate);
+    startFilterDate = dateConvertPickerToSQL(startDate, dateCode);
     const endDate = document.getElementById("forgalomEndDate").value;
     if (endDate !== "") {
-        endFilterDate = dateConvertPickerToSQL(endDate);
+        dateCode = "e";
+        endFilterDate = dateConvertPickerToSQL(endDate, dateCode);
     }
     renderforgalom();
 }
-function dateConvertPickerToSQL(convertDatePicker) {
+function dateConvertPickerToSQL(convertDatePicker, dateCode) {
     let convertDateSQL = "";
     let tempDateArray = convertDatePicker.split("-");
-    if (tempDateArray.length > 1) {
+    if (tempDateArray.length > 1 && dateCode == "s") {
         convertDateSQL = `${tempDateArray[0]}. ${tempDateArray[1]}. ${tempDateArray[2]}. `;
     }
-    convertDateSQL = `${tempDateArray[0]}. ${tempDateArray[1]}. ${tempDateArray[2]}. `;
+    if (tempDateArray.length > 1 && dateCode == "e") {
+        convertDateSQL = `${tempDateArray[0]}. ${tempDateArray[1]}. ${(
+            parseInt(tempDateArray[2]) + 1
+        ).toString()}. `;
+    }
     return convertDateSQL;
 }

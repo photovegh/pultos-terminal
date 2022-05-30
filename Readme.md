@@ -117,3 +117,7 @@ INFO: A termékekhez kell egy jelenlegi készlet mező 😎🦉😎 INFO:
 "name": "admin"
 }
 ]
+
+...NOTE: készletfelvitelnél az adatbázisba küldöm a "valtoztatas"-t és =>
+...NOTE: növelem a "keszletet" darabra és a "sumcl"-t ill. ha "csoport_id" = 2 =>
+...NOTE: akkor a "sumcl" = "valtozas" \* 100 - zal növelem
