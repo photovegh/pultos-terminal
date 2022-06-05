@@ -15,6 +15,17 @@ document.getElementById("nevSzukit").value = "";
 var szukit = document.getElementById("nevSzukit").value;
 var keresValue = "";
 
+document.addEventListener("keypress", function (e) {
+    console.log(e.keyCode);
+    if (e.keyCode === 13 || e.which === 13) {
+        e.preventDefault();
+        keresValue = document.querySelector("#nevSzukit").value;
+        renderTermekek();
+        productsButtonRender();
+        return false;
+    }
+});
+
 const szukitBtn = document.querySelector("#szukit-btn");
 szukitBtn.onclick = function () {
     keresValue = document.querySelector("#nevSzukit").value;
