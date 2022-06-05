@@ -485,7 +485,8 @@ $(".kilepes").click(function () {
     } else {
         /* INFO:HACK:HACK:HACK: modosit HACK:HACK:HACK:INFO: */
         //window.location.href = "http://localhost:7777";
-        window.location.href = "http://photovegh.synology.me:7777/";
+        //window.location.href = "http://photovegh.synology.me:7777/";
+        window.location.href = "/";
         /* INFO:HACK:HACK:HACK: modosit HACK:HACK:HACK:INFO: */
     }
 });
