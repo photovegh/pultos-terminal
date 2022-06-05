@@ -3,43 +3,12 @@ admin.js 9
 pultosok-admin.js 64
 termekek.js 266
 
-/_ INFO:HACK:HACK:HACK: modosit HACK:HACK:HACK:INFO: _/
-//window.location.href = "http://localhost:7777";
-window.location.href = "http://photovegh.synology.me:7777/";
-/_ INFO:HACK:HACK:HACK: modosit HACK:HACK:HACK:INFO: _/
-
 NOTE: megjegyzes
 INFO: FONTOS
 TODO:
 HACK:
 BUG:
 FIXME:
-
-PORT = 7776
-ADMINPORT = 7766
-HOST = 'localhost'
-USER = 'root'
-PSW = ''
-DBF = 'terminal'
-ADMIN = 0000,
-PULTOS1 = 1111,
-PULTOS2 = 2222,
-PULTOS3 = 3333,
-POLTOS4 = 4444
-
----
-
-PORT = 7777
-ADMINPORT = 7766
-HOST = 'localhost'
-USER = 'pultos'
-PSW = 'Terminal-2022'
-DBF = 'pultosterminal'
-ADMIN = 0000,
-PULTOS1 = 1111,
-PULTOS2 = 2222,
-PULTOS3 = 3333,
-POLTOS4 = 4444
 
 // lastTransaction: [],
 // NOTE: Ezek kellenek a forgalom adatokhoz
@@ -53,6 +22,7 @@ termék (transaction) :HACK:
 -   pultos
 -   fizetés: kp, kártya, hitel, leltár, beszállító kifizetés FIXME:
     --- k: kp
+    --- m: kp2
     --- c: bank card
     --- h: hitel (info: kie a hitel) NOTE:
     --- l: leltar (info: ???) NOTE:
@@ -92,31 +62,6 @@ INFO: cl => ha 1 ott 0, ugyanis az összetevők űrtartalma INFO: OKK
 INFO: cl => ha 1 vonódik le összetevőnként küln-külön 😋 INFO:
 INFO: A termékekhez kell egy jelenlegi készlet mező 😎🦉😎 INFO:
 ...NOTE: osszesen elar \* db => mindösszesen sor
-
-\*/
-
-[
-{
-"pin": "00",
-"name": "Zoli"
-},
-{
-"pin": "1",
-"name": "Laci"
-},
-{
-"pin": "02",
-"name": "John Doe"
-},
-{
-"pin": "1234",
-"name": "Jane Doe"
-},
-{
-"pin": "kutykurutty",
-"name": "admin"
-}
-]
 
 ...NOTE: készletfelvitelnél az adatbázisba küldöm a "valtoztatas"-t és =>
 ...NOTE: növelem a "keszletet" darabra és a "sumcl"-t ill. ha "csoport_id" = 2 =>
